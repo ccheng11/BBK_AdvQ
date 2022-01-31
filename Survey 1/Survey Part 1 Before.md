@@ -7,7 +7,7 @@ Chao-Yo Cheng\
 
 ## Table of Content
 
-- [**1 Introduction**](#--1-introduction--)
+- [**1 Introduction**](#--1-introduction)
 - [**2 Data**](#--2-data--)
 - [**3 Survey Design Components**](#--3-survey-design-components--)
 - [**4 Computing Descriptive Statistics**](#--4-computing-descriptive-statistics--)
@@ -15,6 +15,9 @@ Chao-Yo Cheng\
   * [**5.1 Tabulate the data by country**](#--51-tabulate-the-data-by-country--)
   * [**5.2 Set up the `survey` object**](#--52-set-up-the--survey--object--)
   * [**5.3 Try out some analysis**](#--53-try-out-some-analysis--)
+
+
+https://github.com/ccheng11/BBK_IQSR/blob/main/Survey%201/Survey%20Part%201%20Before.md#2-data
 
 ## 1 Introduction
 
