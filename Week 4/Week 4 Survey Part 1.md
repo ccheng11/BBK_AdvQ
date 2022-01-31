@@ -1,9 +1,7 @@
 # Tutorial: Analyzing Survey Data (Part 1)
 
-31 January 2022
-
 Chao-Yo Cheng\
-[c.cheng[at]bbk.ac.uk](mailto:c.cheng@bbk.ac.uk)
+31 January 2022
 
 ## 1 Introduction
 
@@ -12,7 +10,7 @@ Our objectives today include:
   - Set up a survey object using complex survey information, such as survey weight and stratification variables.
   - Use a tidyverse approach for descriptive statistics.
   
-We will use the package `survey` and a tidyverse-style wrapper called `srvyr`.
+We will use the package `survey` and a tidyverse-style wrapper called `srvyr`. For more information about the comparison between these two packages, see the <a href="https://cran.r-project.org/web/packages/srvyr/vignettes/srvyr-vs-survey.html" target="_blank">handout</a> prepared by Greg Freedman.
 
 ```{r, echo=T, eval=F}
 library(survey)
@@ -110,12 +108,31 @@ ces_s <- ces %>%
 
 Complete the following tasks.
 
-  - Drawing on the dataframe `ces`, use `tidyverse` functionbs to calculate the number of people who think abortion should be     banned (and perhaps the proportion of people who think abortion should be banned).
+  - Drawing on the dataframe `ces`, use `tidyverse` functions to calculate the number of people who think abortion should be banned (and perhaps the proportion of people who think abortion should be banned).
   - Repeat the same analysis, but this time use the survey object `ces_s`. 
 
 > *Question: Describe and explain your observations.*
 
 > *Question: Can you think of other descriptive analysis you can do?*
+
+Here is one example (more TBA after the live session) -- say, we want to use the dataframe `ces` to calculate the number of people who think abortion should be banned.
+
+```{r, echo=T, eval=F}
+ces %>%
+  group_by(abortion) %>%
+  summarise(n = n())
+```
+> *Question: How else can you get the table?*
+
+Now let's use `ces_s` (i.e., the survey object).
+
+```{r, echo=T, eval=F}
+ces %>%
+  group_by(abortion) %>%
+  summarise(n = survey_total())
+```
+> *Question: What does `survey_total` do?*
+
 
 ## **5 Extra: European Social Survey (Round 9)**
 
