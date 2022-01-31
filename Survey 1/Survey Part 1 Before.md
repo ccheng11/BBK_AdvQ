@@ -7,17 +7,14 @@ Chao-Yo Cheng\
 
 ## Table of Content
 
-- [**1 Introduction**](#--1-introduction)
-- [**2 Data**](#--2-data)
-- [**3 Survey Design Components**](#--3-survey-design-components--)
-- [**4 Computing Descriptive Statistics**](#--4-computing-descriptive-statistics--)
-- [**5 Extra: European Social Survey (Round 9)**](#--5-extra--european-social-survey--round-9---)
-  * [**5.1 Tabulate the data by country**](#--51-tabulate-the-data-by-country--)
-  * [**5.2 Set up the `survey` object**](#--52-set-up-the--survey--object--)
-  * [**5.3 Try out some analysis**](#--53-try-out-some-analysis--)
-
-
-https://github.com/ccheng11/BBK_IQSR/blob/main/Survey%201/Survey%20Part%201%20Before.md#2-data
+- [**1 Introduction**](https://github.com/ccheng11/BBK_IQSR/blob/main/Survey%201/Survey%20Part%201%20Before.md#--1-introduction)
+- [**2 Data**](https://github.com/ccheng11/BBK_IQSR/blob/main/Survey%201/Survey%20Part%201%20Before.md#--2-data)
+- [**3 Survey Design Components**](https://github.com/ccheng11/BBK_IQSR/blob/main/Survey%201/Survey%20Part%201%20Before.md#--3-survey-design-components)
+- [**4 Computing Descriptive Statistics**](https://github.com/ccheng11/BBK_IQSR/blob/main/Survey%201/Survey%20Part%201%20Before.md#--4-computing-descriptive-statistics)
+- [**5 Extra: European Social Survey (Round 9)**](https://github.com/ccheng11/BBK_IQSR/blob/main/Survey%201/Survey%20Part%201%20Before.md#--5-extra--european-social-survey--round-9-)
+  * [**5.1 Tabulate the data by country**](https://github.com/ccheng11/BBK_IQSR/blob/main/Survey%201/Survey%20Part%201%20Before.md#--51-tabulate-the-data-by-country)
+  * [**5.2 Set up the `survey` object**](https://github.com/ccheng11/BBK_IQSR/blob/main/Survey%201/Survey%20Part%201%20Before.md#--52-set-up-the--survey--object)
+  * [**5.3 Try out some analysis**](https://github.com/ccheng11/BBK_IQSR/blob/main/Survey%201/Survey%20Part%201%20Before.md#--53-try-out-some-analysis)
 
 ## 1 Introduction
 
