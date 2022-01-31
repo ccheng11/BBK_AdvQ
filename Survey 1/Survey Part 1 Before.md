@@ -1,11 +1,11 @@
-# **Tutorial: Analyzing Survey Data (Part 1)**
+# Tutorial: Analyzing Survey Data (Part 1)
 
 31 January 2022
 
 Chao-Yo Cheng\
 [c.cheng[at]bbk.ac.uk](mailto:c.cheng@bbk.ac.uk)
 
-## ** Table of Content**
+## Table of Content
 
 - [**1 Introduction**](#--1-introduction--)
 - [**2 Data**](#--2-data--)
@@ -16,9 +16,7 @@ Chao-Yo Cheng\
   * [**5.2 Set up the `survey` object**](#--52-set-up-the--survey--object--)
   * [**5.3 Try out some analysis**](#--53-try-out-some-analysis--)
 
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
-
-## **1 Introduction**
+## 1 Introduction
 
 Our objectives today include:
 
@@ -49,7 +47,7 @@ library(purrr)
 
 > *Question: Can you use a few words (or sentences) to describe what each of these packages does?*
 
-## **2 Data**
+## 2 Data
 
 The sample dataset for today's tutorial is from the 2011 <a href="http://www.ces-eec.ca/?target=_blank" target="_blank">Canadian National Election Study</a>. 
 
@@ -86,7 +84,7 @@ Note that here we set `stringsAsFactors=TRUE` so that the variables that are mea
 
 > *Question: How do we verify whether or not a variable is a factor in `R`? If it is not, which `R` function should we use to force a variable to be a factor?*
 
-## **3 Survey Design Components**
+## 3 Survey Design Components
 
 The following variables in the dataset provide the information on the survey design. Using the variable list above, recall that
 
@@ -119,7 +117,7 @@ ces_s <- ces %>%
 
 > *Question: In the function `as_survey`, there are four options you have to fill in -- find out what they mean according to the official package manual.*\
 
-## **4 Computing Descriptive Statistics**
+## 4 Computing Descriptive Statistics
 
 Complete the following tasks.
 
@@ -170,7 +168,7 @@ We will also need the variable for country (easier to spot) and any information 
 
 >> The *Design weights* (`DWEIGHT`) adjust for different selection probabilities, while the *Post-stratification* weights (`PSPWGHT`) adjust for sampling error and non-response bias, as well as different selection probabilities. Either `DWEIGHT` or `PSPWGHT` must always be used. In addition, the *Population size weights* (`PWEIGHT`) should be applied if you are looking at aggregates or averages for two or more countries combined. 
 
-### **5.1 Tabulate the data by country**
+### 5.1 Tabulate the data by country
 
 First, let's make the country variable look a bit nicer. It currently looks like this:
 
@@ -184,10 +182,9 @@ But the dataset also has nicer labels included, which we can get like this using
 ess9$cntry <- as_factor(ess9$cntry, levels = "labels")
 table(ess9$cntry)
 ```
-
 > *Question: Describe the differences in the output.*
 
-### **5.2 Set up the `survey` object**
+### 5.2 Set up the `survey` object
 
 Now let's set up the survey object:
 
@@ -201,7 +198,7 @@ ess9_survey <- ess9 %>%
                    weights = pspwght)
 ```
 
-### **5.3 Try out some analysis**
+### 5.3 Try out some analysis
 
 The country variable is `cntry` and the wealth variable is `wltdffr`. They are both explained in the online documentation.
 
