@@ -4,10 +4,10 @@ Here you can find the tutorials for *Intermediate Quantitative Social Research*,
 
 ## Schedule (Term 2)
 
-	- Week 1 (no class)
-	- Week 2: Welcome Back and Town Hall Meeting
-	- Week 3: Think About Your Project
-	- Week 4: Analyze Survey Data (Part 1)
+- Week 1 (no class)
+- Week 2: Welcome Back and Town Hall Meeting
+- Week 3: Think About Your Project
+- Week 4: Analyze Survey Data (Part 1)
 
 ## Contact Information
 
