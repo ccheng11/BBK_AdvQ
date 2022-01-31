@@ -8,7 +8,7 @@ Chao-Yo Cheng\
 The following two links show you how to carry out descriptive statistical analysis using R.
 
   - "Quick R" (Robert I. Kabacoff): https://www.statmethods.net/stats/descriptives.html
-  - "Quick R" (Antoine Soetewey): https://statsandr.com/blog/descriptive-statistics-in-r/#coefficient-of-variation
+  - "Descriptive Statistics in R" (Antoine Soetewey): https://statsandr.com/blog/descriptive-statistics-in-r/#coefficient-of-variation
   - "Modern R with the tidyverse" (Bruno Rodrigues): https://b-rodrigues.github.io/modern_R/ (Chapter 4)
 
 Descriptive statistics in R
