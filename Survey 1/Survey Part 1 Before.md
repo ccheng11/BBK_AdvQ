@@ -8,7 +8,7 @@ Chao-Yo Cheng\
 ## Table of Content
 
 - [**1 Introduction**](#--1-introduction)
-- [**2 Data**](#--2-data--)
+- [**2 Data**](#--2-data)
 - [**3 Survey Design Components**](#--3-survey-design-components--)
 - [**4 Computing Descriptive Statistics**](#--4-computing-descriptive-statistics--)
 - [**5 Extra: European Social Survey (Round 9)**](#--5-extra--european-social-survey--round-9---)
