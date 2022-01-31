@@ -21,7 +21,7 @@ Our objectives today include:
   - Set up a survey object using complex survey information, such as survey weight and stratification variables.
   - Use a tidyverse approach for descriptive statistics.
   
-We will use the package `survey` and a tidyverse-style wrapper called `srvyr`. For more information about the comparison between these two packages, see the <a href="https://cran.r-project.org/web/packages/srvyr/vignettes/srvyr-vs-survey.html" target="_blank">handout</a> prepared by Greg Freedman.
+We will use the package `survey` and a tidyverse-style wrapper called `srvyr`.
 
 ```{r, echo=T, eval=F}
 library(survey)
@@ -144,7 +144,15 @@ ces %>%
 ```
 > *Question: What does `survey_total` do?*
 
-## **5 Extra: European Social Survey (Round 9)**
+## Additional References
+
+UCLA: [Survey data analysis with R](https://stats.oarc.ucla.edu/r/seminars/survey-data-analysis-with-r/) -- walk through the exercise using the `survey` package.
+
+Greg Freedman: [`srvyr` compared to the `survey` package](https://cran.r-project.org/web/packages/srvyr/vignettes/srvyr-vs-survey.html) -- a short tutorial from the package's author.
+
+Arnold Lau: [Exploring survey data with the `pewmethods` R package](https://medium.com/pew-research-center-decoded/exploring-survey-data-with-the-pewmethods-r-package-198c4eb9d1af). -- note this is one of a series articles where Pew researchers introduce how the package they made is a good alternative to the packages we use here.
+
+## Extra: European Social Survey (Round 9)
 
 *This section is contributed by Dr Andi Fugard (NatCen) with some minor revisions by Chao-yo.*
 
