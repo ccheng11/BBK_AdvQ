@@ -147,7 +147,7 @@ View(ess9)
 
 If that has worked -- then the next problem is finding the variables we want to analyze! 
 
-Read the following discussion from the report published by the [British Social Attitudes](https://www.bsa.natcen.ac.uk/latest-report/british-social-attitudes-37/fairness-and-justice-in-britain.aspx){:target="_blank"}:
+Read the following discussion from the report published by the <a href="https://www.bsa.natcen.ac.uk/latest-report/british-social-attitudes-37/fairness-and-justice-in-britain.aspx" target="_blank">British Social Attitudes</a>:
 
 >> Only 20% of the British public think that differences in wealth in Britain are fair, whilst a majority (59%) think that wealth differences in Britain are unfairly large and a further 16% think that differences in wealth are unfairly small.
 
