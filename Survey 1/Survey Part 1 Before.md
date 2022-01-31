@@ -1,7 +1,7 @@
 # **Tutorial: Analyzing Survey Data (Part 1)**
 
-Chao-Yo Cheng
-31 January 2022
+Chao-Yo Cheng\
+31 January 2022\
 [c.cheng[at]bbk.ac.uk](mailto:c.cheng@bbk.ac.uk)
 
 ### **1 Introduction**
