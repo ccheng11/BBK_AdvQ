@@ -44,7 +44,7 @@ There are 2,231 observations on the following 9 variables:
 
   - `id` -- household ID number.
   - `province` -- a factor with (alphabetical) levels, including AB, BC, MB, NB, NL, NS, ON, PE, QC, SK (each of these refers to a Canadian province); the sample was "stratified" by province.
-  - `population` -- population of the respondent's province, number of people over age 17.
+  - `population` -- population of the respondent's province (number of people over age 17).
   - `weight` -- weight sample to size of population, taking into account unequal sampling probabilities by province and household size.
   - `abortion` -- attitude toward abortion, a factor with levels `No` and `Yes`; answer to the question "Should abortion be banned?"
   - `gender` -- a factor with two levels `Female` and `Male`.
