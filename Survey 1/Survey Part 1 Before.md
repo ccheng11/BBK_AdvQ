@@ -54,11 +54,11 @@ There are 2,231 observations on the following 9 variables:
   - `education` -- a factor with (alphabetical) levels including `bachelors` (Bachelors degree), `college` (community college or technical school), `higher` (graduate degree), HS (high-school graduate), `lessHS` (less than high-school graduate), `somePS` (some post-secondary).
   - `urban` -- place of residence, a factor with levels rural, urban.
 
-> *Question: What is the unit of observation?*\
+> *Question: What is the unit of observation?*
 
-> *Question: When should we use stratified sampling? And how does that decision influence the distribution of respondents from different provinces when we do not use stratified sample?*\
+> *Question: When should we use stratified sampling? And how does that decision influence the distribution of respondents from different provinces when we do not use stratified sample?*
 
-> *Question: What is the main dependent variable of interest?*\
+> *Question: What is the main dependent variable of interest?*
 
 > *Question: Anything wrong with the current set of explanatory/independent variables or predictors? Any other factors should we consider?*
 
@@ -69,7 +69,7 @@ Now, set up your working directory and read the data into R.
 ```{r, echo=T, eval=F}
 ces <- read.csv("ces11.csv", stringsAsFactors=TRUE)
 ```
-Note that here we set `stringsAsFactors=TRUE` so that the variables that are meant to be factors are set up accordingly.\
+Note that here we set `stringsAsFactors=TRUE` so that the variables that are meant to be factors are set up accordingly.
 
 > *Question: How do we verify whether or not a variable is a factor in `R`? If it is not, which `R` function should we use to force a variable to be a factor?*
 
@@ -88,7 +88,7 @@ ces %>%
   head(6)
 ```
 
-> *Question: What does "select" and "head" do, respectively?*\
+> *Question: What does "select" and "head" do, respectively?*
 
 > *Question: Think again. How might the sample look differently if CNES used simple random sampling? Can you justify why CNES should use stratified sampling rather than simple random sampling? If they use stratified sampling, in what sense is the sample representative?*
 
@@ -102,9 +102,9 @@ ces_s <- ces %>%
             weights = weight)
 ```
 
-> *Question: Again, how can we verify that `ces_s` is really a `survey` object?*\
+> *Question: Again, how can we verify that `ces_s` is really a `survey` object?*
 
-> *Question: In the function `as_survey`, there are four options you have to fill in -- find out what they mean according to the official package manual.*\
+> *Question: In the function `as_survey`, there are four options you have to fill in -- find out what they mean according to the official package manual.*
 
 ## 4 Computing Descriptive Statistics
 
@@ -113,7 +113,7 @@ Complete the following tasks.
   - Drawing on the dataframe `ces`, use `tidyverse` functionbs to calculate the number of people who think abortion should be     banned (and perhaps the proportion of people who think abortion should be banned).
   - Repeat the same analysis, but this time use the survey object `ces_s`. 
 
-> *Question: Describe and explain your observations.*\
+> *Question: Describe and explain your observations.*
 
 > *Question: Can you think of other descriptive analysis you can do?*
 
@@ -137,11 +137,13 @@ Whenever you import a new dataset, you should see it.
 View(ess9)
 ```
 
-> *Question: Any other functions we can use to "see" the data?*\
+> *Question: Any other functions we can use to "see" the data?*
 
-> *Question: What if you just want to list variable names?*\
+> *Question: What if you just want to list variable names?*
 
-> *Question: Describe your observations. Perhaps you want to read the codebook. It is a good exercise to spend some time looking through the documentation on the ESS website to find the variable name.*
+> *Question: Describe your observations.
+
+> *Question: Perhaps you want to read the codebook -- where is it on the ESS website? It is a good exercise to spend some time looking through the documentation on the ESS website to find the variable name.*
 
 If that has worked -- then the next problem is finding the variables we want to analyze! 
 
