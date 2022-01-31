@@ -146,7 +146,7 @@ ces %>%
 
 ## Additional References
 
-UCLA: [Survey data analysis with R](https://stats.oarc.ucla.edu/r/seminars/survey-data-analysis-with-r/) -- walk through the exercise using the `survey` package.
+John  Fox and Sanford Weisberg: [Fitting regression models to data from complex surveys]. -- walk through the exercise using the `survey` package.
 
 Greg Freedman: [`srvyr` compared to the `survey` package](https://cran.r-project.org/web/packages/srvyr/vignettes/srvyr-vs-survey.html) -- a short tutorial from the package's author.
 
