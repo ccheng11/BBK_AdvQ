@@ -133,7 +133,6 @@ ces %>%
 ```
 > *Question: What does `survey_total` do?*
 
-
 ## **5 Extra: European Social Survey (Round 9)**
 
 *This section is contributed by Dr Andi Fugard (NatCen) with some minor revisions by Chao-yo.*
