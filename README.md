@@ -2,7 +2,9 @@
 
 Here you can find the tutorials for *Intermediate Quantitative Social Research*, a module for the postgraduate social research programs at Birkbeck, University of London.
 
-## Schedule (Term 2)
+## Term 1
+
+## Term 2
 
 - Week 1 (no class)
 - Week 2: Welcome Back and Town Hall Meeting
