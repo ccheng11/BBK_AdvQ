@@ -3,12 +3,6 @@ Tutorial: Analyzing Survey Data (Part 1)
 Chao-Yo Cheng
 31 January 2022
 
-<style type="text/css">
-  body{
-  font-size: 12pt;
-}
-</style>
-
 ## Before You Start: Descriptive Statistics Using R
 
 -   “[Quick R](https://www.statmethods.net/stats/descriptives.html)”
@@ -24,12 +18,12 @@ Chao-Yo Cheng
 
 Our objectives today include:
 
--   Set up a survey object using complex survey information, such as
+-   Set up a `survey` object using survey design information, such as
     sample weight and stratification variables.
 -   Use a `tidyverse` approach to study descriptive statistics.
 
 We will use the package `survey` and a tidyverse-style wrapper called
-`srvyr`.
+`srvyr` (pronounced as “surveyor”).
 
 ``` r
 library(survey)
@@ -58,11 +52,13 @@ library(purrr)
 ## 2 Data
 
 The sample dataset for today’s tutorial is from the 2011
-<a href="http://www.ces-eec.ca/?target=_blank" target="_blank">Canadian
-National Election Study</a>.
+<a href="http://www.ces-eec.ca/" target="_blank">Canadian National
+Election Study</a>. You can also retrieve the dataset from the `carData`
+package (see below). You can also find the .csv file on **Moodle**.
 
-We will use the data stored in the `carData` package. You can also find
-the .csv file on **Moodle**.
+``` r
+ces <- carData::CES11
+```
 
 There are 2,231 observations on the following 9 variables:
 
@@ -120,7 +116,7 @@ are meant to be factors are set up accordingly.
 ## 3 Survey Design Components
 
 The following variables in the dataset provide the information on the
-survey design. Using the variable list above, recall that
+survey design.
 
 -   `id` is a unique identifier for each observation.
 -   `province` – the sampling was stratified by province (random
@@ -159,7 +155,20 @@ ces_s <- ces %>%
       strata = province,
       fpc = population,
       weights = weight)
+ces_s
 ```
+
+    ## Stratified Independent Sampling design
+    ## Called via srvyr
+    ## Sampling variables:
+    ##  - ids: id
+    ##  - strata: province
+    ##  - fpc: population
+    ##  - weights: weight
+    ## Data variables: id (int), province (fct), population (int), weight (dbl),
+    ##   gender (fct), abortion (fct), importance (fct), education (fct), urban (fct)
+
+Here you can find some basic information for the survey object `ces_s`.
 
 > *Question: Again, how can we verify that `ces_s` is really a `survey`
 > object?*
@@ -173,9 +182,7 @@ ces_s <- ces %>%
 Complete the following tasks.
 
 -   Drawing on the dataframe `ces`, use `tidyverse` functions to
-    calculate the number of people who think abortion should be banned
-    (and perhaps the proportion of people who think abortion should be
-    banned).
+    calculate the number of people who think abortion should be banned.
 -   Repeat the same analysis, but this time use the survey object
     `ces_s`.
 
@@ -193,17 +200,33 @@ ces %>%
  summarise(n = n())
 ```
 
+    ## # A tibble: 2 × 2
+    ##   abortion     n
+    ##   <fct>    <int>
+    ## 1 No        1818
+    ## 2 Yes        413
+
 > *Question: How else can you get the table?*
 
-Now let’s use `ces_s` (i.e., the survey object).
+Now let’s use `ces_s` (i.e., the survey object) and the `survey_total()`
+function.
 
 ``` r
-ces %>%
+ces_s %>%
  group_by(abortion) %>%
  summarise(n = survey_total())
 ```
 
+    ## # A tibble: 2 × 3
+    ##   abortion         n    n_se
+    ##   <fct>        <dbl>   <dbl>
+    ## 1 No       13059520. 196984.
+    ## 2 Yes       2964018. 162360.
+
 > *Question: What does `survey_total` do?*
+
+> *Question: Can you the proportion of people who think abortion should
+> be banned?*
 
 ## Additional References
 
@@ -221,11 +244,127 @@ package”](https://medium.com/pew-research-center-decoded/exploring-survey-data
 how the package they made is a good alternative to the packages we use
 here.
 
+## Extra: When Weights Come to Rescue
+
+**You can skip this part completely.**
+
+This section presents a simulation exercise in `R` to show why weights
+matter. The entire simulation consists of the following process:
+
+-   Create a fake population data such as there are 1,000 observations –
+    there is a equal number of observations from the urban and rural
+    areas, respectively (i.e., 500 observations each). The key outcome
+    variable in the population data is `score` (e.g., credit score of
+    the household).
+
+-   Use simple random sampling to create a sample of about 500
+    observations. Compare the weighted and unweighted average scores to
+    the population average score.
+
+-   Use stratified (or multi-stage) samling to create another sample of
+    about 500 observations – however, we will set up such that the
+    probability of being chosen is 0.25 in the countryside and 0.75 in
+    the city.
+
+### Set up the population
+
+``` r
+sim_pop <- data.frame(id = 1:1000, # unique ID
+                      score = rnorm(1000, mean=65, sd=10),
+                      urban = c(rep(0,500), rep(1,500)),
+                      pop = 500)
+```
+
+In this dataset,
+
+-   `id` is the unique identifier of each observation in the population.
+-   `score` is some made-up score for each observation – I use `rnorm()`
+    to generate 1,000 random numbers from a normal distribution such
+    that the mean is 65 and the standard deviation is 10.
+-   `urban` is a binary variable to indicate whether the observation is
+    in the city (=1) or not (=0).
+-   `pop` is the number of people living in the city and countryside
+    with 500 each.
+
+To make things more interesting, I multiply the scores in the city by 2.
+
+``` r
+sim_pop$score[sim_pop$urban == 1] = sim_pop$score[sim_pop$urban == 1]*2
+```
+
+The population mean is then
+
+``` r
+mean(sim_pop$score)
+```
+
+    ## [1] 97.36622
+
+or
+
+``` r
+sim_pop %>%
+  summarise(mean=mean(score))
+```
+
+    ##       mean
+    ## 1 97.36622
+
+### Create a sample with simple random sampling
+
+We will use the function `sample()` to create a binary indicator in the
+population data – when the value is 1, it means the observation is
+selected in the sample.
+
+``` r
+sim_pop$s_simple = sample(c(0,1), size=1000, replace=TRUE, prob=c(1/2, 1/2))
+```
+
+The function basically says: “**please randomize 0 and 1 across 1,000
+observations with each of them occurring with equal probability.**”
+Since each observation is being assigned the value of 1 with equal
+probability, it means the probability of being included in the sample is
+$\\frac{500}{1000}=\\frac{1}{2}=0.5$ and the sample weight is the
+reciprocal (or inverse proportion) of $\\frac{1}{2}$, namely 2.
+
+``` r
+sim_pop$w_simple = 2
+```
+
+Now, let’s create another data frame that only includes the selected
+observations.
+
+``` r
+sam_sim <- sim_pop %>%
+  filter(s_simple == 1)
+```
+
+And let’s turn this into a survey subject.
+
+``` r
+sam_sim_s <- sam_sim %>%
+  as_survey(ids = id,
+            strata = urban,
+            fpc = pop,
+            weight = w_simple)
+```
+
+Finally, let’s compare the population mean and sample mean.
+
+``` r
+sam_sim_s %>% summarise(mean=survey_mean(score))
+```
+
+    ## # A tibble: 1 × 2
+    ##    mean mean_se
+    ##   <dbl>   <dbl>
+    ## 1  98.9   0.494
+
 ## Extra: European Social Survey (Round 9)
 
-*This section is contributed by Dr [Andi
+**This section is contributed by Dr [Andi
 Fugard](https://natcen.ac.uk/about-us/people/staff/andi-fugard) (NatCen)
-with some minor revisions by Chao-yo.*
+with some minor revisions by Chao-yo.**
 
 Let us work on another example using the
 <a href="https://www.europeansocialsurvey.org/download.html?file=ESS9e03_1&y=2018" target="_blank">European
@@ -288,7 +427,7 @@ details about which weights to use (it is on Moodle).
 > > (`PWEIGHT`) should be applied if you are looking at aggregates or
 > > averages for two or more countries combined.
 
-### 5.1 Tabulate the data by country
+### Tabulate the data by country
 
 First, let’s make the country variable look a bit nicer. It currently
 looks like this:
@@ -308,7 +447,7 @@ table(ess9$cntry)
 
 > *Question: Describe the differences in the output.*
 
-### 5.2 Set up the `survey` object
+### Set up the `survey` object
 
 Now let’s set up the survey object:
 
@@ -324,7 +463,7 @@ ess9_survey <- ess9 %>%
           weights = pspwght)
 ```
 
-### 5.3 Try out some analysis
+### Try out some analysis
 
 The country variable is `cntry` and the wealth variable is `wltdffr`.
 They are both explained in the online documentation.
