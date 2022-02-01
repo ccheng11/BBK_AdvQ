@@ -24,22 +24,82 @@ Our objectives today include:
  
 We will use the package `survey` and a tidyverse-style wrapper called `srvyr`.
 
-```{r, echo=T, eval=T}
+
+```r
 library(survey)
+```
+
+```
+## Loading required package: grid
+```
+
+```
+## Loading required package: Matrix
+```
+
+```
+## Loading required package: survival
+```
+
+```
+## 
+## Attaching package: 'survey'
+```
+
+```
+## The following object is masked from 'package:graphics':
+## 
+##     dotchart
+```
+
+```r
 library(srvyr)
+```
+
+```
+## 
+## Attaching package: 'srvyr'
+```
+
+```
+## The following object is masked from 'package:stats':
+## 
+##     filter
 ```
 
 If you have yet to install the packages, use the function `install.packages()`.
 
-```{r, echo=T, eval=F}
+
+```r
 install.packages("survey")
 install.packages("srvyr")
 ```
 
 Make sure you load the following packages, too:
 
-```{r, echo=T, eval=T}
+
+```r
 library(dplyr)
+```
+
+```
+## 
+## Attaching package: 'dplyr'
+```
+
+```
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+```
+
+```r
 library(ggplot2)
 library(purrr)
 ```
@@ -76,7 +136,8 @@ There are 2,231 observations on the following 9 variables:
 
 Now, set up your working directory and read the data into R.
 
-```{r, echo=T, eval=T}
+
+```r
 ces <- read.csv("ces11.csv", stringsAsFactors=TRUE)
 ```
 Note that here we set `stringsAsFactors=TRUE` so that the variables that are meant to be factors are set up accordingly.
@@ -92,14 +153,23 @@ The following variables in the dataset provide the information on the survey des
  - `population` provides the population size of each province.
  - `weight` is calculated based on differences in province population, the study sample size therein, and household size.
 
-```{r, echo=F, eval=T}
-ces <- carData::CES11
-```
 
-```{r, echo=T, eval=T}
+
+
+```r
 ces %>%
  select(id, province, population, weight) %>%
  head(6)
+```
+
+```
+##     id province population  weight
+## 1 2851       BC    3267345 4287.85
+## 2  521       QC    5996930 9230.78
+## 3 2118       QC    5996930 6153.85
+## 4 1815       NL     406455 3430.00
+## 5 1799       ON    9439960 8977.61
+## 6 1103       ON    9439960 8977.61
 ```
 
 > *Question: What does "select" and "head" do, respectively?*
@@ -108,7 +178,8 @@ ces %>%
 
 To use the functions contained in the `survey` and `srvyr` packages, we have to turn the `dataframe` into a `survey` objective.
 
-```{r, echo=T, eval=F}
+
+```r
 ces_s <- ces %>%
  as_survey(ids = id,
       strata = province,
@@ -133,7 +204,8 @@ Complete the following tasks.
 
 Here is one example (more TBA after the live session) -- say, we want to use the dataframe `ces` to calculate the number of people who think abortion should be banned.
 
-```{r, echo=T, eval=F}
+
+```r
 ces %>%
  group_by(abortion) %>%
  summarise(n = n())
@@ -142,7 +214,8 @@ ces %>%
 
 Now let's use `ces_s` (i.e., the survey object).
 
-```{r, echo=T, eval=F}
+
+```r
 ces %>%
  group_by(abortion) %>%
  summarise(n = survey_total())
@@ -167,13 +240,15 @@ To import the `SPSS` data file into `R`, we can use the package `haven`.
 
 > *Question: The package `haven` is very powerful. What other types of data files can we import into `R` by using this package?*
 
-```{r, echo=T, eval=F}
+
+```r
 library(haven)
 ess9 <- read_sav("ESS9e03.sav")
 ```
 
 Whenever you import a new dataset, you should see it.
-```{r, echo=T, eval=F}
+
+```r
 View(ess9)
 ```
 
@@ -203,13 +278,15 @@ We will also need the variable for country (easier to spot) and any information 
 
 First, let's make the country variable look a bit nicer. It currently looks like this:
 
-```{r, echo=T, eval=F}
+
+```r
 table(ess9$cntry)
 ```
 
 But the dataset also has nicer labels included, which we can get like this using the function `as_factor` (note the underscore). This function is in the package `haven`.
 
-```{r, echo=T, eval=F}
+
+```r
 ess9$cntry <- as_factor(ess9$cntry, levels = "labels")
 table(ess9$cntry)
 ```
@@ -221,7 +298,8 @@ Now let's set up the survey object:
 
 The `nest` option takes account of the `ids` being nested within strata -- in other words, the same ID is used only once in a country although it is used more than once across the dataset.
 
-```{r, echo=T, eval=F}
+
+```r
 ess9_survey <- ess9 %>%
  as_survey_design(ids = idno,
           strata = cntry,
@@ -235,13 +313,15 @@ The country variable is `cntry` and the wealth variable is `wltdffr`. They are b
 
 The first thing you will spot when looking at the possible values of this variable is that the original variable is coded from -4 to 4.
 
-```{r, echo=T, eval=F}
+
+```r
 unique(ess9$wltdffr)
 ```
 
 Let's create another variable that is grouped the same way as in the report:
 
-```{r, echo=T, eval=F}
+
+```r
 ess9_survey <- ess9_survey %>%
  mutate(wltdffr_group =
       case_when(
@@ -259,7 +339,8 @@ ess9_survey <- ess9_survey %>%
 
 Great, now let's see what the UK data look like for this grouped variable:
 
-```{r, echo=T, eval=F}
+
+```r
 gb_wealth <- ess9_survey %>%
  filter(cntry == "United Kingdom") %>%
  group_by(wltdffr_group) %>%
@@ -269,7 +350,8 @@ gb_wealth
 
 Let's round our results to see more clearly that they match the report:
 
-```{r, echo=T, eval=F}
+
+```r
 gb_wealth %>%
  mutate(perc = (prop*100) %>% round(0)) %>%
  select(wltdffr_group, perc) 
@@ -277,7 +359,8 @@ gb_wealth %>%
 
 We can also plot the results:
 
-```{r, echo=T, eval=F}
+
+```r
 gb_wealth %>%
  filter(!is.na(wltdffr_group)) %>%
  ggplot(aes(x = wltdffr_group, y = prop*100)) +
@@ -291,7 +374,8 @@ gb_wealth %>%
 
 Let's do it again for a selection of countries. First, make a function which carries out the analysis for one country:
 
-```{r, echo=T, eval=F}
+
+```r
 get_country_results <- function(the_cntry) {
  ess9_survey %>%
   filter(cntry == the_cntry) %>%
@@ -303,14 +387,15 @@ get_country_results <- function(the_cntry) {
 
 Check it works for the UK:
 
-```{r, echo=T, eval=F}
-get_country_results("United Kingdom")
 
+```r
+get_country_results("United Kingdom")
 ```
 
 Run it for your countries of interest:
 
-```{r, echo=T, eval=F}
+
+```r
 conts <- c("Germany", "Spain", "France", "United Kingdom", "Italy")
 euro_wealth <- map_dfr(conts, get_country_results)
 head(euro_wealth)
@@ -318,7 +403,8 @@ head(euro_wealth)
 
 That's a lot of numbers! Let's try a plot:
 
-```{r, echo=T, eval=F}
+
+```r
 euro_wealth %>%
  filter(!is.na(wltdffr_group)) %>%
  ggplot(aes(x = cntry,
