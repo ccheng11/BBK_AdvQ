@@ -86,7 +86,7 @@ The following variables in the dataset provide the information on the survey des
  - `population` provides the population size of each province.
  - `weight` is calculated based on differences in province population, the study sample size therein, and household size.
  
-```{r, echo=T, eval=F}
+```{r, echo=T, eval=T}
 ces %>%
  select(id, province, population, weight) %>%
  head(6)
