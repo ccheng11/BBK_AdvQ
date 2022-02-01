@@ -5,7 +5,7 @@ Chao-Yo Cheng\
 
 ## Before You Start
 
-If you need to refresh some useful tips for carrying out descriptive statistical analysis using R:
+For some useful tips for carrying out descriptive statistical analysis using R:
 
   - "Quick R" (Robert I. Kabacoff): https://www.statmethods.net/stats/descriptives.html
   - "Descriptive Statistics in R" (Antoine Soetewey): https://statsandr.com/blog/descriptive-statistics-in-r/#coefficient-of-variation
