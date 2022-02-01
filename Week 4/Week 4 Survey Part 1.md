@@ -70,7 +70,7 @@ There are 2,231 observations on the following 9 variables:
 
 Now, set up your working directory and read the data into R.
 
-```{r, echo=T, eval=F}
+```{r, echo=T, eval=T}
 ces <- read.csv("ces11.csv", stringsAsFactors=TRUE)
 ```
 Note that here we set `stringsAsFactors=TRUE` so that the variables that are meant to be factors are set up accordingly.
