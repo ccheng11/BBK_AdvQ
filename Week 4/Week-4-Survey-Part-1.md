@@ -1,11 +1,6 @@
-Something fascinating
+Tutorial: Analyzing Survey Data (Part 1)
 ================
-Jenny Bryan
-2022-01-31
-
-# Tutorial: Analyzing Survey Data (Part 1)
-
-Chao-Yo Cheng  
+Chao-Yo Cheng
 31 January 2022
 
 ## Before You Start: Descriptive Statistics Using R
