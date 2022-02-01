@@ -85,7 +85,11 @@ The following variables in the dataset provide the information on the survey des
  - `province` -- the sampling was stratified by province (random sampling by landline numbers was done within province).
  - `population` provides the population size of each province.
  - `weight` is calculated based on differences in province population, the study sample size therein, and household size.
- 
+
+```{r, echo=F, eval=T}
+ces <- carData::CES11
+```
+
 ```{r, echo=T, eval=T}
 ces %>%
  select(id, province, population, weight) %>%
