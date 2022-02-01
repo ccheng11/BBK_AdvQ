@@ -1,3 +1,7 @@
+---
+output: rmarkdown::github_document
+---
+
 # Tutorial: Analyzing Survey Data (Part 1)
 
 Chao-Yo Cheng\
