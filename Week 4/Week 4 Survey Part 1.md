@@ -3,21 +3,19 @@
 Chao-Yo Cheng\
 31 January 2022
 
-## Before You Start
+## Before You Start: Descriptive Statistics Using R
 
-For some useful tips for carrying out descriptive statistical analysis using R:
-
-  - "Quick R" (Robert I. Kabacoff): https://www.statmethods.net/stats/descriptives.html
-  - "Descriptive Statistics in R" (Antoine Soetewey): https://statsandr.com/blog/descriptive-statistics-in-r/#coefficient-of-variation
-  - "Modern R with the tidyverse" (Bruno Rodrigues): https://b-rodrigues.github.io/modern_R/ (Chapter 4)
+ - "[Quick R](https://www.statmethods.net/stats/descriptives.html)" (Robert I. Kabacoff): 
+ - "[Descriptive Statistics in R](https://statsandr.com/blog/)" (Antoine Soetewey): descriptive-statistics-in-r/#coefficient-of-variation
+ - "[Modern R with the Tidyverse](https://b-rodrigues.github.io/modern_R/)" (Bruno Rodrigues) (Chapter 4)
 
 ## 1 Introduction
 
 Our objectives today include:
 
-  - Set up a survey object using complex survey information, such as survey weight and stratification variables.
-  - Use a tidyverse approach for descriptive statistics.
-  
+ - Set up a survey object using complex survey information, such as sample weight and stratification variables.
+ - Use a `tidyverse` approach to study descriptive statistics.
+ 
 We will use the package `survey` and a tidyverse-style wrapper called `srvyr`.
 
 ```{r, echo=T, eval=F}
@@ -50,15 +48,15 @@ We will use the data stored in the `carData` package. You can also find the .csv
 
 There are 2,231 observations on the following 9 variables:
 
-  - `id` -- household ID number.
-  - `province` -- a factor with (alphabetical) levels, including AB, BC, MB, NB, NL, NS, ON, PE, QC, SK (each of these refers to a Canadian province); the sample was "stratified" by province.
-  - `population` -- population of the respondent's province (number of people over age 17).
-  - `weight` -- weight sample to size of population, taking into account unequal sampling probabilities by province and household size.
-  - `abortion` -- attitude toward abortion, a factor with levels `No` and `Yes`; answer to the question "Should abortion be banned?"
-  - `gender` -- a factor with two levels `Female` and `Male`.
-  - `importance` -- importance of religion, a factor with (alphabetical) levels including `not`, `notvery`, `somewhat`, `very`; answer to the question, "In your life, would you say that religion is very important, somewhat important, not very important, or not important at all?"
-  - `education` -- a factor with (alphabetical) levels including `bachelors` (Bachelors degree), `college` (community college or technical school), `higher` (graduate degree), HS (high-school graduate), `lessHS` (less than high-school graduate), `somePS` (some post-secondary).
-  - `urban` -- place of residence, a factor with levels rural, urban.
+ - `id` -- a unique identifier for each response.
+ - `province` -- a factor with (alphabetical) levels, including AB, BC, MB, NB, NL, NS, ON, PE, QC, SK (each of these refers to a Canadian province). The sample was "stratified" by province.
+ - `population` -- population of the respondent's province (number of people over age 17).
+ - `weight` -- weight sample to size of population, taking into account unequal sampling probabilities by province and household size.
+ - `abortion` -- attitude toward abortion, a factor with levels `No` and `Yes`; answer to the question "Should abortion be banned?"
+ - `gender` -- a factor with two levels `Female` and `Male`.
+ - `importance` -- importance of religion, a factor with (alphabetical) levels including `not`, `notvery`, `somewhat`, `very`; answer to the question, "In your life, would you say that religion is very important, somewhat important, not very important, or not important at all?"
+ - `education` -- a factor with (alphabetical) levels including `bachelors` (Bachelors degree), `college` (community college or technical school), `higher` (graduate degree), HS (high-school graduate), `lessHS` (less than high-school graduate), `somePS` (some post-secondary).
+ - `urban` -- place of residence, a factor with levels rural, urban.
 
 > *Question: What is the unit of observation?*
 
@@ -83,15 +81,15 @@ Note that here we set `stringsAsFactors=TRUE` so that the variables that are mea
 
 The following variables in the dataset provide the information on the survey design. Using the variable list above, recall that
 
-  - `id` is a unique identifier for each observation.
-  - `province` -- the sampling was stratified by province (random sampling by landline numbers was done within province).
-  - `population` provides the population size of each province.
-  - `weight` is calculated based on differences in province population, the study sample size therein, and household size.
-  
+ - `id` is a unique identifier for each observation.
+ - `province` -- the sampling was stratified by province (random sampling by landline numbers was done within province).
+ - `population` provides the population size of each province.
+ - `weight` is calculated based on differences in province population, the study sample size therein, and household size.
+ 
 ```{r, echo=T, eval=F}
 ces %>%
-  select(id, province, population, weight) %>%
-  head(6)
+ select(id, province, population, weight) %>%
+ head(6)
 ```
 
 > *Question: What does "select" and "head" do, respectively?*
@@ -102,10 +100,10 @@ To use the functions contained in the `survey` and `srvyr` packages, we have to 
 
 ```{r, echo=T, eval=F}
 ces_s <- ces %>%
-  as_survey(ids = id,
-            strata = province,
-            fpc = population,
-            weights = weight)
+ as_survey(ids = id,
+      strata = province,
+      fpc = population,
+      weights = weight)
 ```
 
 > *Question: Again, how can we verify that `ces_s` is really a `survey` object?*
@@ -116,8 +114,8 @@ ces_s <- ces %>%
 
 Complete the following tasks.
 
-  - Drawing on the dataframe `ces`, use `tidyverse` functions to calculate the number of people who think abortion should be banned (and perhaps the proportion of people who think abortion should be banned).
-  - Repeat the same analysis, but this time use the survey object `ces_s`. 
+ - Drawing on the dataframe `ces`, use `tidyverse` functions to calculate the number of people who think abortion should be banned (and perhaps the proportion of people who think abortion should be banned).
+ - Repeat the same analysis, but this time use the survey object `ces_s`. 
 
 > *Question: Describe and explain your observations.*
 
@@ -127,8 +125,8 @@ Here is one example (more TBA after the live session) -- say, we want to use the
 
 ```{r, echo=T, eval=F}
 ces %>%
-  group_by(abortion) %>%
-  summarise(n = n())
+ group_by(abortion) %>%
+ summarise(n = n())
 ```
 > *Question: How else can you get the table?*
 
@@ -136,8 +134,8 @@ Now let's use `ces_s` (i.e., the survey object).
 
 ```{r, echo=T, eval=F}
 ces %>%
-  group_by(abortion) %>%
-  summarise(n = survey_total())
+ group_by(abortion) %>%
+ summarise(n = survey_total())
 ```
 > *Question: What does `survey_total` do?*
 
@@ -215,10 +213,10 @@ The `nest` option takes account of the `ids` being nested within strata -- in ot
 
 ```{r, echo=T, eval=F}
 ess9_survey <- ess9 %>%
-  as_survey_design(ids = idno,
-                   strata = cntry,
-                   nest = TRUE,
-                   weights = pspwght)
+ as_survey_design(ids = idno,
+          strata = cntry,
+          nest = TRUE,
+          weights = pspwght)
 ```
 
 ### 5.3 Try out some analysis
@@ -235,16 +233,16 @@ Let's create another variable that is grouped the same way as in the report:
 
 ```{r, echo=T, eval=F}
 ess9_survey <- ess9_survey %>%
-  mutate(wltdffr_group =
-           case_when(
-             wltdffr >= -4 & wltdffr <= -1 ~ "Unfairly small",
-             wltdffr == 0 ~ "Fair",
-             wltdffr >= 1 & wltdffr <= 4 ~ "Unfairly large"),
-         wltdffr_group = factor(wltdffr_group,
-                                levels = c("Unfairly small",
-                                           "Fair",
-                                           "Unfairly large"))
-  )
+ mutate(wltdffr_group =
+      case_when(
+       wltdffr >= -4 & wltdffr <= -1 ~ "Unfairly small",
+       wltdffr == 0 ~ "Fair",
+       wltdffr >= 1 & wltdffr <= 4 ~ "Unfairly large"),
+     wltdffr_group = factor(wltdffr_group,
+                levels = c("Unfairly small",
+                      "Fair",
+                      "Unfairly large"))
+ )
 ```
 
 > *Question: Can you repeat the same analysis without using the `tidyverse` pipelines?*
@@ -253,9 +251,9 @@ Great, now let's see what the UK data look like for this grouped variable:
 
 ```{r, echo=T, eval=F}
 gb_wealth <- ess9_survey %>%
-  filter(cntry == "United Kingdom") %>%
-  group_by(wltdffr_group) %>%
-  summarise(prop = survey_mean(vartype = "ci"))
+ filter(cntry == "United Kingdom") %>%
+ group_by(wltdffr_group) %>%
+ summarise(prop = survey_mean(vartype = "ci"))
 gb_wealth 
 ```
 
@@ -263,33 +261,33 @@ Let's round our results to see more clearly that they match the report:
 
 ```{r, echo=T, eval=F}
 gb_wealth %>%
-  mutate(perc = (prop*100) %>% round(0)) %>%
-  select(wltdffr_group, perc) 
+ mutate(perc = (prop*100) %>% round(0)) %>%
+ select(wltdffr_group, perc) 
 ```
 
 We can also plot the results:
 
 ```{r, echo=T, eval=F}
 gb_wealth %>%
-  filter(!is.na(wltdffr_group)) %>%
-  ggplot(aes(x = wltdffr_group, y = prop*100)) +
-  geom_col(fill = "#B053A1") +
-  geom_errorbar(aes(ymin = prop_low*100,
-                    ymax = prop_upp*100), width = 0.2) +
-  ylim(0,100) +
-  labs(y = "%", x = NULL,
-       title = "In your opinion, are differences in wealth in Britain\nunfairly small, fair, or unfairly large?")
+ filter(!is.na(wltdffr_group)) %>%
+ ggplot(aes(x = wltdffr_group, y = prop*100)) +
+ geom_col(fill = "#B053A1") +
+ geom_errorbar(aes(ymin = prop_low*100,
+          ymax = prop_upp*100), width = 0.2) +
+ ylim(0,100) +
+ labs(y = "%", x = NULL,
+    title = "In your opinion, are differences in wealth in Britain\nunfairly small, fair, or unfairly large?")
 ```
 
 Let's do it again for a selection of countries. First, make a function which carries out the analysis for one country:
 
 ```{r, echo=T, eval=F}
 get_country_results <- function(the_cntry) {
-  ess9_survey %>%
-    filter(cntry == the_cntry) %>%
-  group_by(wltdffr_group) %>%
-  summarise(prop = survey_mean(vartype = "ci")) %>%
-  mutate(cntry = the_cntry)
+ ess9_survey %>%
+  filter(cntry == the_cntry) %>%
+ group_by(wltdffr_group) %>%
+ summarise(prop = survey_mean(vartype = "ci")) %>%
+ mutate(cntry = the_cntry)
 }
 ```
 
@@ -312,18 +310,18 @@ That's a lot of numbers! Let's try a plot:
 
 ```{r, echo=T, eval=F}
 euro_wealth %>%
-  filter(!is.na(wltdffr_group)) %>%
-  ggplot(aes(x = cntry,
-             y = prop*100,
-             ymin = prop_low*100,
-             ymax = prop_upp*100,
-             fill = wltdffr_group)) +
-  geom_col(position = position_dodge(width = .8), width = 0.6) + 
-  geom_errorbar(position=position_dodge(width = .8),
-                colour="black",
-                width = 0.2) +
-  ylim(0,100) +
-  labs(y = "%", x = NULL,
-       title = "In your opinion, are differences in wealth\nunfairly small, fair, or unfairly large?",
-       fill = NULL)
+ filter(!is.na(wltdffr_group)) %>%
+ ggplot(aes(x = cntry,
+       y = prop*100,
+       ymin = prop_low*100,
+       ymax = prop_upp*100,
+       fill = wltdffr_group)) +
+ geom_col(position = position_dodge(width = .8), width = 0.6) + 
+ geom_errorbar(position=position_dodge(width = .8),
+        colour="black",
+        width = 0.2) +
+ ylim(0,100) +
+ labs(y = "%", x = NULL,
+    title = "In your opinion, are differences in wealth\nunfairly small, fair, or unfairly large?",
+    fill = NULL)
 ```
