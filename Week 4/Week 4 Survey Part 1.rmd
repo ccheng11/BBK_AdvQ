@@ -1,14 +1,9 @@
 ---
-title: "Something fascinating"
-author: "Jenny Bryan"|
-date: "2022-01-31"
+title: "Tutorial: Analyzing Survey Data (Part 1)"
+author: "Chao-Yo Cheng"
+date: "31 January 2022"
 output: github_document
 ---
-
-# Tutorial: Analyzing Survey Data (Part 1)
-
-Chao-Yo Cheng\
-31 January 2022
 
 ## Before You Start: Descriptive Statistics Using R
 
@@ -77,7 +72,7 @@ There are 2,231 observations on the following 9 variables:
 
 Now, set up your working directory and read the data into R.
 
-```{r, echo=T, eval=T}
+```{r, echo=T, eval=F}
 ces <- read.csv("ces11.csv", stringsAsFactors=TRUE)
 ```
 Note that here we set `stringsAsFactors=TRUE` so that the variables that are meant to be factors are set up accordingly.
