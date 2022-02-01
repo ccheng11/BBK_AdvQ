@@ -1,7 +1,5 @@
 # IQSR Tutorials (2021-2022)
 
-Here you can find the tutorials for *Intermediate Quantitative Social Research*, a module for the postgraduate social research programs at Birkbeck, University of London.
-
 ## Term 1
 
 ## Term 2
@@ -13,4 +11,4 @@ Here you can find the tutorials for *Intermediate Quantitative Social Research*,
 
 ## Contact Information
 
-If you have any questions, please email [c.cheng[at]bbk.ac.uk](mailto:c.cheng@bbk.ac.uk).
+For questions, please email [c.cheng[at]bbk.ac.uk](mailto:c.cheng@bbk.ac.uk).
