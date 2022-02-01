@@ -143,7 +143,7 @@ ces %>%
 
 ## Additional References
 
-John  Fox and Sanford Weisberg: "Fitting regression models to data from complex surveys." -- walk through the exercise using the `survey` package.
+John Fox and Sanford Weisberg: "Fitting regression models to data from complex surveys." -- walk through the exercise using the `survey` package.
 
 Greg Freedman: ["`srvyr` compared to the `survey` package"](https://cran.r-project.org/web/packages/srvyr/vignettes/srvyr-vs-survey.html) -- a short tutorial from the package's author.
 
@@ -151,7 +151,7 @@ Arnold Lau: ["Exploring survey data with the `pewmethods` R package"](https://me
 
 ## Extra: European Social Survey (Round 9)
 
-*This section is contributed by Dr Andi Fugard (NatCen) with some minor revisions by Chao-yo.*
+*This section is contributed by Dr [Andi Fugard](https://natcen.ac.uk/about-us/people/staff/andi-fugard) (NatCen) with some minor revisions by Chao-yo.*
 
 Let us work on another example using the <a href="https://www.europeansocialsurvey.org/download.html?file=ESS9e03_1&y=2018" target="_blank">European Social Survey</a> (Round 9).
 
