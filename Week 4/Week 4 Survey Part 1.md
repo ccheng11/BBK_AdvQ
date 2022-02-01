@@ -18,7 +18,7 @@ Our objectives today include:
  
 We will use the package `survey` and a tidyverse-style wrapper called `srvyr`.
 
-```{r, echo=T, eval=F}
+```{r, echo=T, eval=T}
 library(survey)
 library(srvyr)
 ```
@@ -32,7 +32,7 @@ install.packages("srvyr")
 
 Make sure you load the following packages, too:
 
-```{r, echo=T, eval=F}
+```{r, echo=T, eval=T}
 library(dplyr)
 library(ggplot2)
 library(purrr)
