@@ -1,7 +1,8 @@
 ---
-output: 
-  html_document:
-    keep_md: true
+title: "Something fascinating"
+author: "Jenny Bryan"
+date: "2022-01-31"
+output: github_document
 ---
 
 # Tutorial: Analyzing Survey Data (Part 1)
