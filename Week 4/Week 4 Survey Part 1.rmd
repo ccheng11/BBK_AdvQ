@@ -1,14 +1,17 @@
 ---
 title: "Tutorial: Analyzing Survey Data (Part 1)"
-author: "Chao-Yo Cheng"
-date: "31 January 2022"
+author: ""
+date: ""
 output: github_document
 ---
 
+Chao-Yo Cheng\
+31 January 2021
+
 ## Before You Start: Descriptive Statistics Using R
 
- - "[Quick R](https://www.statmethods.net/stats/descriptives.html)" (Robert I. Kabacoff): 
- - "[Descriptive Statistics in R](https://statsandr.com/blog/descriptive-statistics-in-r/" (Antoine Soetewey): descriptive-statistics-in-r/#coefficient-of-variation
+ - "[Quick R](https://www.statmethods.net/stats/descriptives.html)" (Robert I. Kabacoff)
+ - "[Descriptive Statistics in R](https://statsandr.com/blog/descriptive-statistics-in-r/)" (Antoine Soetewey)
  - "[Modern R with the Tidyverse](https://b-rodrigues.github.io/modern_R/)" (Bruno Rodrigues) (Chapter 4)
 
 ## 1 Introduction
@@ -156,131 +159,6 @@ John Fox and Sanford Weisberg: "Fitting regression models to data from complex s
 Greg Freedman: ["`srvyr` compared to the `survey` package"](https://cran.r-project.org/web/packages/srvyr/vignettes/srvyr-vs-survey.html) -- a short tutorial from the package's author.
 
 Arnold Lau: ["Exploring survey data with the `pewmethods` R package"](https://medium.com/pew-research-center-decoded/exploring-survey-data-with-the-pewmethods-r-package-198c4eb9d1af). -- note this is one of a series articles where Pew researchers introduce how the package they made is a good alternative to the packages we use here.
-
-## Extra: When Weights Come to Rescue
-
-**You can skip this part completely.**
-
-This section presents a simulation exercise in `R` to show why weights matter. The entire simulation consists of the following process:
-
-  - Create a fake population data such as there are 1,000 observations -- there is a equal number of observations from the urban and rural areas, respectively (i.e., 500 observations each). The key outcome variable in the population data is `score` (e.g., credit score of the household). 
-  
-  - Use simple random sampling to create a sample of about 500 observations. Compare the weighted and unweighted average scores to the population average score.
-  
-  - Use stratified (or multi-stage) samling to create another sample of about 500 observations -- however, we will set up such that the probability of being chosen is 0.25 in the countryside and 0.75 in the city.
-  
-### Set up the population
-
-```{r, echo=T, eval=T}
-sim_pop <- data.frame(id = 1:1000, # unique ID
-                      score = rnorm(1000, mean=65, sd=10),
-                      urban = c(rep(0,500), rep(1,500)),
-                      pop = 500)
-```
-
-In this dataset,
-
-  - `id` is the unique identifier of each observation in the population.
-  - `score` is some made-up score for each observation -- I use `rnorm()` to generate 1,000 random numbers from a normal distribution such that the mean is 65 and the standard deviation is 10.
-  - `urban` is a binary variable to indicate whether the observation is in the city (=1) or not (=0).
-  - `pop` is the number of people living in the city and countryside with 500 each.
-
-To make things more interesting, I multiply the scores in the city by 2.
-
-```{r, echo=T, eval=T}
-sim_pop$score[sim_pop$urban == 1] <- sim_pop$score[sim_pop$urban == 1]*2
-```
-
-The population mean is then
-
-```{r, echo=T, eval=T}
-mean(sim_pop$score)
-```
-or
-```{r, echo=T, eval=T}
-sim_pop %>%
-  summarise(mean=mean(score))
-```
-
-### Create a sample with simple random sampling
-
-We will use the function `sample()` to create a binary indicator in the population data -- when the value is 1, it means the observation is selected in the sample.
-
-```{r, echo=T, eval=T}
-sim_pop$s_simple <- sample(c(0,1), size=1000, replace=TRUE, prob=c(1/2, 1/2))
-```
-
-The function basically says: "**please randomize 0 and 1 across 1,000 observations with each of them occurring with equal probability.**" Since each observation is being assigned the value of 1 with equal probability, it means the probability of being included in the sample is 500 out of 1000, which is 0.5. The sample weight is the reciprocal (or inverse proportion) of this probability, namely 2.
-
-```{r, echo=T, eval=T}
-sim_pop$w_simple <- 2
-```
-
-Now, let's create another data frame that only includes the selected observations.
-
-```{r, echo=T, eval=T}
-sam_sim <- sim_pop %>%
-  filter(s_simple == 1)
-```
-
-And let's turn this into a survey subject.
-
-```{r, echo=T, eval=T}
-sam_sim_s <- sam_sim %>%
-  as_survey(ids = id,
-            strata = urban,
-            fpc = pop,
-            weight = w_simple)
-```
-
-Finally, let's compare the sample mean with and without weights. They are similar to each other -- they are also very close to the population mean.
-
-```{r, echo=T, eval=T}
-sam_sim %>% summarise(mean=mean(score)) # unweighted
-sam_sim_s %>% summarise(mean=survey_mean(score)) # weighted
-```
-
-### Create a sample with stratified sampling
-
-Let's create another sample, but with a bit more complicated sampling process. Say, now the probabilities of being included in the sample vary by urban vs rural, with 0.25 and 0.75, respectively.
-
-```{r, echo=T, eval=T}
-sim_pop$s_complex <- NA # add a column in the population data
-sim_pop$s_complex[sim_pop$urban == 1] = sample(c(0,1), size=500, replace=TRUE, prob = c(1/4, 3/4))
-sim_pop$s_complex[sim_pop$urban == 0] = sample(c(0,1), size=500, replace=TRUE, prob = c(3/4, 1/4))
-```
-
-Now let's set the weights for those in the city and countryside, respectively.
-
-```{r, echo=T, eval=T}
-sim_pop$w_complex <- NA
-sim_pop$w_complex[sim_pop$urban == 1] <- 8/3
-sim_pop$w_complex[sim_pop$urban == 0] <- 8/1
-```
-
-Let's create a new data frame for the new selected observations.
-
-```{r, echo=T, eval=T}
-sam_com <- sim_pop %>%
-  filter(s_complex == 1)
-```
-
-And now create the corresponding survey object. Be sure to include the weights.
-
-```{r, echo=T, eval=T}
-sam_com_s <- sam_com %>%
-  as_survey(ids = id,
-            strata = urban,
-            fpc = pop,
-            weight = w_complex)
-```
-
-Finally, let's compare the sample mean with and without weights again. Now you see they are quite different (and the weighted one is closer to the population mean). The unweighted one is higher, which should not be too surprising given that urban observations are more likely to be included in the sample.
-
-```{r, echo=T, eval=T}
-sam_com %>% summarise(mean=mean(score)) # unweighted
-sam_com_s %>% summarise(mean=survey_mean(score)) # weighted
-```
 
 ## Extra: European Social Survey (Round 9)
 
@@ -460,4 +338,137 @@ euro_wealth %>%
  labs(y = "%", x = NULL,
     title = "In your opinion, are differences in wealth\nunfairly small, fair, or unfairly large?",
     fill = NULL)
+```
+
+## Extra: When Weights Come to Rescue
+
+**You can skip this part completely.**
+
+This section presents a simulation exercise in `R` to show why weights matter. The entire simulation consists of the following process:
+
+  - Create a fake population data such as there are 1,000 observations -- there is a equal number of observations from the urban and rural areas, respectively (i.e., 500 observations each). The key outcome variable in the population data is `score` (e.g., credit score of the household). 
+  
+  - Use simple random sampling to create a sample of about 500 observations. Compare the weighted and unweighted average scores to the population average score.
+  
+  - Use stratified (or multi-stage) samling to create another sample of about 500 observations -- however, we will set up such that the probability of being chosen is 0.25 in the countryside and 0.75 in the city.
+  
+### Set up the population
+
+```{r, echo=T, eval=T}
+sim_pop <- data.frame(id = 1:1000, # unique ID
+                      score = rnorm(1000, mean=65, sd=10),
+                      urban = c(rep(0,500), rep(1,500)),
+                      pop = 500)
+```
+
+In this dataset,
+
+  - `id` is the unique identifier of each observation in the population.
+  - `score` is some made-up score for each observation -- I use `rnorm()` to generate 1,000 random numbers from a normal distribution such that the mean is 65 and the standard deviation is 10.
+  - `urban` is a binary variable to indicate whether the observation is in the city (=1) or not (=0).
+  - `pop` is the number of people living in the city and countryside with 500 each.
+
+To make things more interesting, I multiply the scores in the city by 2.
+
+```{r, echo=T, eval=T}
+sim_pop$score[sim_pop$urban == 1] <- sim_pop$score[sim_pop$urban == 1]*2
+```
+
+The population mean is then
+
+```{r, echo=T, eval=T}
+mean(sim_pop$score)
+```
+or
+```{r, echo=T, eval=T}
+sim_pop %>%
+  summarise(mean=mean(score))
+```
+
+### Create a sample with simple random sampling
+
+We will use the function `sample()` to create a binary indicator in the population data -- when the value is 1, it means the observation is selected in the sample.
+
+```{r, echo=T, eval=T}
+sim_pop$s_simple <- sample(c(0,1), size=1000, replace=TRUE, prob=c(1/2, 1/2))
+```
+
+The function basically says: "**please randomize 0 and 1 across 1,000 observations with each of them occurring with equal probability.**" Since each observation is being assigned the value of 1 with equal probability, it means the probability of being included in the sample is 500 out of 1000, which is 0.5. The sample weight is the reciprocal (or inverse proportion) of this probability, namely 2.
+
+```{r, echo=T, eval=T}
+sim_pop$w_simple <- 2
+```
+
+Now, let's create another data frame that only includes the selected observations.
+
+```{r, echo=T, eval=T}
+sam_sim <- sim_pop %>%
+  filter(s_simple == 1)
+```
+
+And let's turn this into a survey subject.
+
+```{r, echo=T, eval=T}
+sam_sim_s <- sam_sim %>%
+  as_survey(ids = id,
+            strata = urban,
+            fpc = pop,
+            weight = w_simple)
+```
+
+Finally, let's compare the sample mean with and without weights. They are similar to each other -- they are also very close to the population mean.
+
+```{r, echo=T, eval=T}
+sam_sim %>% summarise(mean=mean(score)) # unweighted
+sam_sim_s %>% summarise(mean=survey_mean(score)) # weighted
+```
+
+### Create a sample with stratified sampling
+
+Let's create another sample, but with a bit more complicated sampling process. Say, now the probabilities of being included in the sample vary by urban vs rural, with 0.25 and 0.75, respectively.
+
+```{r, echo=T, eval=T}
+sim_pop$s_complex <- NA # add a column in the population data
+sim_pop$s_complex[sim_pop$urban == 1] = sample(c(0,1), size=500, replace=TRUE, prob = c(1/4, 3/4))
+sim_pop$s_complex[sim_pop$urban == 0] = sample(c(0,1), size=500, replace=TRUE, prob = c(3/4, 1/4))
+```
+
+Now let's set the weights for those in the city and countryside, respectively.
+
+```{r, echo=T, eval=T}
+sim_pop$w_complex <- NA
+sim_pop$w_complex[sim_pop$urban == 1] <- 4/3
+sim_pop$w_complex[sim_pop$urban == 0] <- 4/1
+```
+
+Let's create a new data frame for the new selected observations.
+
+```{r, echo=T, eval=T}
+sam_com <- sim_pop %>%
+  filter(s_complex == 1)
+```
+
+Let's check to see if the sample indeed includes more observations from the city (the numbers may not be perfect here given that we draw all the sample from some random processes).
+
+```{r, echo=T, eval=T}
+sam_com %>%
+  group_by(urban) %>%
+  summarise(n =n())
+```
+
+And now create the corresponding survey object. Be sure to include the weights.
+
+```{r, echo=T, eval=T}
+sam_com_s <- sam_com %>%
+  as_survey(ids = id,
+            strata = urban,
+            fpc = pop,
+            weight = w_complex)
+```
+
+Finally, let's compare the sample mean with and without weights again. Now you see they are quite different (and the weighted one is closer to the population mean). The unweighted one is higher, which should not be too surprising given that urban observations are more likely to be included in the sample.
+
+```{r, echo=T, eval=T}
+sam_com %>% summarise(mean=mean(score)) # unweighted
+sam_com_s %>% summarise(mean=survey_mean(score)) # weighted
 ```
