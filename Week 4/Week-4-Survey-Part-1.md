@@ -298,7 +298,7 @@ The population mean is then
 mean(sim_pop$score)
 ```
 
-    ## [1] 98.049
+    ## [1] 97.51993
 
 or
 
@@ -307,8 +307,8 @@ sim_pop %>%
   summarise(mean=mean(score))
 ```
 
-    ##     mean
-    ## 1 98.049
+    ##       mean
+    ## 1 97.51993
 
 ### Create a sample with simple random sampling
 
@@ -358,7 +358,7 @@ sam_sim %>% summarise(mean=mean(score)) # unweighted
 ```
 
     ##       mean
-    ## 1 97.86258
+    ## 1 95.84408
 
 ``` r
 sam_sim_s %>% summarise(mean=survey_mean(score)) # weighted
@@ -367,7 +367,7 @@ sam_sim_s %>% summarise(mean=survey_mean(score)) # weighted
     ## # A tibble: 1 × 2
     ##    mean mean_se
     ##   <dbl>   <dbl>
-    ## 1  97.9   0.462
+    ## 1  95.8   0.485
 
 ### Create a sample with stratified sampling
 
@@ -386,8 +386,8 @@ respectively.
 
 ``` r
 sim_pop$w_complex <- NA
-sim_pop$w_complex[sim_pop$urban == 1] <- 4/3 # the reciprocal is 3/4
-sim_pop$w_complex[sim_pop$urban == 0] <- 4 # the reciprocal is 1/4
+sim_pop$w_complex[sim_pop$urban == 1] <- 8/3
+sim_pop$w_complex[sim_pop$urban == 0] <- 8/1
 ```
 
 Let’s create a new data frame for the new selected observations.
@@ -419,7 +419,7 @@ sam_com %>% summarise(mean=mean(score)) # unweighted
 ```
 
     ##       mean
-    ## 1 112.8922
+    ## 1 116.0788
 
 ``` r
 sam_com_s %>% summarise(mean=survey_mean(score)) # weighted
@@ -428,7 +428,7 @@ sam_com_s %>% summarise(mean=survey_mean(score)) # weighted
     ## # A tibble: 1 × 2
     ##    mean mean_se
     ##   <dbl>   <dbl>
-    ## 1  96.7   0.450
+    ## 1  101.   0.483
 
 ## Extra: European Social Survey (Round 9)
 
