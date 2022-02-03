@@ -439,8 +439,8 @@ Now let's set the weights for those in the city and countryside, respectively.
 
 ```{r, echo=T, eval=T}
 sim_pop$w_complex <- NA
-sim_pop$w_complex[sim_pop$urban == 1] <- 4/3
-sim_pop$w_complex[sim_pop$urban == 0] <- 4/1
+sim_pop$w_complex[sim_pop$urban == 1] <- (2/1)*(4/3)
+sim_pop$w_complex[sim_pop$urban == 0] <- (2/1)*(4/3)
 ```
 
 Let's create a new data frame for the new selected observations.
