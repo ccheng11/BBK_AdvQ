@@ -514,7 +514,7 @@ The population mean is then
 mean(sim_pop$score)
 ```
 
-    ## [1] 97.7316
+    ## [1] 97.84328
 
 or
 
@@ -523,8 +523,8 @@ sim_pop %>%
   summarise(mean=mean(score))
 ```
 
-    ##      mean
-    ## 1 97.7316
+    ##       mean
+    ## 1 97.84328
 
 ### Create a sample with simple random sampling
 
@@ -577,7 +577,7 @@ sam_sim %>% summarise(mean=mean(score)) # unweighted
 ```
 
     ##       mean
-    ## 1 96.29046
+    ## 1 98.14668
 
 ``` r
 sam_sim_s %>% summarise(mean=survey_mean(score)) # weighted
@@ -586,7 +586,7 @@ sam_sim_s %>% summarise(mean=survey_mean(score)) # weighted
     ## # A tibble: 1 × 2
     ##    mean mean_se
     ##   <dbl>   <dbl>
-    ## 1  96.3   0.498
+    ## 1  98.1   0.459
 
 ### Create a sample with stratified sampling
 
@@ -605,8 +605,8 @@ respectively.
 
 ``` r
 sim_pop$w_complex <- NA
-sim_pop$w_complex[sim_pop$urban == 1] <- 4/3
-sim_pop$w_complex[sim_pop$urban == 0] <- 4/1
+sim_pop$w_complex[sim_pop$urban == 1] <- (2/1)*(4/3)
+sim_pop$w_complex[sim_pop$urban == 0] <- (2/1)*(4/3)
 ```
 
 Let’s create a new data frame for the new selected observations.
@@ -629,8 +629,8 @@ sam_com %>%
     ## # A tibble: 2 × 2
     ##   urban     n
     ##   <dbl> <int>
-    ## 1     0   123
-    ## 2     1   374
+    ## 1     0   127
+    ## 2     1   377
 
 And now create the corresponding survey object. Be sure to include the
 weights.
@@ -654,7 +654,7 @@ sam_com %>% summarise(mean=mean(score)) # unweighted
 ```
 
     ##       mean
-    ## 1 113.7048
+    ## 1 114.4915
 
 ``` r
 sam_com_s %>% summarise(mean=survey_mean(score)) # weighted
@@ -663,4 +663,4 @@ sam_com_s %>% summarise(mean=survey_mean(score)) # weighted
     ## # A tibble: 1 × 2
     ##    mean mean_se
     ##   <dbl>   <dbl>
-    ## 1  97.5   0.433
+    ## 1  114.   0.438
