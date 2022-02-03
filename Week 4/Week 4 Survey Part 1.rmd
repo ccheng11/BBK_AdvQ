@@ -113,6 +113,7 @@ ces_s <- ces %>%
       weights = weight)
 ces_s
 ```
+
 Here you can find some basic information for the survey object `ces_s`.
 
 > *Question: Again, how can we verify that `ces_s` is really a `survey` object?*
@@ -176,6 +177,7 @@ ess9 <- read_sav("ESS9e03.sav")
 ```
 
 Whenever you import a new dataset, you should see it.
+
 ```{r, echo=T, eval=F}
 View(ess9)
 ```
@@ -184,7 +186,7 @@ View(ess9)
 
 > *Question: What if you just want to list variable names?*
 
-> *Question: Describe your observations.
+> *Question: Describe your observations.*
 
 > *Question: Perhaps you want to read the codebook -- where is it on the ESS website? It is a good exercise to spend some time looking through the documentation on the ESS website to find the variable name.*
 
@@ -393,7 +395,7 @@ We will use the function `sample()` to create a binary indicator in the populati
 sim_pop$s_simple <- sample(c(0,1), size=1000, replace=TRUE, prob=c(1/2, 1/2))
 ```
 
-The function basically says: "**please randomize 0 and 1 across 1,000 observations with each of them occurring with equal probability.**" Since each observation is being assigned the value of 1 with equal probability, it means the probability of being included in the sample is 500 out of 1000, which is 0.5. The sample weight is the reciprocal (or inverse proportion) of this probability, namely 2.
+The function basically says: "**please take 1,000 draws and the occurrence of 0 and 1 for each draw has the same probability -- here each draw is independent from each other because the probability of having 0 (or 1) in the previous draw does not affect the probability of having 0 (or 1) in the following draw.**" Since each observation is being assigned the value of 1 with equal probability, it means the probability of being included in the sample is 500 out of 1000, which is 0.5. The sample weight is the reciprocal (or inverse proportion) of this probability, namely 2.
 
 ```{r, echo=T, eval=T}
 sim_pop$w_simple <- 2
