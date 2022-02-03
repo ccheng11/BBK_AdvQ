@@ -275,7 +275,7 @@ View(ess9)
 
 > *Question: What if you just want to list variable names?*
 
-> \*Question: Describe your observations.
+> *Question: Describe your observations.*
 
 > *Question: Perhaps you want to read the codebook – where is it on the
 > ESS website? It is a good exercise to spend some time looking through
@@ -514,7 +514,7 @@ The population mean is then
 mean(sim_pop$score)
 ```
 
-    ## [1] 97.64484
+    ## [1] 97.7316
 
 or
 
@@ -523,8 +523,8 @@ sim_pop %>%
   summarise(mean=mean(score))
 ```
 
-    ##       mean
-    ## 1 97.64484
+    ##      mean
+    ## 1 97.7316
 
 ### Create a sample with simple random sampling
 
@@ -536,12 +536,15 @@ selected in the sample.
 sim_pop$s_simple <- sample(c(0,1), size=1000, replace=TRUE, prob=c(1/2, 1/2))
 ```
 
-The function basically says: “**please randomize 0 and 1 across 1,000
-observations with each of them occurring with equal probability.**”
-Since each observation is being assigned the value of 1 with equal
-probability, it means the probability of being included in the sample is
-500 out of 1000, which is 0.5. The sample weight is the reciprocal (or
-inverse proportion) of this probability, namely 2.
+The function basically says: “**please take 1,000 draws and the
+occurrence of 0 and 1 for each draw has the same probability – here each
+draw is independent from each other because the probability of having 0
+(or 1) in the previous draw does not affect the probability of having 0
+(or 1) in the following draw.**” Since each observation is being
+assigned the value of 1 with equal probability, it means the probability
+of being included in the sample is 500 out of 1000, which is 0.5. The
+sample weight is the reciprocal (or inverse proportion) of this
+probability, namely 2.
 
 ``` r
 sim_pop$w_simple <- 2
@@ -574,7 +577,7 @@ sam_sim %>% summarise(mean=mean(score)) # unweighted
 ```
 
     ##       mean
-    ## 1 98.65697
+    ## 1 96.29046
 
 ``` r
 sam_sim_s %>% summarise(mean=survey_mean(score)) # weighted
@@ -583,7 +586,7 @@ sam_sim_s %>% summarise(mean=survey_mean(score)) # weighted
     ## # A tibble: 1 × 2
     ##    mean mean_se
     ##   <dbl>   <dbl>
-    ## 1  98.7   0.504
+    ## 1  96.3   0.498
 
 ### Create a sample with stratified sampling
 
@@ -626,8 +629,8 @@ sam_com %>%
     ## # A tibble: 2 × 2
     ##   urban     n
     ##   <dbl> <int>
-    ## 1     0   117
-    ## 2     1   368
+    ## 1     0   123
+    ## 2     1   374
 
 And now create the corresponding survey object. Be sure to include the
 weights.
@@ -651,7 +654,7 @@ sam_com %>% summarise(mean=mean(score)) # unweighted
 ```
 
     ##       mean
-    ## 1 114.1507
+    ## 1 113.7048
 
 ``` r
 sam_com_s %>% summarise(mean=survey_mean(score)) # weighted
@@ -660,4 +663,4 @@ sam_com_s %>% summarise(mean=survey_mean(score)) # weighted
     ## # A tibble: 1 × 2
     ##    mean mean_se
     ##   <dbl>   <dbl>
-    ## 1  98.4   0.485
+    ## 1  97.5   0.433
