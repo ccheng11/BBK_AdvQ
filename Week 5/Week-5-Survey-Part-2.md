@@ -1,0 +1,32 @@
+Tutorial: Analyzing Survey Data (Part 2)
+================
+
+Chao-Yo Cheng  
+6 February 2021
+
+## Introduction
+
+By the end of this tutorial, you will know how to:
+
+-   Review the main concepts of logit and GLMs.
+-   Use logit regression to analyze survey data.
+-   Perform model comparison on survey data.
+
+We are building on our previous tutorial on survey weights this week.
+Feel free to continue writing your code in the same file you used last
+week.
+
+First, let us bring in the same packages again.
+
+``` r
+library(survey)
+library(srvyr)
+library(dplyr)
+library(ggplot2)
+library(purrr)
+```
+
+## Data
+
+We will continue to work with the data set from Here are our 9 variables
+again:
