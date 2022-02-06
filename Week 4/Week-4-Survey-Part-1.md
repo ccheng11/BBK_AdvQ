@@ -48,9 +48,7 @@ library(purrr)
 ```
 
 > *Question: Can you use a few words (or sentences) to describe what
-> each of these packages does?*
-
-## 2 Data
+> each of these packages does?* ## 2 Data
 
 The sample dataset for today’s tutorial is from the 2011
 <a href="http://www.ces-eec.ca/" target="_blank">Canadian National
@@ -86,22 +84,15 @@ There are 2,231 observations on the following 9 variables:
     post-secondary).
 -   `urban` – place of residence, a factor with levels rural, urban.
 
-> *Question: What is the unit of observation?*
-
-> *Question: When should we use stratified sampling? And how does that
-> decision influence the distribution of respondents from different
-> provinces when we do not use stratified sample?*
-
-> *Question: What is the main dependent variable of interest?*
-
-> *Question: Anything wrong with the current set of
+> *Question: What is the unit of observation?* *Question: When should we
+> use stratified sampling? And how does that decision influence the
+> distribution of respondents from different provinces when we do not
+> use stratified sample?* *Question: What is the main dependent variable
+> of interest?* *Question: Anything wrong with the current set of
 > explanatory/independent variables or predictors? Any other factors
-> should we consider?*
-
-> *Question: Can we conduct survey research with children in our sample?
-> How should we do that?*
-
-Now, set up your working directory and read the data into R.
+> should we consider?* *Question: Can we conduct survey research with
+> children in our sample? How should we do that?* Now, set up your
+> working directory and read the data into R.
 
 ``` r
 ces <- read.csv("ces11.csv", stringsAsFactors=TRUE)
@@ -112,9 +103,7 @@ are meant to be factors are set up accordingly.
 
 > *Question: How do we verify whether or not a variable is a factor in
 > `R`? If it is not, which `R` function should we use to force a
-> variable to be a factor?*
-
-## 3 Survey Design Components
+> variable to be a factor?* ## 3 Survey Design Components
 
 The following variables in the dataset provide the information on the
 survey design.
@@ -128,8 +117,8 @@ survey design.
 
 ``` r
 ces %>%
- select(id, province, population, weight) %>%
- head(6)
+  select(id, province, population, weight) %>%
+  head(6)
 ```
 
     ##     id province population  weight
@@ -140,22 +129,20 @@ ces %>%
     ## 5 1799       ON    9439960 8977.61
     ## 6 1103       ON    9439960 8977.61
 
-> *Question: What does “select” and “head” do, respectively?*
-
-> *Question: Think again. How might the sample look differently if CNES
-> used simple random sampling? Can you justify why CNES should use
-> stratified sampling rather than simple random sampling? If they use
-> stratified sampling, in what sense is the sample representative?*
-
-To use the functions contained in the `survey` and `srvyr` packages, we
-have to turn the `dataframe` into a `survey` objective.
+> *Question: What does “select” and “head” do, respectively?* *Question:
+> Think again. How might the sample look differently if CNES used simple
+> random sampling? Can you justify why CNES should use stratified
+> sampling rather than simple random sampling? If they use stratified
+> sampling, in what sense is the sample representative?* To use the
+> functions contained in the `survey` and `srvyr` packages, we have to
+> turn the `dataframe` into a `survey` objective.
 
 ``` r
 ces_s <- ces %>%
- as_survey(ids = id,
-      strata = province,
-      fpc = population,
-      weights = weight)
+  as_survey(ids = id,
+            strata = province,
+            fpc = population,
+            weights = weight)
 ces_s
 ```
 
@@ -172,13 +159,9 @@ ces_s
 Here you can find some basic information for the survey object `ces_s`.
 
 > *Question: Again, how can we verify that `ces_s` is really a `survey`
-> object?*
-
-> *Question: In the function `as_survey`, there are four options you
-> have to fill in – find out what they mean according to the official
-> package manual.*
-
-## 4 Computing Descriptive Statistics
+> object?* *Question: In the function `as_survey`, there are four
+> options you have to fill in – find out what they mean according to the
+> official package manual.* ## 4 Computing Descriptive Statistics
 
 Complete the following tasks.
 
@@ -187,18 +170,16 @@ Complete the following tasks.
 -   Repeat the same analysis, but this time use the survey object
     `ces_s`.
 
-> *Question: Describe and explain your observations.*
-
-> *Question: Can you think of other descriptive analysis you can do?*
-
-Here is one example (more TBA after the live session) – say, we want to
-use the dataframe `ces` to calculate the number of people who think
-abortion should be banned.
+> *Question: Describe and explain your observations.* *Question: Can you
+> think of other descriptive analysis you can do?* Here is one example
+> (more TBA after the live session) – say, we want to use the dataframe
+> `ces` to calculate the number of people who think abortion should be
+> banned.
 
 ``` r
 ces %>%
- group_by(abortion) %>%
- summarise(n = n())
+  group_by(abortion) %>%
+  summarise(n = n())
 ```
 
     ## # A tibble: 2 × 2
@@ -207,10 +188,8 @@ ces %>%
     ## 1 No        1818
     ## 2 Yes        413
 
-> *Question: How else can you get the table?*
-
-Now let’s use `ces_s` (i.e., the survey object) and the `survey_total()`
-function.
+> *Question: How else can you get the table?* Now let’s use `ces_s`
+> (i.e., the survey object) and the `survey_total()` function.
 
 ``` r
 ces_s %>%
@@ -224,12 +203,9 @@ ces_s %>%
     ## 1 No       13059520. 196984.
     ## 2 Yes       2964018. 162360.
 
-> *Question: What does `survey_total` do?*
-
-> *Question: Can you the proportion of people who think abortion should
-> be banned?*
-
-## Additional References
+> *Question: What does `survey_total` do?* *Question: Can you the
+> proportion of people who think abortion should be banned?* ##
+> Additional References
 
 John Fox and Sanford Weisberg: “Fitting regression models to data from
 complex surveys.” – walk through the exercise using the `survey`
@@ -272,17 +248,12 @@ View(ess9)
 ```
 
 > *Question: Any other functions we can use to “see” the data?*
-
-> *Question: What if you just want to list variable names?*
-
-> *Question: Describe your observations.*
-
-> *Question: Perhaps you want to read the codebook – where is it on the
-> ESS website? It is a good exercise to spend some time looking through
-> the documentation on the ESS website to find the variable name.*
-
-If that has worked – then the next problem is finding the variables we
-want to analyze!
+> *Question: What if you just want to list variable names?* *Question:
+> Describe your observations.* *Question: Perhaps you want to read the
+> codebook – where is it on the ESS website? It is a good exercise to
+> spend some time looking through the documentation on the ESS website
+> to find the variable name.* If that has worked – then the next problem
+> is finding the variables we want to analyze!
 
 Read the following discussion from the report published by the
 <a href="https://www.bsa.natcen.ac.uk/latest-report/british-social-attitudes-37/fairness-and-justice-in-britain.aspx" target="_blank">British
@@ -291,18 +262,16 @@ Social Attitudes</a>:
 > > Only 20% of the British public think that differences in wealth in
 > > Britain are fair, whilst a majority (59%) think that wealth
 > > differences in Britain are unfairly large and a further 16% think
-> > that differences in wealth are unfairly small.
-
-The original question was
+> > that differences in wealth are unfairly small. The original question
+> > was
 
 > > In your opinion, are differences in wealth in Britain unfairly
-> > small, fair, or unfairly large?
-
-We will also need the variable for country (easier to spot) and any
-information required for setting up the survey object. The ESS website
-advises we “must weight tables before quoting percentages from the
-survey.” See the guide Weighting European Social Survey Data for fuller
-details about which weights to use (it is on Moodle).
+> > small, fair, or unfairly large? We will also need the variable for
+> > country (easier to spot) and any information required for setting up
+> > the survey object. The ESS website advises we “must weight tables
+> > before quoting percentages from the survey.” See the guide Weighting
+> > European Social Survey Data for fuller details about which weights
+> > to use (it is on Moodle).
 
 > > The *Design weights* (`DWEIGHT`) adjust for different selection
 > > probabilities, while the *Post-stratification* weights (`PSPWGHT`)
@@ -310,9 +279,8 @@ details about which weights to use (it is on Moodle).
 > > different selection probabilities. Either `DWEIGHT` or `PSPWGHT`
 > > must always be used. In addition, the *Population size weights*
 > > (`PWEIGHT`) should be applied if you are looking at aggregates or
-> > averages for two or more countries combined.
-
-### Tabulate the data by country
+> > averages for two or more countries combined. ### Tabulate the data
+> > by country
 
 First, let’s make the country variable look a bit nicer. It currently
 looks like this:
@@ -330,9 +298,8 @@ ess9$cntry <- as_factor(ess9$cntry, levels = "labels")
 table(ess9$cntry)
 ```
 
-> *Question: Describe the differences in the output.*
-
-### Set up the `survey` object
+> *Question: Describe the differences in the output.* ### Set up the
+> `survey` object
 
 Now let’s set up the survey object:
 
@@ -342,10 +309,10 @@ is used more than once across the dataset.
 
 ``` r
 ess9_survey <- ess9 %>%
- as_survey_design(ids = idno,
-          strata = cntry,
-          nest = TRUE,
-          weights = pspwght)
+  as_survey_design(ids = idno,
+                   strata = cntry,
+                   nest = TRUE,
+                   weights = pspwght)
 ```
 
 ### Try out some analysis
@@ -378,16 +345,14 @@ ess9_survey <- ess9_survey %>%
 ```
 
 > *Question: Can you repeat the same analysis without using the
-> `tidyverse` pipelines?*
-
-Great, now let’s see what the UK data look like for this grouped
-variable:
+> `tidyverse` pipelines?* Great, now let’s see what the UK data look
+> like for this grouped variable:
 
 ``` r
 gb_wealth <- ess9_survey %>%
- filter(cntry == "United Kingdom") %>%
- group_by(wltdffr_group) %>%
- summarise(prop = survey_mean(vartype = "ci"))
+filter(cntry == "United Kingdom") %>%
+group_by(wltdffr_group) %>%
+summarise(prop = survey_mean(vartype = "ci"))
 gb_wealth 
 ```
 
@@ -418,11 +383,11 @@ which carries out the analysis for one country:
 
 ``` r
 get_country_results <- function(the_cntry) {
- ess9_survey %>%
+ess9_survey %>%
   filter(cntry == the_cntry) %>%
- group_by(wltdffr_group) %>%
- summarise(prop = survey_mean(vartype = "ci")) %>%
- mutate(cntry = the_cntry)
+  group_by(wltdffr_group) %>%
+  summarise(prop = survey_mean(vartype = "ci")) %>%
+  mutate(cntry = the_cntry)
 }
 ```
 
@@ -444,20 +409,20 @@ That’s a lot of numbers! Let’s try a plot:
 
 ``` r
 euro_wealth %>%
- filter(!is.na(wltdffr_group)) %>%
- ggplot(aes(x = cntry,
-       y = prop*100,
-       ymin = prop_low*100,
-       ymax = prop_upp*100,
-       fill = wltdffr_group)) +
- geom_col(position = position_dodge(width = .8), width = 0.6) + 
- geom_errorbar(position=position_dodge(width = .8),
-        colour="black",
-        width = 0.2) +
- ylim(0,100) +
- labs(y = "%", x = NULL,
-    title = "In your opinion, are differences in wealth\nunfairly small, fair, or unfairly large?",
-    fill = NULL)
+filter(!is.na(wltdffr_group)) %>%
+ggplot(aes(x = cntry,
+           y = prop*100,
+           ymin = prop_low*100,
+           ymax = prop_upp*100,
+           fill = wltdffr_group)) +
+geom_col(position = position_dodge(width = .8), width = 0.6) + 
+geom_errorbar(position=position_dodge(width = .8),
+              colour="black",
+              width = 0.2) +
+ylim(0,100) +
+labs(y = "%", x = NULL,
+     title = "In your opinion, are differences in wealth\nunfairly small, fair, or unfairly large?",
+     fill = NULL)
 ```
 
 ## Extra: When Weights Come to Rescue
@@ -514,7 +479,7 @@ The population mean is then
 mean(sim_pop$score)
 ```
 
-    ## [1] 97.84328
+    ## [1] 97.36515
 
 or
 
@@ -524,7 +489,7 @@ sim_pop %>%
 ```
 
     ##       mean
-    ## 1 97.84328
+    ## 1 97.36515
 
 ### Create a sample with simple random sampling
 
@@ -576,8 +541,8 @@ mean.
 sam_sim %>% summarise(mean=mean(score)) # unweighted
 ```
 
-    ##       mean
-    ## 1 98.14668
+    ##      mean
+    ## 1 98.0357
 
 ``` r
 sam_sim_s %>% summarise(mean=survey_mean(score)) # weighted
@@ -586,7 +551,7 @@ sam_sim_s %>% summarise(mean=survey_mean(score)) # weighted
     ## # A tibble: 1 × 2
     ##    mean mean_se
     ##   <dbl>   <dbl>
-    ## 1  98.1   0.459
+    ## 1  98.0   0.466
 
 ### Create a sample with stratified sampling
 
@@ -629,8 +594,8 @@ sam_com %>%
     ## # A tibble: 2 × 2
     ##   urban     n
     ##   <dbl> <int>
-    ## 1     0   127
-    ## 2     1   377
+    ## 1     0   125
+    ## 2     1   376
 
 And now create the corresponding survey object. Be sure to include the
 weights.
@@ -654,7 +619,7 @@ sam_com %>% summarise(mean=mean(score)) # unweighted
 ```
 
     ##       mean
-    ## 1 114.4915
+    ## 1 113.7542
 
 ``` r
 sam_com_s %>% summarise(mean=survey_mean(score)) # weighted
@@ -663,4 +628,4 @@ sam_com_s %>% summarise(mean=survey_mean(score)) # weighted
     ## # A tibble: 1 × 2
     ##    mean mean_se
     ##   <dbl>   <dbl>
-    ## 1  114.   0.438
+    ## 1  114.   0.423
