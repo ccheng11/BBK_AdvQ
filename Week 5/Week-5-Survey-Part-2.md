@@ -182,8 +182,8 @@ the new variable). We can continue.
 ### Logit Regression with No Predictor
 
 Let’s start with a simple model with no predictor. You should recall the
-logit regression transforms a **probability** *p* into **log odds**
-$\\frac{p}{1-p}$ (or logged odds or log of odds, they are
+logit regression transforms a **probability** $p$ into **log odds**
+$\frac{p}{1-p}$ (or logged odds or log of odds, they are
 interchangeable).
 
 ## Fitting GLMs With Weights
