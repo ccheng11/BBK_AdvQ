@@ -86,10 +86,10 @@ First, let's create a binary variable such that we will assign the value of 1 to
 
 ```{r, echo=T, eval=T}
 ces_new <- ces %>%
-  mutate(against_abortion = if_else(abortion == "No", 1, 0))
+  mutate(against_abortion = if_else(abortion == "Yes", 1, 0)) # the question asks people whether abortion should be banned.
 ```
 
-The `if_else()` function is very straightforward -- it basically says: *please assign the value of 1 to those who answered "No" and 0 to those who answered the opposite.*
+The `if_else()` function is very straightforward -- it basically says: *please assign the value of 1 to those who answered "Yes" and 0 to those who answered the opposite.*
 
 Now let's check if we have done this properly. First, use `table()`.
 
@@ -122,7 +122,7 @@ summary(mod_intercept)
 
 ### 3.1.1 Explore the Point Estimate
 
-The estimated intercept $\hat{\alpha}=1.482045$ is the *log odds*. Let's use `coef()` to extract the coefficient.
+The estimated intercept $\hat{\alpha}=-1.482045$ is the *log odds*. Let's use `coef()` to extract the coefficient.
   
 ```{r, echo=T, eval=T}
 coefs <- coef(mod_intercept) # extracting log odds
@@ -135,7 +135,7 @@ Next, we can exponentiate the log odds to get the *odds* (i.e., use `exp()` to g
 exp(coefs) # calculating odds
 ```
 
-Third, let's take an extra step to compute the *probability* of people saying no to abortion. From the previous step, since the odds $\frac{p}{1-p}=4.401937$, we know $p=\frac{4.401937}{1+4.401937}=0.8148812$.
+Third, let's take an extra step to compute the *probability* of people saying no to abortion. From the previous step, since the odds $\frac{p}{1-p}=0.2271727$, we know $p=\frac{0.2271727}{1+0.2271727}=0.1851188$.
 
 ```{r, echo=T, eval=T}
 exp(coefs)/(1+exp(coefs)) # calculating p
@@ -209,7 +209,7 @@ or %>%
   kable_styling()
 ```
 
-Since we find $OR=0.3089115$, it seems our data support the last scenario. 
+*Since we find $OR=3.237173195$, more religious people are going be more likely to be against abortion.* 
 
 To sum up our discussion, when you find a statistically significant coefficient, do the following:
 
