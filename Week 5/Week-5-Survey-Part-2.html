@@ -307,7 +307,7 @@ head(ces,10)</code></pre>
 <ul>
 <li><p>Create a new dependent variable <code>against_abortion</code>, using the original variable <code>abortion</code> in the dataset.</p></li>
 <li><p>Fit the logit model with no predictor.</p></li>
-<li><p>Fit the logit model with one continuous predictor <code>religion</code> (see below).</p></li>
+<li><p>Fit the logit model with one predictor <code>religion</code> (see below).</p></li>
 </ul>
 <p><em>Note: The main objective of this section is to make sure everyone is on the same page with respect to logit and GLM before we move on to include weights in the analysis.</em></p>
 <div id="create-the-dependent-variable" class="section level2">
@@ -373,7 +373,7 @@ summary(mod_intercept)</code></pre>
 coefs</code></pre>
 <pre><code>## (Intercept) 
 ##    1.482045</code></pre>
-<p>Next, Exponentiate the log odds will give us the odds of <span class="math inline">\(p\)</span>.</p>
+<p>Next, exponentiate the log odds will give us the odds of <span class="math inline">\(p\)</span>.</p>
 <pre class="r"><code>exp(coefs) # calculating odds</code></pre>
 <pre><code>## (Intercept) 
 ##    4.401937</code></pre>
@@ -390,8 +390,8 @@ coefs_ci</code></pre>
 <p><em>Question: How do you derive the upper and lower bounds of estimated odds and probability?</em></p>
 </blockquote>
 </div>
-<div id="logit-regression-with-one-continuous-predictor" class="section level2">
-<h2>3.3 Logit Regression with One Continuous Predictor</h2>
+<div id="logit-regression-with-one-predictor" class="section level2">
+<h2>3.3 Logit Regression with One Predictor</h2>
 <p>Now, we will add a continuous explanatory variable to the model. There is no variable like this, so let’s create a new variable <code>religion</code>, using <code>importance</code>. Let’s use <code>recode()</code> inside <code>mutate()</code>.</p>
 <pre class="r"><code>ces_new &lt;- ces_new %&gt;% # update &quot;ces_new&quot; to include the new variable
   mutate(religion = recode(importance,
@@ -443,8 +443,8 @@ summary(mod_religion)</code></pre>
 <pre><code>## (Intercept)    religion 
 ##    5.023228   -1.174700</code></pre>
 </div>
-<div id="option-2-exponetiate-hatbeta-to-get-odds-ratio-or" class="section level3">
-<h3>Option 2: Exponetiate <span class="math inline">\(\hat{\beta}\)</span> to Get Odds Ratio (OR)</h3>
+<div id="option-2-exponentiate-hatbeta-to-get-odds-ratio-or" class="section level3">
+<h3>Option 2: Exponentiate <span class="math inline">\(\hat{\beta}\)</span> to Get Odds Ratio (OR)</h3>
 <p>Alternatively, you may have heard that <span class="math inline">\(e^\beta\)</span> will give us the <strong>odds-ratio</strong> (OR). OR is notoriously challenging because it requires some understandings of how logarithm works – but the math is not that hard.</p>
 <ul>
 <li>First, remember that we define the model as <span class="math inline">\(\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{Religion}).\)</span></li>
@@ -456,12 +456,17 @@ summary(mod_religion)</code></pre>
 <pre class="r"><code>exp(coef(mod_religion)) # exponentiate all coefficients</code></pre>
 <pre><code>## (Intercept)    religion 
 ## 151.9008210   0.3089115</code></pre>
+<p>A rule of thumb for odds-ratio (OR):</p>
+<ul>
+<li>If <span class="math inline">\(OR=1\)</span>, it means <span class="math inline">\(\text{Odds}_1\)</span> and <span class="math inline">\(\text{Odds}_0\)</span> are the same, so changing <span class="math inline">\(X\)</span> from 0 to 1 does not have much impact on the outcome (i.e., <span class="math inline">\(X\)</span> is not associated with the odds of the outcome).</li>
+<li>If <span class="math inline">\(OR&gt;1\)</span>, it means <span class="math inline">\(\text{Odds}_1\)</span> is larger <span class="math inline">\(\text{Odds}_0\)</span> so that changing <span class="math inline">\(X\)</span> from 0 to 1 will make the outcome of interest more likely to happen (i.e., <span class="math inline">\(X\)</span> is positively associated with the odds of the outcome).</li>
+<li>If <span class="math inline">\(OR&lt;1\)</span>, it means <span class="math inline">\(\text{Odds}_1\)</span> is small <span class="math inline">\(\text{Odds}_0\)</span> so that changing <span class="math inline">\(X\)</span> from 0 to 1 will make the outcome of interest less likely to happen (i.e., <span class="math inline">\(X\)</span> is negatively associated with the odds of the outcome).</li>
+</ul>
 </div>
 <div id="option-3-the-divide-by-4-rule" class="section level3">
 <h3>Option 3: The <em>Divide-by-4</em> Rule</h3>
 <p>Third, use the <em>divide-by-4</em> rule, we can derive the largest possible change in the probability of opposing abortion.</p>
-<pre class="r"><code>beta_hat &lt;- coef(mod_religion)[2] # extract the &quot;religion&quot; coefficient 
-beta_hat/4 </code></pre>
+<pre class="r"><code>coef(mod_religion)[2]/4 # extract the &quot;religion&quot; coefficient </code></pre>
 <pre><code>##   religion 
 ## -0.2936751</code></pre>
 </div>
@@ -506,9 +511,9 @@ fit_religion$fit_prob[fit_religion$religion == 2] - fit_religion$fit_prob[fit_re
 <pre class="r"><code>### The corresponding change in log-odds is
 fit_religion$fit_log_odds[fit_religion$religion == 2] - fit_religion$fit_log_odds[fit_religion$religion == 1]</code></pre>
 <pre><code>## [1] -1.1747</code></pre>
-<pre class="r"><code>### The corresponding change in odds is
-fit_religion$fit_odds[fit_religion$religion == 2] - fit_religion$fit_odds[fit_religion$religion == 1]</code></pre>
-<pre><code>## [1] -32.42857</code></pre>
+<pre class="r"><code>### The corresponding odds ratio is
+fit_religion$fit_odds[fit_religion$religion == 2]/ fit_religion$fit_odds[fit_religion$religion == 1]</code></pre>
+<pre><code>## [1] 0.3089115</code></pre>
 <p>They are identical with the <span class="math inline">\(\hat{\beta}\)</span> and <span class="math inline">\(e^{\hat{\beta}}\)</span> we get. All in all, we know that a more religious person is less likely to go against abortion.</p>
 <blockquote>
 <p><em>Question: Which interpretation do you prefer?</em><br />
@@ -549,64 +554,21 @@ fit_religion$fit_odds[fit_religion$religion == 2] - fit_religion$fit_odds[fit_re
 </div>
 <div id="fit-logit-regression" class="section level2">
 <h2>4.2 Fit Logit Regression</h2>
-<p>To carry out logit regression with weights included, we need to use the <code>svyglm()</code> function in the <code>survey</code> package. Let’s include <code>religion</code> and <code>urban</code> together so the regression model we are testing will be <span class="math display">\[\log\left(\frac{p}{1-p}\right)=\alpha+\beta_1(\text{Religion})+\beta_2(\text{Urban})\]</span>.</p>
+<p>To carry out logit regression with weights included, we need to use the <code>svyglm()</code> function in the <code>survey</code> package. Let’s include <code>religion</code> and <code>urban</code> together so the regression model we are testing will be <span class="math display">\[\log\left(\frac{p}{1-p}\right)=\alpha+\beta_1(\text{Religion})+\beta_2(\text{Urban}).\]</span></p>
 <pre class="r"><code>mod_s &lt;- svyglm(against_abortion ~ religion + urban,
                 design = ces_s, # be sure to use the survey object
-                family = binomial)</code></pre>
-<pre><code>## Warning in eval(family$initialize): non-integer #successes in a binomial glm!</code></pre>
-<pre class="r"><code>summary(mod_s)</code></pre>
-<pre><code>## 
-## Call:
-## svyglm(formula = against_abortion ~ religion + urban, design = ces_s, 
-##     family = binomial)
-## 
-## Survey design:
-## Called via srvyr
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   4.9319     0.3774  13.068   &lt;2e-16 ***
-## religion     -1.2246     0.1031 -11.873   &lt;2e-16 ***
-## urban         0.3591     0.1570   2.287   0.0223 *  
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## (Dispersion parameter for binomial family taken to be 1.214632)
-## 
-## Number of Fisher Scoring iterations: 6</code></pre>
+                family = binomial)
+summary(mod_s)</code></pre>
 </div>
 <div id="model-comparison" class="section level2">
 <h2>4.3 Model Comparison</h2>
 <p>Let’s conduct another logit regression but this time only includes the intercept.</p>
 <pre class="r"><code>mod_s_intercept &lt;- svyglm(against_abortion ~ 1,
                           design = ces_s,
-                          family = binomial)</code></pre>
-<pre><code>## Warning in eval(family$initialize): non-integer #successes in a binomial glm!</code></pre>
-<pre class="r"><code>summary(mod_s_intercept)</code></pre>
-<pre><code>## 
-## Call:
-## svyglm(formula = against_abortion ~ 1, design = ces_s, family = binomial)
-## 
-## Survey design:
-## Called via srvyr
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  1.48297    0.06534    22.7   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## (Dispersion parameter for binomial family taken to be 1.000448)
-## 
-## Number of Fisher Scoring iterations: 4</code></pre>
+                          family = binomial)
+summary(mod_s_intercept)</code></pre>
 <p>Use <code>anova()</code> to compare whether or not including <code>religion</code> helps with explaining more variance in the outcome variable (or: does including <code>religion</code> statistically improve the fit)?</p>
 <pre class="r"><code>anova(mod_s_intercept, mod_s, test=&quot;Chi&quot;)</code></pre>
-<pre><code>## Warning in eval(family$initialize): non-integer #successes in a binomial glm!</code></pre>
-<pre><code>## Working (Rao-Scott) LRT for religion urban
-##  in svyglm(formula = against_abortion ~ religion + urban, design = ces_s, 
-##     family = binomial)
-## Working 2logLR =  266.4676 p= &lt; 2.22e-16 
-## (scale factors:  1.2 0.82 )</code></pre>
 <blockquote>
 <p><em>Question: What is the <code>test</code> option here for? Use <code>?anova</code> to see more information.</em><br />
 </p>
@@ -623,19 +585,10 @@ fit_religion$fit_odds[fit_religion$religion == 2] - fit_religion$fit_odds[fit_re
 </ul>
 <pre class="r"><code>ces_s %&gt;%
   summarise(urban_w_mean = survey_mean(urban, na.rm=T))</code></pre>
-<pre><code>## # A tibble: 1 × 2
-##   urban_w_mean urban_w_mean_se
-##          &lt;dbl&gt;           &lt;dbl&gt;
-## 1        0.785         0.00952</code></pre>
 <p>Putting them together, let’s create a new data frame. Note the variable names have to be the same as those included in <code>svyglm()</code>.</p>
 <pre class="r"><code>data_predict &lt;- data.frame(religion = 1:4,
                            urban = 0.785)
 data_predict</code></pre>
-<pre><code>##   religion urban
-## 1        1 0.785
-## 2        2 0.785
-## 3        3 0.785
-## 4        4 0.785</code></pre>
 <p>Now let’s obtain the predicted log-odds, odds, and probabilities when we vary the importance of <code>religion</code> while holding <code>urban</code> at its weighted mean.</p>
 <pre class="r"><code>fit_prob &lt;- predict(mod_s, newdata=data_predict, type=&quot;response&quot;)
 fit_log_odds &lt;- predict(mod_s, newdata=data_predict)
@@ -644,11 +597,6 @@ fit_mod_s &lt;- data.frame(religion = 1:4,
                         fit_log_odds = as.matrix(fit_log_odds))
 fit_mod_s$fit_odds &lt;- exp(fit_mod_s$fit_log_odds)
 fit_mod_s</code></pre>
-<pre><code>##   religion  fit_prob fit_log_odds  fit_odds
-## 1        1 0.9818210    3.9891435 54.008611
-## 2        2 0.9407299    2.7645512 15.871915
-## 3        3 0.8234587    1.5399589  4.664398
-## 4        4 0.5781946    0.3153665  1.370762</code></pre>
 <blockquote>
 <p><em>Question: Do the calculation similar to “Option 4: Use predict() Function (Recommended). Discuss your observation.</em><br />
 </p>
