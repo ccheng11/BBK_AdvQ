@@ -17,9 +17,9 @@ Chao-Yo Cheng\
 
 Revisit **Tutorial: logistic regression as a GLM** prepared by Dr Marju Kaps -- let's have a quick discussion on this.
 
-**If you'd like, please focus on Section 12 only and treat other sections in the original tutorial as extra (i.e., project-only) materials**. 
+**If you'd like, treat the original tutorial as extra (i.e., project-only) materials**. 
 
-Having said that, Section 7 in the original tutorial is useful if you need a quick refresher on the log function. It will not be included in the exam.
+Having said that, Section 7 in the original tutorial is useful if you need a quick refresher on the log function. Section 12 provides some useful tools for model diagnostics etc.
 
 # 1 Introduction
 
