@@ -2,7 +2,10 @@
 title: "Tutorial: Analyzing Survey Data (Part 2)"
 author: ""
 date: ""
-output: html_document
+output:
+  html_document:
+    toc: true
+    theme: united
 ---
 
 Chao-Yo Cheng\
