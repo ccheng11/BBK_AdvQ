@@ -209,7 +209,7 @@ or %>%
   kable_styling()
 ```
 
-*Since we find $OR=3.237173195$, more religious people are going be more likely to be against abortion.* 
+**Since we find $OR=3.237173195$, more religious people are going be more likely to be against abortion.** 
 
 To sum up our discussion, when you find a statistically significant coefficient, do the following:
 
