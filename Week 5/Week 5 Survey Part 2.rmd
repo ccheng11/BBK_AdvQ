@@ -17,9 +17,9 @@ Chao-Yo Cheng\
 
 Revisit **Tutorial: logistic regression as a GLM** prepared by Dr Marju Kaps -- let's have a quick discussion on this.
 
-**If you'd like, please focus on Section 12 only and treat other sections in the original tutorial as extra materials**. 
+**If you'd like, please focus on Section 12 only and treat other sections in the original tutorial as extra (i.e., project-only) materials**. 
 
-Section 7 in the original tutorial is useful if you need a quick refresher on the log function, but that will not be included in the exam.
+Having said that, Section 7 in the original tutorial is useful if you need a quick refresher on the log function. It will not be included in the exam.
 
 # 1 Introduction
 
@@ -169,7 +169,7 @@ table(ces_new$importance, ces_new$religion)
 
 > *Question: Which of the two versions of the importance of religion variable would you use in your analysis? Why? Try to think of pros and cons for each.*
 
-With the predictor included, the log odds of someone saying no to abortion is then $$\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{religion}).$$ The model means that we specify "the log-odds of people opposition abortion is a (linear) function of the variable `religion`s".
+With the predictor included, the log odds of someone saying no to abortion is then $$\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{religion}).$$ The model means that we specify "the log-odds of people opposition abortion is a (linear) function of the variable `religion`".
 
 Let's run the analysis, using the new data frame.
 
@@ -180,7 +180,7 @@ summary(mod_religion)
 
 The estimated coefficient for *Religion* is 1.17470 and statistically significant. How do we interpret the results? Dr Kaps introduced several options, but two stand out.
 
-### 3.2.1 Exponentiate $\hat{\beta}$ to Get Odds Ratio (OR)
+### 3.2.1 Odds Ratio (OR)
 
 First, $e^\beta$ (i.e., enter the coefficients in the `exp()` function) will give us the **odds-ratio** (OR). OR is notoriously confusing, but here is the basic intuition with minimum math involved.
 
