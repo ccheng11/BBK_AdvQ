@@ -202,10 +202,12 @@ Essentially, odds-ratio (OR) is a ratio of two different odds when we change the
 library(readxl)
 library(kableExtra)
 or <- read_xlsx("or.xlsx", col_names=T)
+colnames(or)[1] = ""
 or %>%
   kbl() %>%
   kable_styling()
 ```
+
 Since we find $OR=0.3089115$, it seems our data support the last scenario. 
 
 To sum up our discussion, when you find a statistically significant coefficient, do the following:
