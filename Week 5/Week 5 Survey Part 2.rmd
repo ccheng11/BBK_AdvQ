@@ -13,11 +13,19 @@ output:
 Chao-Yo Cheng\
 6 February 2021
 
+# Before You Start
+
+Revisit **Tutorial: logistic regression as a GLM** prepared by Dr Marju Kaps -- let's have a quick discussion on this.
+
+**If you'd like, please focus on Section 12 only and treat other sections in the original tutorial as extra materials**. 
+
+Section 7 in the original tutorial is useful if you need a quick refresher on the log function, but that will not be included in the exam.
+
 # 1 Introduction
 
 By the end of this tutorial, you will know how to:
 
-  - Review the main concepts of logit regression.
+  - Review the main concepts of logit regression and how to interpret the results.
   - Use logit regression to analyze survey data.
   - Perform model comparison on survey data.
 
@@ -61,30 +69,26 @@ ces <- carData::CES11
 head(ces,10)
 ```
 
-# 3 Use `glm()` to Run Logit Regression Without Weights
+# 3 Use `glm()` to Run Logit Regression
 
-In this section, we will use the workhorse function `glm()` to estimate the correlates of people's attitudes toward abortion.
+*Note: The main objective of this section is to make sure everyone is on the same page with respect to logit and GLM before we move on to include weights in the analysis.*
+
+In this section, we will use the workhorse function `glm()` to estimate the correlates of *people's attitudes toward abortion*.
 
   - Create a new dependent variable `against_abortion`, using the original variable `abortion` in the dataset.
   
-  - Fit the logit model with no predictor.
+  - Fit the logit model with no predictor. Interpret the findings.
   
-  - Fit the logit model with one predictor `religion` (see below).
-
-*Note: The main objective of this section is to make sure everyone is on the same page with respect to logit and GLM before we move on to include weights in the analysis.*
-  
-## 3.1 Create the Dependent Variable
+  - Fit the logit model with one predictor. Interpret the findings using odds-ratio with the help of `predict()`.
 
 First, let's create a binary variable such that we will assign the value of 1 to people against abortion in the study. If we use the `tidyverse` style, then we will use the `mutate()` function after the first pipeline. Make sure you save the data frame with the new variable as the same or another object, so we can continue to use it in the following analysis.
-
-> *Question: Can you explain why it may be a good idea to save the data frame with the new variable `against_abortion` as a separate object in R?*
 
 ```{r, echo=T, eval=T}
 ces_new <- ces %>%
   mutate(against_abortion = if_else(abortion == "No", 1, 0))
 ```
 
-The `if_else()` function is very straightforward -- it basically says: *please assign the value of 1 to those who answered "Yes" and 0 to those who answered the opposite.*
+The `if_else()` function is very straightforward -- it basically says: *please assign the value of 1 to those who answered "No" and 0 to those who answered the opposite.*
 
 Now let's check if we have done this properly. First, use `table()`.
 
@@ -92,147 +96,155 @@ Now let's check if we have done this properly. First, use `table()`.
 table(ces_new$against_abortion)
 ```
 
-You can also include both variables to create a frequency table -- the first variable will be the rows and the second will be the columns.
-
-```{r, echo=T, eval=T}
-table(ces_new$abortion, ces_new$against_abortion)
-```
-
-So it seems all observations are placed properly (i.e., no respondent is mis-classified in the new variable).
+All observations are placed properly (i.e., no respondent is mis-classified in the new variable).
 
 > *Question: Can you create a new binary variable such that it assigns the value of 1 (and 0 otherwise) to those living in the urban area?*
 
-## 3.2 Logit Regression with No Predictor
+## 3.1 Logit Regression with No Predictor
 
 We will tart with a simple model with no predictor.
 
-Recall the logit regression transforms a **probability** into **log odds** (or logged odds or log of odds, they are interchangeable): $$\text{logit}(p)=\log\left(\frac{p}{1-p}\right).$$
+Quickly recall the logit regression transforms a **probability** into **log odds** (or logged odds or log of odds, they are interchangeable): $$\text{logit}(p)=\log\left(\frac{p}{1-p}\right).$$ In this case, $p$ is the probability of respondents saying "No" to abortion. 
 
-In our case, $p$ is the probability of respondents saying "No" to abortion. If we only include the intercept (i.e., no predictor), then our model looks like this: $$\log\left(\frac{p}{1-p}\right)=\alpha.$$ The estimated intercept will be the log-odds of $p$ (i.e., the log odds of the probability that people are against abortion).
+If we only include the intercept (i.e., no predictor), then our model looks like this: $$\log\left(\frac{p}{1-p}\right)=\alpha.$$ The estimated intercept will be *the log-odds of people are against abortion*.
 
-Let's go ahead and fit the model. You can use the `summary()` function to see the canonical regression output. Note that we have to use the new data frame `ces_new` (the original `ces` does not include the variable we created).
+Let's go ahead and fit the model. Use the `summary()` function to see the canonical regression output. Note that we have to use the new data frame `ces_new` (the original `ces` does not include the variable we created).
 
 ```{r, echo=T, eval=T}
-mod_intercept <- glm(against_abortion ~ 1, data = ces_new, family = binomial)
+mod_intercept <- glm(against_abortion ~ 1,
+                     data = ces_new,
+                     family = binomial)
 summary(mod_intercept)
 ```
 
 > *Question: Use `?glm` to see more information -- what is the default for the option `family`?*
 
-Three notable things jump out:
+### 3.2.1 Explore the Point Estimate
 
-First, the estimated intercept $\hat{\alpha}=1.482045$ is the log odds of $p$ (the probability of a respondent opposing abortion). Let's use `coef()` to extract the coefficient.
+The estimated intercept $\hat{\alpha}=1.482045$ is the *log odds*. Let's use `coef()` to extract the coefficient.
   
 ```{r, echo=T, eval=T}
 coefs <- coef(mod_intercept) # extracting log odds
 coefs
 ```  
   
-Next, exponentiate the log odds will give us the odds of $p$.
+Next, we can exponentiate the log odds to get the *odds* (i.e., use `exp()` to get rid of the log from the odds).
   
 ```{r, echo=T, eval=T}
 exp(coefs) # calculating odds
 ```
 
-Third, we can take an extra step to derive the probability or the proportion of people objecting abortion: given that $\frac{p}{1-p}=4.401937$, we know $p=\frac{4.401937}{1+4.401937}=0.8148812$. You can use R to do the calculation for you.
+Third, let's take an extra step to compute the *probability* of people saying no to abortion. From the previous step, since the odds $\frac{p}{1-p}=4.401937$, we know $p=\frac{4.401937}{1+4.401937}=0.8148812$.
 
 ```{r, echo=T, eval=T}
 exp(coefs)/(1+exp(coefs)) # calculating p
 ```
 
-If you'd like, we can show the confidence interval of the estimate, using the `confint()` function. These are the upper and lower bounds of the estimated log odds.
+### 3.2.2 Explore the Confidence Intervals of the Point Estimate
+
+If you'd like, we can show the confidence interval of the point estimate, using the `confint()` function. These are the upper and lower bounds of the 95\% confidence intervals for $\hat{\alpha}$, namely the log odds.
 
 ```{r, echo=T, eval=T, message=F}
 coefs_ci <- confint(mod_intercept)
 coefs_ci
 ``` 
 
-> *Question: How do you derive the upper and lower bounds of estimated odds and probability?*
+> *Question: How do you derive the upper and lower bounds of estimated odds and probability? Hint: Use the upper and lower bounds of log odds to calculate the upper and lower bounds of estimated odds and probabilities.*
 
-## 3.3 Logit Regression with One Predictor
+## 3.2 Logit Regression with One Predictor
 
-Now, we will add a continuous explanatory variable to the model. There is no variable like this, so let's create a new variable `religion`, using `importance`. Let's use `recode()` inside `mutate()`.
+Now, we will add a predictor to the logit regression model.
+
+There is no variable like this, so let's create a new variable `religion`, using `importance`. Let's use `recode()` inside `mutate()`. Here we use higher numbers to refer to greater importance.
 
 ```{r, echo=T, eval=T}
-ces_new <- ces_new %>% # update "ces_new" to include the new variable
+ces_new <- ces_new %>% # update "ces_new" to include all new variables
   mutate(religion = recode(importance,
-                          "very" = 4,
-                          "somewhat" = 3,
-                          "notvery" = 2,
-                          "not" = 1))
+                           "very" = 4,
+                           "somewhat" = 3,
+                           "notvery" = 2,
+                           "not" = 1))
 table(ces_new$importance, ces_new$religion)
 ```
 
 > *Question: Which of the two versions of the importance of religion variable would you use in your analysis? Why? Try to think of pros and cons for each.*
 
-With the predictor included, the log odds of someone saying no to abortion is then $$\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{Religion}).$$ Let's run the analysis, using the new data frame.
+With the predictor included, the log odds of someone saying no to abortion is then $$\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{religion}).$$ The model means that we specify "the log-odds of people opposition abortion is a (linear) function of the variable `religion`s".
+
+Let's run the analysis, using the new data frame.
 
 ```{r, echo=T, eval=T}
 mod_religion <- glm(against_abortion ~ religion, data = ces_new, family = binomial)
 summary(mod_religion)
 ```
 
-The estimated coefficient for *Religion* is 1.17470 and statistically significant. How do we interpret the results?
+The estimated coefficient for *Religion* is 1.17470 and statistically significant. How do we interpret the results? Dr Kaps introduced several options, but two stand out.
 
-### Option 1: Interpret $\hat{\beta}$ Directly
+### 3.3.1 Exponentiate $\hat{\beta}$ to Get Odds Ratio (OR)
 
-From the output, we can see that $\hat{\beta}=1.17470$ is how the (expected) log-odds will change when we increase religion's degree of importance by 1. You can use the `confint()` function to extract the upper and lower bounds of the confidence intervals for $\hat{\beta}$.
+First, $e^\beta$ (i.e., enter the coefficients in the `exp()` function) will give us the **odds-ratio** (OR). OR is notoriously confusing, but here is the basic intuition with minimum math involved.
 
+  - First, recall that we define the model as $\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{religion}).$ The outcome variable is the log-odds of people against abortion.
+
+  - Again, similar to OLS, $\beta$ tells us how the *log-odds* will change when we increase the importance of `religion` by one level. Say we move `religion` from 1 to 2, we will have two separate log-odds. One is the log-odds of people opposing abortion when `Religion`$=2$ and the other one is the log-odds of people opposing abortion when `Religion`$=1$. Let's name them $\log(\text{Odds when Religion}=0)$ and $\log(\text{Odds when Religion}=1)$. This gives us $$\beta=\log(\text{Odds when Religion}=2)-\log(\text{Odds when Religion}=1).$$
+  
+  - By the law of logarithms, the **the difference between two logs** (the left hand side below) can be rewritten as **the log of them dividing up each other** (the right hand side below): $$\log(\text{Odds when Religion}=2)-\log(\text{Odds when Religion}=1)=\log\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right).$$
+  
+  - We can remove the log from $\log\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right)$ by taking $e^\beta$; in doing so, we have $\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right)$, and this is **the odds ratio when we increase the importance of religion by one unit.** 
+  
 ```{r, echo=T, eval=T}
-coef(mod_religion) # extract coefficients
+exp(coef(mod_religion)) # exponentiate coefficients
 ```  
 
-### Option 2: Exponentiate $\hat{\beta}$ to Get Odds Ratio (OR)
+Essentially, odds-ratio (OR) is a ratio of two different odds when we change the value of `religion` from 1 to 2. 
 
-Alternatively, you may have heard that $e^\beta$ will give us the **odds-ratio** (OR). OR is notoriously challenging because it requires some understandings of how logarithm works -- but the math is not that hard.
+```{r, echo=F, eval=T, message=F}
+library(readxl)
+library(kableExtra)
+or <- read_xlsx("or.xlsx", col_names=T)
+or %>%
+  kbl() %>%
+  kable_styling()
+```
+Since we find $OR=0.3089115$, it seems our data support the last scenario. 
 
-  - First, remember that we define the model as $\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{Religion}).$
-  - Again, $\beta$ tells us how the log of odds will change when we increase the value of $X$ by 1.
-  - Now, say we move $X$ from 0 to 1, we will have two logs of odds. Let's call them $\log(\text{Odds}_0)$ and $\log(\text{Odds}_1)$.
-  - By the law of logarithms, **the difference between two logs of odds** (the left hand side below) is the same as **the log of these two odds dividing up of each other** (the right hand side below): $$\beta = \log(\text{Odds}_1)-\log(\text{Odds}_0)=\log\left(\frac{\text{Odds}_1}{\text{Odds}_0}\right)$$.
-  - We can get rid of the log from $\log\left(\frac{\text{Odds}_1}{\text{Odds}_0}\right)$ by taking $e^\beta$.
+To sum up our discussion, when you find a statistically significant coefficient, do the following:
+
+  - Step 1: Put the coefficients into `exp()` to exponentiate them. This is the odds-ratio when we change the corresponding predictor by one unit. In our case, $\beta$ is the coefficient for the variable `religion`, so doing exponentiating it will give us the odds ratio when we increase the level of `religion` by 1.
+  
+  - Step 2: Read the odds-ratio (OR).
+    - If $OR=1$, the predictor is not associated with the outcome (this is going to be rare in practice).
+    - If $OR>1$, the predictor is positively associated with the outcome.
+    - If $OR<1$, the predictor is negatively associated with the outcome.
+
+### 3.3.2 Use `predict()` Function (Recommended)
 
 ```{r, echo=T, eval=T}
-exp(coef(mod_religion)) # exponentiate all coefficients
-```  
-
-A rule of thumb for odds-ratio (OR):
-
-  - If $OR=1$, it means $\text{Odds}_1$ and $\text{Odds}_0$ are the same, so changing $X$ from 0 to 1 does not have much impact on the outcome (i.e., $X$ is not associated with the odds of the outcome).
-  - If $OR>1$, it means $\text{Odds}_1$ is larger $\text{Odds}_0$ so that changing $X$ from 0 to 1 will make the outcome of interest more likely to happen (i.e., $X$ is positively associated with the odds of the outcome).
-  - If $OR<1$, it means $\text{Odds}_1$ is small $\text{Odds}_0$ so that changing $X$ from 0 to 1 will make the outcome of interest less likely to happen (i.e., $X$ is negatively associated with the odds of the outcome).
-
-### Option 3: The *Divide-by-4* Rule
-
-Third, use the *divide-by-4* rule, we can derive the largest possible change in the probability of opposing abortion.
-
-```{r, echo=T, eval=T}
-coef(mod_religion)[2]/4 # extract the "religion" coefficient 
-```  
-
-### Option 4: Use `predict()` Function (Recommended)
+mod_religion <- glm(against_abortion ~ religion, data = ces_new, family = binomial)
+```
 
 Usually, I do not recommend too many calculations.
 
-The most intuitive way to me, is to **use the `predict()` function**. Plug the model into `predict()` to compute the predicted **log-odds** for each observation (given each respondent's report level of religious importance). Including `type="response"` will return the predicted **probabilities**.
+The most intuitive way to me, is to **use the `predict()` function**. Plug the logit model into `predict()` to compute the predicted **log-odds** for each observation (given each respondent's report level of religious importance). Including `type="response"` will return the predicted **probabilities**. 
 
-```{r, echo=T, eval=F, message=F}
-predict(mod_religion) # return predicted log-odds
-predict(mod_religion, type="response") # return predicted probabilities
+```{r, echo=T, eval=T, message=F}
+fit_log_odds <- predict(mod_religion) # return predicted log-odds
+fit_prob <- predict(mod_religion, type="response") # return predicted probabilities
 ```  
 
-Let's create a new data frame to include `religion` so you will see it better. We will also include the original `importance` variable. We also use `exp()` to exponentiate the log odds to return the odds.
+Let's create a new data frame to include `religion` so you will see it better. We will also include the original `importance` variable. We also use `exp()` to remove log from log-odds.
 
 ```{r, echo=T, eval=T}
 fit_religion <- data.frame(religion = ces_new$religion, # use "religion" in "ces_new"
-                           importance = ces_new$importance,
-                           fit_prob = predict(mod_religion, type="response"),
-                           fit_log_odds = predict(mod_religion))
-fit_religion$fit_odds = exp(fit_religion$fit_log_odds)
+                           importance = ces_new$importance)
+fit_religion <- fit_religion %>%
+  mutate(prob = predict(mod_religion, type="response"),
+         log_odds = predict(mod_religion)) %>%
+  mutate(odds = exp(log_odds))
 head(fit_religion, 10)
 ```  
 
-You will see that observations who have the same level of importance towards religion have the same predicted log-odds and probabilities. Let's clean the data frame a bit with the help with `distinct()` and `arrange()`. Also, 
+You will see that observations who have the identical level of importance towards religion have the same predicted log-odds and probabilities. Let's clean the data frame a bit with the help with `distinct()` and `arrange()`. 
 
 ```{r, echo=T, eval=T}
 fit_religion <- fit_religion %>%
@@ -241,38 +253,45 @@ fit_religion <- fit_religion %>%
 fit_religion
 ```  
 
-Now we have the corresponding predicted odds, log-odds, and probability for each level of `religion`. If we increase the importance of `religion` from 1 to 2:
+Now we have the corresponding predicted odds, log-odds, and probability for each level of `religion`. If we increase the importance of `religion` from 1 to 2, we will get (you can ignore the number 8 on the top):
+
+```{r, echo=T, eval=T}
+### The corresponding change in log-odds is
+beta <- fit_religion$log_odds[fit_religion$religion == 2] - fit_religion$log_odds[fit_religion$religion == 1]
+beta
+
+### The corresponding odds ratio is
+or <- fit_religion$odds[fit_religion$religion == 2]/fit_religion$odds[fit_religion$religion == 1]
+or
+```  
+
+They are identical with the results we get before. All in all, we know that a more religious person is less likely to go against abortion. You can also calculate the change in the probability as below.
 
 ```{r, echo=T, eval=T}
 ### The corresponding change in probability is
-fit_religion$fit_prob[fit_religion$religion == 2] - fit_religion$fit_prob[fit_religion$religion == 1]
-
-### The corresponding change in log-odds is
-fit_religion$fit_log_odds[fit_religion$religion == 2] - fit_religion$fit_log_odds[fit_religion$religion == 1]
-
-### The corresponding odds ratio is
-fit_religion$fit_odds[fit_religion$religion == 2]/ fit_religion$fit_odds[fit_religion$religion == 1]
-```  
-
-They are identical with the $\hat{\beta}$ and $e^{\hat{\beta}}$ we get. All in all, we know that a more religious person is less likely to go against abortion.
+prob <- fit_religion$prob[fit_religion$religion == 2] - fit_religion$prob[fit_religion$religion == 1]
+prob
+```
 
 > *Question: Which interpretation do you prefer?*\
 
 > *Question: Redo the entire exercise, but now create a new binary variable `urban_num` so that it takes the value of 1 for those living in the city (otherwise 0) and carry out another logit regression with `urban_num` as the only predictor.*
 
+To use `predict()` when the model includes more than one predictor, see *Section 4.4*.
+
 # 4 Fitting GLMs With Weights
 
-The `survey` package makes this very easy. Th function `svyglm()` is identical to the conventional `glm()` function except that `svyglm()` use `design` (i.e., the survey object) instead of `data`. Type `?svyglm` for more information about the function. Alternatively, you can visit the `survey` package's vignette page. The section **Regression models** provides additional information.
+The `survey` package makes this very easy. The function `svyglm()` is identical to the conventional `glm()` function except that `svyglm()` use `design` (i.e., the survey object) instead of `data`.
+
+Type `?svyglm` for more information about the function. Alternatively, you can visit the `survey` package's vignette page. The section **Regression models** provides additional information.
 
 In this section, we will use the updated data frame `ces_new`, which should have included all the variables we have added so far, to carry out the following activities.
 
   - Create a survey object. 
   
-  - Use the `svyglm()` function to fit logit regression with different predictors.
+  - Use the `svyglm()` function to fit logit regression with two predictors.
   
   - Compare the results.
-  
-  - Carry out diagnostics.
 
 ## 4.1 Create a Survey Object
 
@@ -287,7 +306,7 @@ ces_new <- ces %>%
                            "not" = 1))
 ```
 
-As before, to include weights when you create the survey object.
+As before, `as_survey()` to create the survey object so we can use the useful functions in the packages.
 
 ```{r, echo=T, eval=F}
 ces_s <- ces_new %>%
@@ -299,16 +318,18 @@ ces_s <- ces_new %>%
 
 ## 4.2 Fit Logit Regression
 
-To carry out logit regression with weights included, we need to use the `svyglm()` function in the `survey` package. Let's include `religion` and `urban` together so the regression model we are testing will be $$\log\left(\frac{p}{1-p}\right)=\alpha+\beta_1(\text{Religion})+\beta_2(\text{Urban}).$$
+To carry out logit regression with weights included, we need to use the `svyglm()` function in the `survey` package. Let's include `religion` again.
 
 ```{r, echo=T, eval=F, message=F}
-mod_s <- svyglm(against_abortion ~ religion + urban,
+mod_s_religion <- svyglm(against_abortion ~ religion,
                 design = ces_s, # be sure to use the survey object
                 family = binomial)
-summary(mod_s)
+summary(mod_s_religion)
 ```
 
-## 4.3 Model Comparison
+## 4.3 Model Comparison and Diagnostics
+
+**Note: Please revisit Section 12 "Diagnostics" in "Tutorial: logistic regression as a GLM" by Dr Marju Kaps.** 
 
 Let's conduct another logit regression but this time only includes the intercept.
 
@@ -319,21 +340,32 @@ mod_s_intercept <- svyglm(against_abortion ~ 1,
 summary(mod_s_intercept)
 ```
 
-Use `anova()` to compare whether or not including `religion` helps with explaining more variance in the outcome variable (or: does including `religion` statistically improve the fit)?
+Use `anova()` to see whether or not including `religion` helps with explaining more variance in the outcome variable (or: does including `religion` statistically improve the model fit)?
 
 ```{r, echo=T, eval=F}
-anova(mod_s_intercept, mod_s, test="Chi")
+anova(mod_s_intercept, mod_s_religion, test="Chi")
 ```
 
 > *Question: What is the `test` option here for? Use `?anova` to see more information.*\
 
+> *Question: You can also compare the finding we get from `glm()`.*\
+
 ## 4.4 Extra: Get Predicted Log Odds and Probability With Multiple Predictors
 
-Now we will use the `predict()` function to interpret the results. Given that we have two predictors, it is better that we tell the values each variable should take before we ask the function to return probabilities and log-odds. 
+Say now if we include two predictors in the model.
 
-When we use multiple regression, to interpret each estimated coefficient, we usually have to hold the other variable constant. The following exercise will use $\beta_1$ as the example. To put this more specifically, $\beta_1$ now tells us how the log-oddeds will will change when we increase religion's importance by 1, when we control for the effect of `urban` by holding it constant.
+```{r, echo=T, eval=F, message=F}
+mod_s <- svyglm(against_abortion ~ religion,
+                design = ces_s, # be sure to use the survey object
+                family = binomial)
+summary(mod_s)
+```
 
-So we need to feed the `predict()` function two pieces of information:
+We can still use the `predict()` function to interpret the results. Given that the model includes two predictors, we have to let `predict()` know the values each variable should take to carry out the predictions. 
+
+In multivariate regression, we usually have to hold the other variable *constant* so as to interpret individual coefficients. The following exercise will use `religion` as the example. Against, the coefficient for `religion` tells us how the log-odds will change if we increase religion's importance by 1 when we control for the effect of `urban`.
+
+Let's feed the `predict()` function two pieces of information:
 
   - What are the unique levels of `religion``? The variable ranges from 1 to 4.
   - What is the constant of `urban` we can use? Weighted mean is a good choice.
@@ -351,7 +383,7 @@ data_predict <- data.frame(religion = 1:4,
 data_predict
 ```
 
-Now let's obtain the predicted log-odds, odds, and probabilities when we vary the importance of `religion` while holding `urban` at its weighted mean.
+Now let's obtain the predicted log-odds, odds, and probabilities when we vary the importance of `religion` while keeping `urban` at its weighted mean. 
 
 ```{r, echo=T, eval=F, message=F}
 fit_prob <- predict(mod_s, newdata=data_predict, type="response")
@@ -363,10 +395,26 @@ fit_mod_s$fit_odds <- exp(fit_mod_s$fit_log_odds)
 fit_mod_s
 ```
 
-> *Question: Do the calculation similar to "Option 4: Use predict() Function (Recommended). Discuss your observation.*\
+> *Question: Do the calculation similar to "Use predict() Function (Recommended). Discuss your observation.*\
 
 > *Question: Redo the same process, but this time, obtain the predicted log-odds, odds, and probabilities when we vary the importance of `urban` while holding `religion` at its weighted mean.*
 
-# 5 Model Diagnostics
+# Extra: Alternative Ways of Interpreting Results from Logit Regression
 
-**Note: Please revisit Section 12 "Diagnostics" in "Tutorial: logistic regression as a GLM" by Dr Marju Kaps.** 
+This section shows you additional options to interpret results from logit regression in addition to the options we discussed in Sections 3.3.
+
+## Option 1: Interpret $\hat{\beta}$ Directly
+
+From the output, we can see that $\hat{\beta}=1.17470$ is how the (expected) log-odds will change when we increase religion's degree of importance by 1. You can use the `confint()` function to extract the upper and lower bounds of the confidence intervals for $\hat{\beta}$.
+
+```{r, echo=T, eval=T}
+coef(mod_religion) # extract coefficients
+```  
+
+## Option 2: The *Divide-by-4* Rule
+
+Third, use the *divide-by-4* rule, we can derive the largest possible change in the probability of opposing abortion.
+
+```{r, echo=T, eval=T}
+coef(mod_religion)[2]/4 # extract the "religion" coefficient 
+```  
