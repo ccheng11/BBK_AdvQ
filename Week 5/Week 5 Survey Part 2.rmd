@@ -69,7 +69,7 @@ In this section, we will use the workhorse function `glm()` to estimate the corr
   
   - Fit the logit model with no predictor.
   
-  - Fit the logit model with one continuous predictor `religion` (see below).
+  - Fit the logit model with one predictor `religion` (see below).
 
 *Note: The main objective of this section is to make sure everyone is on the same page with respect to logit and GLM before we move on to include weights in the analysis.*
   
@@ -128,7 +128,7 @@ coefs <- coef(mod_intercept) # extracting log odds
 coefs
 ```  
   
-Next, Exponentiate the log odds will give us the odds of $p$.
+Next, exponentiate the log odds will give us the odds of $p$.
   
 ```{r, echo=T, eval=T}
 exp(coefs) # calculating odds
@@ -149,7 +149,7 @@ coefs_ci
 
 > *Question: How do you derive the upper and lower bounds of estimated odds and probability?*
 
-## 3.3 Logit Regression with One Continuous Predictor
+## 3.3 Logit Regression with One Predictor
 
 Now, we will add a continuous explanatory variable to the model. There is no variable like this, so let's create a new variable `religion`, using `importance`. Let's use `recode()` inside `mutate()`.
 
@@ -182,7 +182,7 @@ From the output, we can see that $\hat{\beta}=1.17470$ is how the (expected) log
 coef(mod_religion) # extract coefficients
 ```  
 
-### Option 2: Exponetiate $\hat{\beta}$ to Get Odds Ratio (OR)
+### Option 2: Exponentiate $\hat{\beta}$ to Get Odds Ratio (OR)
 
 Alternatively, you may have heard that $e^\beta$ will give us the **odds-ratio** (OR). OR is notoriously challenging because it requires some understandings of how logarithm works -- but the math is not that hard.
 
@@ -196,13 +196,18 @@ Alternatively, you may have heard that $e^\beta$ will give us the **odds-ratio**
 exp(coef(mod_religion)) # exponentiate all coefficients
 ```  
 
+A rule of thumb for odds-ratio (OR):
+
+  - If $OR=1$, it means $\text{Odds}_1$ and $\text{Odds}_0$ are the same, so changing $X$ from 0 to 1 does not have much impact on the outcome (i.e., $X$ is not associated with the odds of the outcome).
+  - If $OR>1$, it means $\text{Odds}_1$ is larger $\text{Odds}_0$ so that changing $X$ from 0 to 1 will make the outcome of interest more likely to happen (i.e., $X$ is positively associated with the odds of the outcome).
+  - If $OR<1$, it means $\text{Odds}_1$ is small $\text{Odds}_0$ so that changing $X$ from 0 to 1 will make the outcome of interest less likely to happen (i.e., $X$ is negatively associated with the odds of the outcome).
+
 ### Option 3: The *Divide-by-4* Rule
 
 Third, use the *divide-by-4* rule, we can derive the largest possible change in the probability of opposing abortion.
 
 ```{r, echo=T, eval=T}
-beta_hat <- coef(mod_religion)[2] # extract the "religion" coefficient 
-beta_hat/4 
+coef(mod_religion)[2]/4 # extract the "religion" coefficient 
 ```  
 
 ### Option 4: Use `predict()` Function (Recommended)
@@ -245,8 +250,8 @@ fit_religion$fit_prob[fit_religion$religion == 2] - fit_religion$fit_prob[fit_re
 ### The corresponding change in log-odds is
 fit_religion$fit_log_odds[fit_religion$religion == 2] - fit_religion$fit_log_odds[fit_religion$religion == 1]
 
-### The corresponding change in odds is
-fit_religion$fit_odds[fit_religion$religion == 2] - fit_religion$fit_odds[fit_religion$religion == 1]
+### The corresponding odds ratio is
+fit_religion$fit_odds[fit_religion$religion == 2]/ fit_religion$fit_odds[fit_religion$religion == 1]
 ```  
 
 They are identical with the $\hat{\beta}$ and $e^{\hat{\beta}}$ we get. All in all, we know that a more religious person is less likely to go against abortion.
@@ -271,7 +276,7 @@ In this section, we will use the updated data frame `ces_new`, which should have
 
 ## 4.1 Create a Survey Object
 
-```{r, echo=T, eval=T}
+```{r, echo=T, eval=F}
 ces_new <- ces %>%
   mutate(against_abortion = if_else(abortion == "No", 1, 0),
          urban = if_else(urban == "urban", 1, 0),
@@ -284,7 +289,7 @@ ces_new <- ces %>%
 
 As before, to include weights when you create the survey object.
 
-```{r, echo=T, eval=T}
+```{r, echo=T, eval=F}
 ces_s <- ces_new %>%
   as_survey(ids = id,
             strata = province,
@@ -294,9 +299,9 @@ ces_s <- ces_new %>%
 
 ## 4.2 Fit Logit Regression
 
-To carry out logit regression with weights included, we need to use the `svyglm()` function in the `survey` package. Let's include `religion` and `urban` together so the regression model we are testing will be $$\log\left(\frac{p}{1-p}\right)=\alpha+\beta_1(\text{Religion})+\beta_2(\text{Urban})$$.
+To carry out logit regression with weights included, we need to use the `svyglm()` function in the `survey` package. Let's include `religion` and `urban` together so the regression model we are testing will be $$\log\left(\frac{p}{1-p}\right)=\alpha+\beta_1(\text{Religion})+\beta_2(\text{Urban}).$$
 
-```{r, echo=T, eval=T, message=F}
+```{r, echo=T, eval=F, message=F}
 mod_s <- svyglm(against_abortion ~ religion + urban,
                 design = ces_s, # be sure to use the survey object
                 family = binomial)
@@ -307,7 +312,7 @@ summary(mod_s)
 
 Let's conduct another logit regression but this time only includes the intercept.
 
-```{r, echo=T, eval=T}
+```{r, echo=T, eval=F}
 mod_s_intercept <- svyglm(against_abortion ~ 1,
                           design = ces_s,
                           family = binomial)
@@ -316,7 +321,7 @@ summary(mod_s_intercept)
 
 Use `anova()` to compare whether or not including `religion` helps with explaining more variance in the outcome variable (or: does including `religion` statistically improve the fit)?
 
-```{r, echo=T, eval=T}
+```{r, echo=T, eval=F}
 anova(mod_s_intercept, mod_s, test="Chi")
 ```
 
@@ -333,14 +338,14 @@ So we need to feed the `predict()` function two pieces of information:
   - What are the unique levels of `religion``? The variable ranges from 1 to 4.
   - What is the constant of `urban` we can use? Weighted mean is a good choice.
 
-```{r, echo=T, eval=T, message=F}
+```{r, echo=T, eval=F, message=F}
 ces_s %>%
   summarise(urban_w_mean = survey_mean(urban, na.rm=T))
 ```
 
 Putting them together, let's create a new data frame. Note the variable names have to be the same as those included in `svyglm()`. 
 
-```{r, echo=T, eval=T, message=F}
+```{r, echo=T, eval=F, message=F}
 data_predict <- data.frame(religion = 1:4,
                            urban = 0.785)
 data_predict
@@ -348,7 +353,7 @@ data_predict
 
 Now let's obtain the predicted log-odds, odds, and probabilities when we vary the importance of `religion` while holding `urban` at its weighted mean.
 
-```{r, echo=T, eval=T, message=F}
+```{r, echo=T, eval=F, message=F}
 fit_prob <- predict(mod_s, newdata=data_predict, type="response")
 fit_log_odds <- predict(mod_s, newdata=data_predict)
 fit_mod_s <- data.frame(religion = 1:4,
