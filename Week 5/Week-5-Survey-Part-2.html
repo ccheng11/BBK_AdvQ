@@ -453,7 +453,7 @@ summary(mod_religion)</code></pre>
 <pre class="r"><code>exp(coef(mod_religion)) # exponentiate coefficients</code></pre>
 <pre><code>## (Intercept)    religion 
 ## 151.9008210   0.3089115</code></pre>
-<p>Essentially, odds-ratio (OR) is a ratio of two different odds when we change the value of <code>religion</code> from 1 to 2.</p>
+<p><strong>Essentially, odds-ratio (OR) is a ratio of two different odds when we change the level of <code>religion</code> by one unit</strong> (that is, from 1 to 2).</p>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -692,24 +692,6 @@ fit_mod_s</code></pre>
 <blockquote>
 <p><em>Question: Redo the same process, but this time, obtain the predicted log-odds, odds, and probabilities when we vary the importance of <code>urban</code> while holding <code>religion</code> at its weighted mean.</em></p>
 </blockquote>
-</div>
-</div>
-<div id="extra-alternative-ways-of-interpreting-results-from-logit-regression" class="section level1">
-<h1>Extra: Alternative Ways of Interpreting Results from Logit Regression</h1>
-<p>This section shows you additional options to interpret results from logit regression in addition to the options we discussed in Sections 3.3.</p>
-<div id="option-1-interpret-hatbeta-directly" class="section level2">
-<h2>Option 1: Interpret <span class="math inline">\(\hat{\beta}\)</span> Directly</h2>
-<p>From the output, we can see that <span class="math inline">\(\hat{\beta}=1.17470\)</span> is how the (expected) log-odds will change when we increase religion’s degree of importance by 1. You can use the <code>confint()</code> function to extract the upper and lower bounds of the confidence intervals for <span class="math inline">\(\hat{\beta}\)</span>.</p>
-<pre class="r"><code>coef(mod_religion) # extract coefficients</code></pre>
-<pre><code>## (Intercept)    religion 
-##    5.023228   -1.174700</code></pre>
-</div>
-<div id="option-2-the-divide-by-4-rule" class="section level2">
-<h2>Option 2: The <em>Divide-by-4</em> Rule</h2>
-<p>Third, use the <em>divide-by-4</em> rule, we can derive the largest possible change in the probability of opposing abortion.</p>
-<pre class="r"><code>coef(mod_religion)[2]/4 # extract the &quot;religion&quot; coefficient </code></pre>
-<pre><code>##   religion 
-## -0.2936751</code></pre>
 </div>
 </div>
 
