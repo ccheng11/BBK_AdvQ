@@ -186,7 +186,7 @@ coef(mod_religion) # extract coefficients
 
 Alternatively, you may have heard that $e^\beta$ will give us the **odds-ratio** (OR). OR is notoriously challenging because it requires some understandings of how logarithm works -- but the math is not that hard.
 
-  - First, remember that we define the model as $\log\left(\frac{p}{1-p}\right)=\alpha + beta(\text{Religion}).$
+  - First, remember that we define the model as $\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{Religion}).$
   - Again, $\beta$ tells us how the log of odds will change when we increase the value of $X$ by 1.
   - Now, say we move $X$ from 0 to 1, we will have two logs of odds. Let's call them $\log(\text{Odds}_0)$ and $\log(\text{Odds}_1)$.
   - By the law of logarithms, **the difference between two logs of odds** (the left hand side below) is the same as **the log of these two odds dividing up of each other** (the right hand side below): $$\beta = \log(\text{Odds}_1)-\log(\text{Odds}_0)=\log\left(\frac{\text{Odds}_1}{\text{Odds}_0}\right)$$.
