@@ -119,7 +119,7 @@ summary(mod_intercept)
 
 > *Question: Use `?glm` to see more information -- what is the default for the option `family`?*
 
-### 3.2.1 Explore the Point Estimate
+### 3.1.1 Explore the Point Estimate
 
 The estimated intercept $\hat{\alpha}=1.482045$ is the *log odds*. Let's use `coef()` to extract the coefficient.
   
@@ -140,7 +140,7 @@ Third, let's take an extra step to compute the *probability* of people saying no
 exp(coefs)/(1+exp(coefs)) # calculating p
 ```
 
-### 3.2.2 Explore the Confidence Intervals of the Point Estimate
+### 3.1.2 Explore the Confidence Intervals of the Point Estimate
 
 If you'd like, we can show the confidence interval of the point estimate, using the `confint()` function. These are the upper and lower bounds of the 95\% confidence intervals for $\hat{\alpha}$, namely the log odds.
 
@@ -180,7 +180,7 @@ summary(mod_religion)
 
 The estimated coefficient for *Religion* is 1.17470 and statistically significant. How do we interpret the results? Dr Kaps introduced several options, but two stand out.
 
-### 3.3.1 Exponentiate $\hat{\beta}$ to Get Odds Ratio (OR)
+### 3.2.1 Exponentiate $\hat{\beta}$ to Get Odds Ratio (OR)
 
 First, $e^\beta$ (i.e., enter the coefficients in the `exp()` function) will give us the **odds-ratio** (OR). OR is notoriously confusing, but here is the basic intuition with minimum math involved.
 
@@ -219,7 +219,7 @@ To sum up our discussion, when you find a statistically significant coefficient,
     - If $OR>1$, the predictor is positively associated with the outcome.
     - If $OR<1$, the predictor is negatively associated with the outcome.
 
-### 3.3.2 Use `predict()` Function (Recommended)
+### 3.2.2 Use `predict()` Function (Recommended)
 
 ```{r, echo=T, eval=T}
 mod_religion <- glm(against_abortion ~ religion, data = ces_new, family = binomial)
