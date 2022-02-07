@@ -4,6 +4,7 @@ author: ""
 date: ""
 output:
   html_document:
+    css: style.css
     toc: true
     toc_float:
       collapsed: false
