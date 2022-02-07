@@ -258,8 +258,8 @@ div.tocify {
 <div id="before-you-start" class="section level1">
 <h1>Before You Start</h1>
 <p>Revisit <strong>Tutorial: logistic regression as a GLM</strong> prepared by Dr Marju Kaps – let’s have a quick discussion on this.</p>
-<p><strong>If you’d like, please focus on Section 12 only and treat other sections in the original tutorial as extra materials</strong>.</p>
-<p>Section 7 in the original tutorial is useful if you need a quick refresher on the log function, but that will not be included in the exam.</p>
+<p><strong>If you’d like, please focus on Section 12 only and treat other sections in the original tutorial as extra (i.e., project-only) materials</strong>.</p>
+<p>Having said that, Section 7 in the original tutorial is useful if you need a quick refresher on the log function. It will not be included in the exam.</p>
 </div>
 <div id="introduction" class="section level1">
 <h1>1 Introduction</h1>
@@ -413,7 +413,7 @@ table(ces_new$importance, ces_new$religion)</code></pre>
 <blockquote>
 <p><em>Question: Which of the two versions of the importance of religion variable would you use in your analysis? Why? Try to think of pros and cons for each.</em></p>
 </blockquote>
-<p>With the predictor included, the log odds of someone saying no to abortion is then <span class="math display">\[\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{religion}).\]</span> The model means that we specify “the log-odds of people opposition abortion is a (linear) function of the variable <code>religion</code>s”.</p>
+<p>With the predictor included, the log odds of someone saying no to abortion is then <span class="math display">\[\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{religion}).\]</span> The model means that we specify “the log-odds of people opposition abortion is a (linear) function of the variable <code>religion</code>”.</p>
 <p>Let’s run the analysis, using the new data frame.</p>
 <pre class="r"><code>mod_religion &lt;- glm(against_abortion ~ religion, data = ces_new, family = binomial)
 summary(mod_religion)</code></pre>
@@ -441,8 +441,8 @@ summary(mod_religion)</code></pre>
 ## 
 ## Number of Fisher Scoring iterations: 5</code></pre>
 <p>The estimated coefficient for <em>Religion</em> is 1.17470 and statistically significant. How do we interpret the results? Dr Kaps introduced several options, but two stand out.</p>
-<div id="exponentiate-hatbeta-to-get-odds-ratio-or" class="section level3">
-<h3>3.2.1 Exponentiate <span class="math inline">\(\hat{\beta}\)</span> to Get Odds Ratio (OR)</h3>
+<div id="odds-ratio-or" class="section level3">
+<h3>3.2.1 Odds Ratio (OR)</h3>
 <p>First, <span class="math inline">\(e^\beta\)</span> (i.e., enter the coefficients in the <code>exp()</code> function) will give us the <strong>odds-ratio</strong> (OR). OR is notoriously confusing, but here is the basic intuition with minimum math involved.</p>
 <ul>
 <li><p>First, recall that we define the model as <span class="math inline">\(\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{religion}).\)</span> The outcome variable is the log-odds of people against abortion.</p></li>
