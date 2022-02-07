@@ -2,7 +2,13 @@
 title: "Tutorial: Analyzing Survey Data (Part 1)"
 author: ""
 date: ""
-output: github_document
+output:
+  html_document:
+    css: style.css
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
 ---
   
 Chao-Yo Cheng\
