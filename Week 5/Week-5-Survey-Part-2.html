@@ -447,7 +447,7 @@ summary(mod_religion)</code></pre>
 <h3>Option 2: Exponetiate <span class="math inline">\(\hat{\beta}\)</span> to Get Odds Ratio (OR)</h3>
 <p>Alternatively, you may have heard that <span class="math inline">\(e^\beta\)</span> will give us the <strong>odds-ratio</strong> (OR). OR is notoriously challenging because it requires some understandings of how logarithm works – but the math is not that hard.</p>
 <ul>
-<li>First, remember that we define the model as <span class="math inline">\(\log\left(\frac{p}{1-p}\right)=\alpha + beta(\text{Religion}).\)</span></li>
+<li>First, remember that we define the model as <span class="math inline">\(\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{Religion}).\)</span></li>
 <li>Again, <span class="math inline">\(\beta\)</span> tells us how the log of odds will change when we increase the value of <span class="math inline">\(X\)</span> by 1.</li>
 <li>Now, say we move <span class="math inline">\(X\)</span> from 0 to 1, we will have two logs of odds. Let’s call them <span class="math inline">\(\log(\text{Odds}_0)\)</span> and <span class="math inline">\(\log(\text{Odds}_1)\)</span>.</li>
 <li>By the law of logarithms, <strong>the difference between two logs of odds</strong> (the left hand side below) is the same as <strong>the log of these two odds dividing up of each other</strong> (the right hand side below): <span class="math display">\[\beta = \log(\text{Odds}_1)-\log(\text{Odds}_0)=\log\left(\frac{\text{Odds}_1}{\text{Odds}_0}\right)\]</span>.</li>
