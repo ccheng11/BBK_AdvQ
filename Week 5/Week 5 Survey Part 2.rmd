@@ -197,7 +197,7 @@ First, $e^\beta$ (i.e., enter the coefficients in the `exp()` function) will giv
 exp(coef(mod_religion)) # exponentiate coefficients
 ```  
 
-**Essentially, odds-ratio (OR) is a ratio of two different odds when we change the level of `religion` by one unit** (that is, from 1 to 2). 
+**In a nutshell, odds-ratio (OR) is a ratio of two different odds when we change the level of `religion` by one unit** (that is, from 1 to 2). 
 
 ```{r, echo=F, eval=T, message=F}
 library(readxl)
@@ -267,7 +267,6 @@ beta
 or <- fit_religion$odds[fit_religion$religion == 2]/fit_religion$odds[fit_religion$religion == 1]
 or
 ```  
-
 They are identical with the results we get before. All in all, we know that a more religious person is less likely to go against abortion. You can also calculate the change in the probability as below.
 
 ```{r, echo=T, eval=T}
@@ -275,7 +274,6 @@ They are identical with the results we get before. All in all, we know that a mo
 prob <- fit_religion$prob[fit_religion$religion == 2] - fit_religion$prob[fit_religion$religion == 1]
 prob
 ```
-
 > *Question: Which interpretation do you prefer?*\
 
 > *Question: Redo the entire exercise, but now create a new binary variable `urban_num` so that it takes the value of 1 for those living in the city (otherwise 0) and carry out another logit regression with `urban_num` as the only predictor.*
