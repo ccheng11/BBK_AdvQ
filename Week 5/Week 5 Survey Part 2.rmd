@@ -215,9 +215,9 @@ To sum up our discussion, when you find a statistically significant coefficient,
   - Step 1: Put the coefficients into `exp()` to exponentiate them. This is the odds-ratio when we change the corresponding predictor by one unit. In our case, $\beta$ is the coefficient for the variable `religion`, so doing exponentiating it will give us the odds ratio when we increase the level of `religion` by 1.
   
   - Step 2: Read the odds-ratio (OR).
-    - If $OR=1$, the predictor is not associated with the outcome (this is going to be rare in practice).
-    - If $OR>1$, the predictor is positively associated with the outcome.
-    - If $OR<1$, the predictor is negatively associated with the outcome.
+    - If $OR=1$, the predictor is not associated with the (odds of the) outcome (this is going to be rare in practice).
+    - If $OR>1$, the predictor is positively associated with the (odds of the) outcome.
+    - If $OR<1$, the predictor is negatively associated with the (odds of the) outcome.
 
 ### 3.2.2 Use `predict()` Function (Recommended)
 
