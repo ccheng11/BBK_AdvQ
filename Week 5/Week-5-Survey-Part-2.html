@@ -264,7 +264,7 @@ div.tocify {
 </div>
 <div id="introduction" class="section level1">
 <h1>1 Introduction</h1>
-<p>By the end of this tutorial, you will know how to:</p>
+<p>By the end of this tutorial, you will know how to</p>
 <ul>
 <li>Review the main concepts of logit regression and how to interpret the results.</li>
 <li>Use logit regression to analyze survey data.</li>
@@ -293,7 +293,7 @@ library(purrr)</code></pre>
 </ul>
 <p>In this tutorial, we will consider some of the variables that may be statistically associated with people’s attitudes towards abortion. The outcome of variable of interest is therefore <code>abortion</code>.</p>
 <blockquote>
-<p><em>Question: Anything wrong with the current set of explanatory/independent variables or predictors? Any other factors we should consider?</em></p>
+<p><em>Question: Any other factors we can or should consider?</em></p>
 </blockquote>
 <p>Let’s read in the data and check that all of our variables are as described.</p>
 <pre class="r"><code>ces &lt;- read.csv(&quot;ces11.csv&quot;, stringsAsFactors = TRUE)
@@ -309,35 +309,35 @@ head(ces,10)</code></pre>
 ## 8  3431       NL     406455 1715.00 Female      Yes    notvery   college urban
 ## 9  2516       NL     406455 1715.00   Male       No       very   college urban
 ## 10  959       NL     406455 3430.00   Male      Yes       very    lessHS rural</code></pre>
-</div>
-<div id="use-glm-to-run-logit-regression" class="section level1">
-<h1>3 Use <code>glm()</code> to Run Logit Regression</h1>
-<p><em>Note: The main objective of this section is to make sure everyone is on the same page with respect to logit and GLM before we move on to include weights in the analysis.</em></p>
-<p>In this section, we will use the workhorse function <code>glm()</code> to estimate the correlates of <em>people’s attitudes toward abortion</em>.</p>
-<ul>
-<li><p>Create a new dependent variable <code>against_abortion</code>, using the original variable <code>abortion</code> in the dataset.</p></li>
-<li><p>Fit the logit model with no predictor. Interpret the findings.</p></li>
-<li><p>Fit the logit model with one predictor. Interpret the findings using odds-ratio with the help of <code>predict()</code>.</p></li>
-</ul>
-<p>First, let’s create a binary variable such that we will assign the value of 1 to people against abortion in the study. If we use the <code>tidyverse</code> style, then we will use the <code>mutate()</code> function after the first pipeline. Make sure you save the data frame with the new variable as the same or another object, so we can continue to use it in the following analysis.</p>
+<p>For the following analysis, we will create a binary variable to assign the value of 1 to people against abortion. If we use the <code>tidyverse</code> style, then we will use the <code>mutate()</code> function after the first pipeline. Make sure you save the data frame with the new variable as the same or another object, so we can continue to use it in the following analysis.</p>
 <pre class="r"><code>ces_new &lt;- ces %&gt;%
-  mutate(against_abortion = if_else(abortion == &quot;Yes&quot;, 1, 0)) # the question asks people whether abortion should be banned.</code></pre>
-<p>The <code>if_else()</code> function is very straightforward – it basically says: <em>please assign the value of 1 to those who answered “Yes” and 0 to those who answered the opposite.</em></p>
+  mutate(against_abortion = if_else(abortion == &quot;Yes&quot;, 1, 0))</code></pre>
+<p>The <code>if_else()</code> function is very straightforward – it basically says: please assign the value of 1 to those who answered “Yes” and 0 to those who answered the opposite.</p>
 <p>Now let’s check if we have done this properly. First, use <code>table()</code>.</p>
 <pre class="r"><code>table(ces_new$against_abortion)</code></pre>
 <pre><code>## 
 ##    0    1 
 ## 1818  413</code></pre>
 <p>All observations are placed properly (i.e., no respondent is mis-classified in the new variable).</p>
+</div>
+<div id="use-glm-to-run-logit-regression" class="section level1">
+<h1>3 Use <code>glm()</code> to Run Logit Regression</h1>
+<p><em>Note: The main objective of this section is to make sure everyone is on the same page with respect to logit and GLM before we move on to include weights in the analysis.</em></p>
+<p>In this section, we will use the workhorse function <code>glm()</code> to estimate the correlates of <em>people’s attitudes against abortion</em>.</p>
+<ul>
+<li><p>Create a new dependent variable <code>against_abortion</code>, using the original variable <code>abortion</code> in the dataset.</p></li>
+<li><p>Fit the logit model with no predictor. Interpret the findings.</p></li>
+<li><p>Fit the logit model with one predictor. Interpret the findings using odds-ratio with the help of <code>predict()</code>.</p></li>
+</ul>
 <blockquote>
 <p><em>Question: Can you create a new binary variable such that it assigns the value of 1 (and 0 otherwise) to those living in the urban area?</em></p>
 </blockquote>
 <div id="logit-regression-with-no-predictor" class="section level2">
 <h2>3.1 Logit Regression with No Predictor</h2>
-<p>We will tart with a simple model with no predictor.</p>
-<p>Quickly recall the logit regression transforms a <strong>probability</strong> into <strong>log odds</strong> (or logged odds or log of odds, they are interchangeable): <span class="math display">\[\text{logit}(p)=\log\left(\frac{p}{1-p}\right).\]</span> In this case, <span class="math inline">\(p\)</span> is the probability of respondents saying “No” to abortion.</p>
-<p>If we only include the intercept (i.e., no predictor), then our model looks like this: <span class="math display">\[\log\left(\frac{p}{1-p}\right)=\alpha.\]</span> The estimated intercept will be <em>the log-odds of people are against abortion</em>.</p>
-<p>Let’s go ahead and fit the model. Use the <code>summary()</code> function to see the canonical regression output. Note that we have to use the new data frame <code>ces_new</code> (the original <code>ces</code> does not include the variable we created).</p>
+<p>We will start with a simple model with no predictor. This exercise aims to make you familiar with the differences between probability, odds, and log-odds.</p>
+<p>Quickly recall the logit link function transforms a <strong>probability</strong> into <strong>log odds</strong>: <span class="math display">\[\text{logit}(p)=\log\left(\frac{p}{1-p}\right).\]</span> In this case, <span class="math inline">\(p\)</span> is the <strong>probability</strong> of respondents against abortion.**</p>
+<p>If we only include the intercept (i.e., no predictor), then our model is like this: <span class="math display">\[\log\left(\frac{p}{1-p}\right)=\alpha.\]</span> The estimated intercept will be <em>the log-odds</em> of people against abortion.</p>
+<p>Let’s go ahead and fit the model. Use the <code>summary()</code> function to see the output. Note that we have to use the new data frame <code>ces_new</code> (the original <code>ces</code> does not include the variable we created).</p>
 <pre class="r"><code>mod_intercept &lt;- glm(against_abortion ~ 1,
                      data = ces_new,
                      family = binomial)
@@ -368,23 +368,23 @@ summary(mod_intercept)</code></pre>
 </blockquote>
 <div id="explore-the-point-estimate" class="section level3">
 <h3>3.1.1 Explore the Point Estimate</h3>
-<p>The estimated intercept <span class="math inline">\(\hat{\alpha}=-1.482045\)</span> is the <em>log odds</em>. Let’s use <code>coef()</code> to extract the coefficient.</p>
+<p>The estimated intercept is the <em>log-odds</em> (of people against abortion). Let’s use <code>coef()</code> to extract the coefficient.</p>
 <pre class="r"><code>coefs &lt;- coef(mod_intercept) # extracting log odds
 coefs</code></pre>
 <pre><code>## (Intercept) 
 ##   -1.482045</code></pre>
-<p>Next, we can exponentiate the log odds to get the <em>odds</em> (i.e., use <code>exp()</code> to get rid of the log from the odds).</p>
+<p>Next, we can take the exponent of the log odds to get the <em>odds</em> of people against abortion (i.e., use <code>exp()</code>). <strong>Rule of thumb: use <code>exp()</code> to turn log-odds into odds.</strong></p>
 <pre class="r"><code>exp(coefs) # calculating odds</code></pre>
 <pre><code>## (Intercept) 
 ##   0.2271727</code></pre>
-<p>Third, let’s take an extra step to compute the <em>probability</em> of people saying no to abortion. From the previous step, since the odds <span class="math inline">\(\frac{p}{1-p}=0.2271727\)</span>, we know <span class="math inline">\(p=\frac{0.2271727}{1+0.2271727}=0.1851188\)</span>.</p>
+<p>Third, we can compute the <em>probability</em> of people against abortion. From the previous step, since the odds <span class="math inline">\(\frac{p}{1-p}=0.2271727\)</span>, we know <span class="math inline">\(p=\frac{0.2271727}{1+0.2271727}=0.1851188\)</span>.</p>
 <pre class="r"><code>exp(coefs)/(1+exp(coefs)) # calculating p</code></pre>
 <pre><code>## (Intercept) 
 ##   0.1851188</code></pre>
 </div>
 <div id="explore-the-confidence-intervals-of-the-point-estimate" class="section level3">
 <h3>3.1.2 Explore the Confidence Intervals of the Point Estimate</h3>
-<p>If you’d like, we can show the confidence interval of the point estimate, using the <code>confint()</code> function. These are the upper and lower bounds of the 95% confidence intervals for <span class="math inline">\(\hat{\alpha}\)</span>, namely the log odds.</p>
+<p>We can show the <strong>confidence interval</strong> of the estimated log-odds, using the <code>confint()</code> function. These are the upper and lower bounds of the 95% confidence intervals.</p>
 <pre class="r"><code>coefs_ci &lt;- confint(mod_intercept)
 coefs_ci</code></pre>
 <pre><code>##     2.5 %    97.5 % 
@@ -392,11 +392,21 @@ coefs_ci</code></pre>
 <blockquote>
 <p><em>Question: How do you derive the upper and lower bounds of estimated odds and probability? Hint: Use the upper and lower bounds of log odds to calculate the upper and lower bounds of estimated odds and probabilities.</em></p>
 </blockquote>
+<pre class="r"><code>coefs_ci &lt;- confint(mod_intercept)
+coefs_ci # CIs of log-odds</code></pre>
+<pre><code>##     2.5 %    97.5 % 
+## -1.590112 -1.376378</code></pre>
+<pre class="r"><code>exp(coefs_ci) # CIs of odds</code></pre>
+<pre><code>##     2.5 %    97.5 % 
+## 0.2039028 0.2524914</code></pre>
+<pre class="r"><code>exp(coefs_ci)/(1+exp(coefs_ci)) # CIs of probability</code></pre>
+<pre><code>##     2.5 %    97.5 % 
+## 0.1693682 0.2015913</code></pre>
 </div>
 </div>
 <div id="logit-regression-with-one-predictor" class="section level2">
 <h2>3.2 Logit Regression with One Predictor</h2>
-<p>Now, we will add a predictor to the logit regression model.</p>
+<p>Let’s add a predictor to the logit regression model.</p>
 <p>There is no variable like this, so let’s create a new variable <code>religion</code>, using <code>importance</code>. Let’s use <code>recode()</code> inside <code>mutate()</code>. Here we use higher numbers to refer to greater importance.</p>
 <pre class="r"><code>ces_new &lt;- ces_new %&gt;% # update &quot;ces_new&quot; to include all new variables
   mutate(religion = recode(importance,
@@ -414,8 +424,7 @@ table(ces_new$importance, ces_new$religion)</code></pre>
 <blockquote>
 <p><em>Question: Which of the two versions of the importance of religion variable would you use in your analysis? Why? Try to think of pros and cons for each.</em></p>
 </blockquote>
-<p>With the predictor included, the log odds of someone saying no to abortion is then <span class="math display">\[\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{religion}).\]</span> The model means that we specify “the log-odds of people opposition abortion is a (linear) function of the variable <code>religion</code>”.</p>
-<p>Let’s run the analysis, using the new data frame.</p>
+<p>With the predictor included, the log-odds of someone against abortion is <span class="math display">\[\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{religion}).\]</span> Let’s run the analysis.</p>
 <pre class="r"><code>mod_religion &lt;- glm(against_abortion ~ religion, data = ces_new, family = binomial)
 summary(mod_religion)</code></pre>
 <pre><code>## 
@@ -441,20 +450,29 @@ summary(mod_religion)</code></pre>
 ## AIC: 1765.9
 ## 
 ## Number of Fisher Scoring iterations: 5</code></pre>
-<p>The estimated coefficient for <em>Religion</em> is 1.17470 and statistically significant. How do we interpret the results? Dr Kaps introduced several options, but two stand out.</p>
+<p>The estimated coefficient for <em>religion</em> is 1.17470 and statistically significant. How do we interpret the results?</p>
 <div id="odds-ratio-or" class="section level3">
 <h3>3.2.1 Odds Ratio (OR)</h3>
-<p>First, <span class="math inline">\(e^\beta\)</span> (i.e., enter the coefficients in the <code>exp()</code> function) will give us the <strong>odds-ratio</strong> (OR). OR is notoriously confusing, but here is the basic intuition with minimum math involved.</p>
-<ul>
-<li><p>First, recall that we define the model as <span class="math inline">\(\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{religion}).\)</span> The outcome variable is the log-odds of people against abortion.</p></li>
-<li><p>Again, similar to OLS, <span class="math inline">\(\beta\)</span> tells us how the <em>log-odds</em> will change when we increase the importance of <code>religion</code> by one level. Say we move <code>religion</code> from 1 to 2, we will have two separate log-odds. One is the log-odds of people opposing abortion when <code>Religion</code><span class="math inline">\(=2\)</span> and the other one is the log-odds of people opposing abortion when <code>Religion</code><span class="math inline">\(=1\)</span>. Let’s name them <span class="math inline">\(\log(\text{Odds when Religion}=0)\)</span> and <span class="math inline">\(\log(\text{Odds when Religion}=1)\)</span>. This gives us <span class="math display">\[\beta=\log(\text{Odds when Religion}=2)-\log(\text{Odds when Religion}=1).\]</span></p></li>
-<li><p>By the law of logarithms, the <strong>the difference between two logs</strong> (the left hand side below) can be rewritten as <strong>the log of them dividing up each other</strong> (the right hand side below): <span class="math display">\[\log(\text{Odds when Religion}=2)-\log(\text{Odds when Religion}=1)=\log\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right).\]</span></p></li>
-<li><p>We can remove the log from <span class="math inline">\(\log\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right)\)</span> by taking <span class="math inline">\(e^\beta\)</span>; in doing so, we have <span class="math inline">\(\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right)\)</span>, and this is <strong>the odds ratio when we increase the importance of religion by one unit.</strong></p></li>
-</ul>
-<pre class="r"><code>exp(coef(mod_religion)) # exponentiate coefficients</code></pre>
+<p>First, again, the coefficient is <strong>log-odds</strong>. Unlike the model with no predictor, take the exponent of the coefficient will give us the <strong>odds-ratio</strong> (OR). OR is notoriously confusing, but here is the basic intuition with minimum math involved.</p>
+<p>First, recall that we define the model as <span class="math display">\[\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{religion}).\]</span> Keep in mind that the outcome variable is the log-odds of people against abortion.</p>
+<p>Next, <span class="math inline">\(\beta\)</span> tells us how the <em>log-odds</em> will change when we increase the importance of <code>religion</code> by one level. <span class="math display">\[\beta=\log(\text{Odds when Religion}=2)-\log(\text{Odds when Religion}=1).\]</span></p>
+<p>By the law of logarithms, the <strong>the difference between two logs</strong> (the left hand side below) can be rewritten as <strong>the log of them dividing up each other</strong> (the right hand side below): <span class="math display">\[\log(\text{Odds when Religion}=2)-\log(\text{Odds when Religion}=1)=\log\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right).\]</span></p>
+<p>Remove the log from <span class="math inline">\(\log\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right)\)</span> by taking the exponent of it; in doing so, we have <span class="math display">\[\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right)\]</span>. This is <strong>the odds ratio when we increase the importance of religion by one unit.</strong></p>
+<pre class="r"><code>exp(coef(mod_religion))</code></pre>
 <pre><code>## (Intercept)    religion 
 ## 0.006583243 3.237173195</code></pre>
-<p><strong>In a nutshell, odds-ratio (OR) is a ratio of two different odds when we change the level of <code>religion</code> by one unit</strong> (that is, from 1 to 2).</p>
+<p>We can use <code>confint()</code> to get the confidence interval of the odds-ratio.</p>
+<pre class="r"><code>coefs_ci &lt;- confint(mod_religion)
+coefs_ci # CIs of log-odds</code></pre>
+<pre><code>##                 2.5 %    97.5 %
+## (Intercept) -5.548352 -4.532450
+## religion     1.031402  1.325895</code></pre>
+<pre class="r"><code>exp(coefs_ci) # CIs of odds-ratio</code></pre>
+<pre><code>##                  2.5 %    97.5 %
+## (Intercept) 0.00389387 0.0107543
+## religion    2.80499482 3.7655551</code></pre>
+<p>In a nutshell, odds-ratio (OR) is <strong>a ratio of two different odds</strong> when we change the level of <code>religion</code> by one unit. And it can only fall into one of the three scenarios, each of which has a different substantive interpretation.</p>
+<p>Since we find <span class="math inline">\(OR_{religion}&gt;1\)</span> even after we consider its confidence interval, <strong>more religious people are going be more likely to be against abortion.</strong></p>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -464,10 +482,7 @@ summary(mod_religion)</code></pre>
 It means
 </th>
 <th style="text-align:left;">
-It suggests
-</th>
-<th style="text-align:left;">
-So we know
+So when we increase importance of religion
 </th>
 <th style="text-align:left;">
 Put it simply
@@ -483,13 +498,10 @@ OR=1
 (Odds when Religion=2) = (Odds when Religion=1)
 </td>
 <td style="text-align:left;">
-More importance of religion does NOT affect the odds of resisting abortion
+the odds/chance of resisting abortion is not affected
 </td>
 <td style="text-align:left;">
-Religion and attitudes against abortion are NOT correlated
-</td>
-<td style="text-align:left;">
-NA
+Not clear how religious people react to abortion
 </td>
 </tr>
 <tr>
@@ -500,10 +512,7 @@ OR&gt;1
 (Odds when Religion=2) &gt; (Odds when Religion=1)
 </td>
 <td style="text-align:left;">
-More importance of religion also increases the odds of resisting abortion
-</td>
-<td style="text-align:left;">
-Religion and attitudes against abortion are positively correlated
+the odds/chance of resisting the abortion is higher
 </td>
 <td style="text-align:left;">
 Religious people are more likely to be against abortion
@@ -517,10 +526,7 @@ OR&lt;1
 (Odds when Religion=2) &lt; (Odds when Religion=1)
 </td>
 <td style="text-align:left;">
-More importance of religion reduces the odds of resisting abortion
-</td>
-<td style="text-align:left;">
-Religion and attitudes against abortion are negatively correlated
+the odds/chance of resisting abortion is lower
 </td>
 <td style="text-align:left;">
 Religious people are less likely to be against abortion
@@ -528,45 +534,43 @@ Religious people are less likely to be against abortion
 </tr>
 </tbody>
 </table>
-<p><strong>Since we find <span class="math inline">\(OR=3.237173195\)</span>, more religious people are going be more likely to be against abortion.</strong></p>
-<p>To sum up our discussion, when you find a statistically significant coefficient, do the following:</p>
+<p>To sum up our discussion, when you conduct a logit regression, do the following:</p>
 <ul>
-<li><p>Step 1: Put the coefficients into <code>exp()</code> to exponentiate them. This is the odds-ratio when we change the corresponding predictor by one unit. In our case, <span class="math inline">\(\beta\)</span> is the coefficient for the variable <code>religion</code>, so doing exponentiating it will give us the odds ratio when we increase the level of <code>religion</code> by 1.</p></li>
-<li><p>Step 2: Read the odds-ratio (OR).</p>
+<li><p>Step 1: Write down a table like the one above to think through your interpretations.</p></li>
+<li><p>Step 2: Run the logit regression (use <code>glm()</code>); see if your predictor(s) have any statistically significant coefficients.</p></li>
+<li><p>Step 3: Take the exponent of your coefficients (use <code>exp()</code>). the odds-ratio when we change the corresponding predictor by one unit.</p></li>
+<li><p>Step 4: Explain the odds-ratio (OR) with the table you made.</p>
 <ul>
 <li>If <span class="math inline">\(OR=1\)</span>, the predictor is not associated with the (odds of the) outcome (this is going to be rare in practice).</li>
 <li>If <span class="math inline">\(OR&gt;1\)</span>, the predictor is positively associated with the (odds of the) outcome.</li>
 <li>If <span class="math inline">\(OR&lt;1\)</span>, the predictor is negatively associated with the (odds of the) outcome.</li>
 </ul></li>
+<li><p>Step 5: Get the confidence interval of the odds ratio to make sure it stays in one of the three situations above.</p></li>
 </ul>
+<blockquote>
+<p><em>Question: Use another predictor in the dataset to go through the entire analysis again to make sure everything is clear.</em></p>
+</blockquote>
 </div>
 <div id="use-predict-function-recommended" class="section level3">
 <h3>3.2.2 Use <code>predict()</code> Function (Recommended)</h3>
-<pre class="r"><code>mod_religion &lt;- glm(against_abortion ~ religion, data = ces_new, family = binomial)</code></pre>
-<p>Usually, I do not recommend too many calculations.</p>
-<p>The most intuitive way to me, is to <strong>use the <code>predict()</code> function</strong>. Plug the logit model into <code>predict()</code> to compute the predicted <strong>log-odds</strong> for each observation (given each respondent’s report level of religious importance). Including <code>type=&quot;response&quot;</code> will return the predicted <strong>probabilities</strong>.</p>
-<pre class="r"><code>fit_log_odds &lt;- predict(mod_religion) # return predicted log-odds
-fit_prob &lt;- predict(mod_religion, type=&quot;response&quot;) # return predicted probabilities</code></pre>
-<p>Let’s create a new data frame to include <code>religion</code> so you will see it better. We will also include the original <code>importance</code> variable. We also use <code>exp()</code> to remove log from log-odds.</p>
+<p>The most intuitive way to me is perhaps <strong>use the <code>predict()</code> function</strong>. Plug the logit model into <code>predict()</code> to compute the predicted <strong>log-odds</strong> for each observation (given each respondent’s reported level of religious importance). Including <code>type=&quot;response&quot;</code> will return the predicted <strong>probabilities</strong>.</p>
+<pre class="r"><code>fit_log_odds &lt;- predict(mod_religion) # for predicted log-odds
+fit_prob &lt;- predict(mod_religion, type=&quot;response&quot;) # for predicted probabilities</code></pre>
+<p>Let’s create a new data frame to include <code>religion</code> so you will see it better. We will also include the original <code>importance</code> variable.</p>
 <pre class="r"><code>fit_religion &lt;- data.frame(religion = ces_new$religion, # use &quot;religion&quot; in &quot;ces_new&quot;
                            importance = ces_new$importance)
 fit_religion &lt;- fit_religion %&gt;%
   mutate(prob = predict(mod_religion, type=&quot;response&quot;),
          log_odds = predict(mod_religion)) %&gt;%
-  mutate(odds = exp(log_odds))
-head(fit_religion, 10)</code></pre>
-<pre><code>##    religion importance       prob   log_odds       odds
-## 1         3   somewhat 0.18255586 -1.4991264 0.22332518
-## 2         1        not 0.02086641 -3.8485273 0.02131110
-## 3         3   somewhat 0.18255586 -1.4991264 0.22332518
-## 4         4       very 0.41959750 -0.3244259 0.72294227
-## 5         1        not 0.02086641 -3.8485273 0.02131110
-## 6         1        not 0.02086641 -3.8485273 0.02131110
-## 7         4       very 0.41959750 -0.3244259 0.72294227
-## 8         2    notvery 0.06453555 -2.6738269 0.06898771
-## 9         4       very 0.41959750 -0.3244259 0.72294227
-## 10        4       very 0.41959750 -0.3244259 0.72294227</code></pre>
-<p>You will see that observations who have the identical level of importance towards religion have the same predicted log-odds and probabilities. Let’s clean the data frame a bit with the help with <code>distinct()</code> and <code>arrange()</code>.</p>
+  mutate(odds = exp(log_odds)) # convert log-odds into odds
+head(fit_religion, 5)</code></pre>
+<pre><code>##   religion importance       prob   log_odds      odds
+## 1        3   somewhat 0.18255586 -1.4991264 0.2233252
+## 2        1        not 0.02086641 -3.8485273 0.0213111
+## 3        3   somewhat 0.18255586 -1.4991264 0.2233252
+## 4        4       very 0.41959750 -0.3244259 0.7229423
+## 5        1        not 0.02086641 -3.8485273 0.0213111</code></pre>
+<p>You will see that observations with the identical level of importance have the same predicted values. Let’s clean the data frame a bit using <code>distinct()</code> and <code>arrange()</code>.</p>
 <pre class="r"><code>fit_religion &lt;- fit_religion %&gt;%
   distinct() %&gt;% # remove duplicates
   arrange(religion) # arrange observations by religion
@@ -576,30 +580,18 @@ fit_religion</code></pre>
 ## 2        2    notvery 0.06453555 -2.6738269 0.06898771
 ## 3        3   somewhat 0.18255586 -1.4991264 0.22332518
 ## 4        4       very 0.41959750 -0.3244259 0.72294227</code></pre>
-<p>Now we have the corresponding predicted odds, log-odds, and probability for each level of <code>religion</code>. If we increase the importance of <code>religion</code> from 1 to 2, we will get (you can ignore the number 8 on the top):</p>
-<pre class="r"><code>### The corresponding change in log-odds is
-beta &lt;- fit_religion$log_odds[fit_religion$religion == 2] - fit_religion$log_odds[fit_religion$religion == 1]
-beta</code></pre>
+<p>Now we have the corresponding predicted odds, log-odds, and probability for each level of <code>religion</code>. If we increase the importance of <code>religion</code> from 1 to 2, the corresponding change in log-odds and odds-ratio will be</p>
+<pre class="r"><code>fit_religion$log_odds[fit_religion$religion == 2] - fit_religion$log_odds[fit_religion$religion == 1]</code></pre>
 <pre><code>##      8 
 ## 1.1747</code></pre>
-<pre class="r"><code>### The corresponding odds ratio is
-or &lt;- fit_religion$odds[fit_religion$religion == 2]/fit_religion$odds[fit_religion$religion == 1]
-or</code></pre>
+<pre class="r"><code>fit_religion$odds[fit_religion$religion == 2]/fit_religion$odds[fit_religion$religion == 1]</code></pre>
 <pre><code>##        8 
 ## 3.237173</code></pre>
-<p>They are identical with the results we get before. All in all, we know that a more religious person is less likely to go against abortion. You can also calculate the change in the probability as below.</p>
-<pre class="r"><code>### The corresponding change in probability is
-prob &lt;- fit_religion$prob[fit_religion$religion == 2] - fit_religion$prob[fit_religion$religion == 1]
-prob</code></pre>
+<p>The corresponding change in probability is</p>
+<pre class="r"><code>fit_religion$prob[fit_religion$religion == 2] - fit_religion$prob[fit_religion$religion == 1]</code></pre>
 <pre><code>##          8 
 ## 0.04366914</code></pre>
-<blockquote>
-<p><em>Question: Which interpretation do you prefer?</em><br />
-</p>
-</blockquote>
-<blockquote>
-<p><em>Question: Redo the entire exercise, but now create a new binary variable <code>urban_num</code> so that it takes the value of 1 for those living in the city (otherwise 0) and carry out another logit regression with <code>urban_num</code> as the only predictor.</em></p>
-</blockquote>
+<p>They are identical with the results we get before. All in all, we know that a more religious person is more likely to go against abortion.</p>
 <p>To use <code>predict()</code> when the model includes more than one predictor, see <em>Section 4.4</em>.</p>
 </div>
 </div>
@@ -612,43 +604,100 @@ prob</code></pre>
 <ul>
 <li><p>Create a survey object.</p></li>
 <li><p>Use the <code>svyglm()</code> function to fit logit regression with two predictors.</p></li>
-<li><p>Compare the results.</p></li>
 </ul>
-<div id="create-a-survey-object" class="section level2">
-<h2>4.1 Create a Survey Object</h2>
+<p>Before we start, let’s check we have all the variables we need.</p>
 <pre class="r"><code>ces_new &lt;- ces %&gt;%
-  mutate(against_abortion = if_else(abortion == &quot;No&quot;, 1, 0),
+  mutate(against_abortion = if_else(abortion == &quot;Yes&quot;, 1, 0),
          urban = if_else(urban == &quot;urban&quot;, 1, 0),
          religion = recode(importance,
                            &quot;very&quot; = 4,
                            &quot;somewhat&quot; = 3,
                            &quot;notvery&quot; = 2,
                            &quot;not&quot; = 1))</code></pre>
-<p>As before, <code>as_survey()</code> to create the survey object so we can use the useful functions in the packages.</p>
+<div id="create-a-survey-object" class="section level2">
+<h2>4.1 Create a Survey Object</h2>
+<p>As before, we can use <code>as_survey()</code> to create the <code>survey</code> object so we can use the useful functions in the packages.</p>
 <pre class="r"><code>ces_s &lt;- ces_new %&gt;%
   as_survey(ids = id,
             strata = province,
             fpc = population,
-            weights = weight)</code></pre>
+            weights = weight)
+ces_s</code></pre>
+<pre><code>## Stratified Independent Sampling design
+## Called via srvyr
+## Sampling variables:
+##  - ids: id
+##  - strata: province
+##  - fpc: population
+##  - weights: weight
+## Data variables: id (int), province (fct), population (int), weight (dbl),
+##   gender (fct), abortion (fct), importance (fct), education (fct), urban (dbl),
+##   against_abortion (dbl), religion (dbl)</code></pre>
 </div>
 <div id="fit-logit-regression" class="section level2">
 <h2>4.2 Fit Logit Regression</h2>
-<p>To carry out logit regression with weights included, we need to use the <code>svyglm()</code> function in the <code>survey</code> package. Let’s include <code>religion</code> again.</p>
+<p>To carry out logit regression with weights included, we need to use <code>svyglm()</code> in the <code>survey</code> package. Let’s include <code>religion</code> again. Again, here we have to use <code>ces_s</code> rather than <code>ces_new</code>. You can ignore the warning message.</p>
 <pre class="r"><code>mod_s_religion &lt;- svyglm(against_abortion ~ religion,
-                design = ces_s, # be sure to use the survey object
-                family = binomial)
-summary(mod_s_religion)</code></pre>
+                         design = ces_s, # be sure to use the survey object
+                         family = binomial)</code></pre>
+<pre><code>## Warning in eval(family$initialize): non-integer #successes in a binomial glm!</code></pre>
+<pre class="r"><code>summary(mod_s_religion)</code></pre>
+<pre><code>## 
+## Call:
+## svyglm(formula = against_abortion ~ religion, design = ces_s, 
+##     family = binomial)
+## 
+## Survey design:
+## Called via srvyr
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   -5.202      0.355  -14.65   &lt;2e-16 ***
+## religion       1.223      0.103   11.88   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1.210905)
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<p>Let’s take a look at the odds-ratio by taking the exponent of the <code>religion</code> coefficient.</p>
+<pre class="r"><code>exp(coef(mod_s_religion))</code></pre>
+<pre><code>## (Intercept)    religion 
+## 0.005506094 3.397762968</code></pre>
 </div>
-<div id="model-comparison-and-diagnostics" class="section level2">
-<h2>4.3 Model Comparison and Diagnostics</h2>
-<p><strong>Note: Please revisit Section 12 “Diagnostics” in “Tutorial: logistic regression as a GLM” by Dr Marju Kaps.</strong></p>
+<div id="extra-model-comparison-and-diagnostics" class="section level2">
+<h2>4.3 Extra: Model Comparison and Diagnostics</h2>
+<p><strong>Note: Please revisit Section 12 “Diagnostics” in “Tutorial: logistic regression as a GLM” by Dr Marju Kaps to see the functions you can use for model diagnostics.</strong></p>
 <p>Let’s conduct another logit regression but this time only includes the intercept.</p>
 <pre class="r"><code>mod_s_intercept &lt;- svyglm(against_abortion ~ 1,
                           design = ces_s,
-                          family = binomial)
-summary(mod_s_intercept)</code></pre>
+                          family = binomial)</code></pre>
+<pre><code>## Warning in eval(family$initialize): non-integer #successes in a binomial glm!</code></pre>
+<pre class="r"><code>summary(mod_s_intercept)</code></pre>
+<pre><code>## 
+## Call:
+## svyglm(formula = against_abortion ~ 1, design = ces_s, family = binomial)
+## 
+## Survey design:
+## Called via srvyr
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -1.48297    0.06534   -22.7   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1.000448)
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
 <p>Use <code>anova()</code> to see whether or not including <code>religion</code> helps with explaining more variance in the outcome variable (or: does including <code>religion</code> statistically improve the model fit)?</p>
 <pre class="r"><code>anova(mod_s_intercept, mod_s_religion, test=&quot;Chi&quot;)</code></pre>
+<pre><code>## Warning in eval(family$initialize): non-integer #successes in a binomial glm!</code></pre>
+<pre><code>## Working (Rao-Scott) LRT for religion
+##  in svyglm(formula = against_abortion ~ religion, design = ces_s, 
+##     family = binomial)
+## Working 2logLR =  224.806 p= &lt; 2.22e-16 
+## df=1</code></pre>
 <blockquote>
 <p><em>Question: What is the <code>test</code> option here for? Use <code>?anova</code> to see more information.</em><br />
 </p>
@@ -661,12 +710,32 @@ summary(mod_s_intercept)</code></pre>
 <div id="extra-get-predicted-log-odds-and-probability-with-multiple-predictors" class="section level2">
 <h2>4.4 Extra: Get Predicted Log Odds and Probability With Multiple Predictors</h2>
 <p>Say now if we include two predictors in the model.</p>
-<pre class="r"><code>mod_s &lt;- svyglm(against_abortion ~ religion,
+<pre class="r"><code>mod_s &lt;- svyglm(against_abortion ~ religion + urban,
                 design = ces_s, # be sure to use the survey object
-                family = binomial)
-summary(mod_s)</code></pre>
-<p>We can still use the <code>predict()</code> function to interpret the results. Given that the model includes two predictors, we have to let <code>predict()</code> know the values each variable should take to carry out the predictions.</p>
-<p>In multivariate regression, we usually have to hold the other variable <em>constant</em> so as to interpret individual coefficients. The following exercise will use <code>religion</code> as the example. Against, the coefficient for <code>religion</code> tells us how the log-odds will change if we increase religion’s importance by 1 when we control for the effect of <code>urban</code>.</p>
+                family = binomial)</code></pre>
+<pre><code>## Warning in eval(family$initialize): non-integer #successes in a binomial glm!</code></pre>
+<pre class="r"><code>summary(mod_s)</code></pre>
+<pre><code>## 
+## Call:
+## svyglm(formula = against_abortion ~ religion + urban, design = ces_s, 
+##     family = binomial)
+## 
+## Survey design:
+## Called via srvyr
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  -4.9319     0.3774 -13.068   &lt;2e-16 ***
+## religion      1.2246     0.1031  11.873   &lt;2e-16 ***
+## urban        -0.3591     0.1570  -2.287   0.0223 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1.214632)
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<p>We can still use the <code>predict()</code> function to get the predicted log-odds and probabilities. Given that the model includes two predictors, we have to carry out the predictions one by one.</p>
+<p>We will start with the <code>religion</code> coefficient. This time, rather than putting the model into <code>predict()</code>, let’s specify the exact levels of <code>religion</code>. Since we are interested in learning how the predicted log-odds and probabilities across different levels, we have to hold <code>urban</code> constant. In this sense, <code>urban</code> serves as a <strong>control</strong> variable for us so we can explore the following: <em>how will the attitudes against abortion change with one-unit increase in <code>religion</code>, when we hold <code>urban</code> constant?</em></p>
 <p>Let’s feed the <code>predict()</code> function two pieces of information:</p>
 <ul>
 <li>What are the unique levels of `religion``? The variable ranges from 1 to 4.</li>
@@ -674,10 +743,19 @@ summary(mod_s)</code></pre>
 </ul>
 <pre class="r"><code>ces_s %&gt;%
   summarise(urban_w_mean = survey_mean(urban, na.rm=T))</code></pre>
-<p>Putting them together, let’s create a new data frame. Note the variable names have to be the same as those included in <code>svyglm()</code>.</p>
+<pre><code>## # A tibble: 1 × 2
+##   urban_w_mean urban_w_mean_se
+##          &lt;dbl&gt;           &lt;dbl&gt;
+## 1        0.785         0.00952</code></pre>
+<p>Put them together into a new data frame. Note the variable names have to be the same as those included in <code>svyglm()</code>.</p>
 <pre class="r"><code>data_predict &lt;- data.frame(religion = 1:4,
                            urban = 0.785)
 data_predict</code></pre>
+<pre><code>##   religion urban
+## 1        1 0.785
+## 2        2 0.785
+## 3        3 0.785
+## 4        4 0.785</code></pre>
 <p>Now let’s obtain the predicted log-odds, odds, and probabilities when we vary the importance of <code>religion</code> while keeping <code>urban</code> at its weighted mean.</p>
 <pre class="r"><code>fit_prob &lt;- predict(mod_s, newdata=data_predict, type=&quot;response&quot;)
 fit_log_odds &lt;- predict(mod_s, newdata=data_predict)
@@ -686,12 +764,17 @@ fit_mod_s &lt;- data.frame(religion = 1:4,
                         fit_log_odds = as.matrix(fit_log_odds))
 fit_mod_s$fit_odds &lt;- exp(fit_mod_s$fit_log_odds)
 fit_mod_s</code></pre>
+<pre><code>##   religion   fit_prob fit_log_odds   fit_odds
+## 1        1 0.01817897   -3.9891435 0.01851557
+## 2        2 0.05927010   -2.7645512 0.06300437
+## 3        3 0.17654126   -1.5399589 0.21438992
+## 4        4 0.42180537   -0.3153665 0.72952142</code></pre>
 <blockquote>
 <p><em>Question: Do the calculation similar to “Use predict() Function (Recommended). Discuss your observation.</em><br />
 </p>
 </blockquote>
 <blockquote>
-<p><em>Question: Redo the same process, but this time, obtain the predicted log-odds, odds, and probabilities when we vary the importance of <code>urban</code> while holding <code>religion</code> at its weighted mean.</em></p>
+<p><em>Question: Redo the same process, but this time, obtain the predicted log-odds, odds, and probabilities when we vary the levels of <code>urban</code> while holding <code>religion</code> at its weighted mean.</em></p>
 </blockquote>
 </div>
 </div>
