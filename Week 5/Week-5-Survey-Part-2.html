@@ -457,11 +457,11 @@ summary(mod_religion)</code></pre>
 <p>First, recall that we define the model as <span class="math display">\[\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{religion}).\]</span> Keep in mind that the outcome variable is the log-odds of people against abortion.</p>
 <p>Next, <span class="math inline">\(\beta\)</span> tells us how the <em>log-odds</em> will change when we increase the importance of <code>religion</code> by one level. <span class="math display">\[\beta=\log(\text{Odds when Religion}=2)-\log(\text{Odds when Religion}=1).\]</span></p>
 <p>By the law of logarithms, the <strong>the difference between two logs</strong> (the left hand side below) can be rewritten as <strong>the log of them dividing up each other</strong> (the right hand side below): <span class="math display">\[\log(\text{Odds when Religion}=2)-\log(\text{Odds when Religion}=1)=\log\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right).\]</span></p>
-<p>Remove the log from <span class="math inline">\(\log\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right)\)</span> by taking the exponent of it; in doing so, we have <span class="math display">\[\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right)\]</span>. This is <strong>the odds ratio when we increase the importance of religion by one unit.</strong></p>
+<p>Remove the log from <span class="math inline">\(\log\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right)\)</span> by taking the exponent of it; in doing so, we have <span class="math display">\[\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right).\]</span> This is <strong>the odds ratio when we increase the importance of religion by one unit.</strong></p>
 <pre class="r"><code>exp(coef(mod_religion))</code></pre>
 <pre><code>## (Intercept)    religion 
 ## 0.006583243 3.237173195</code></pre>
-<p>We can use <code>confint()</code> to get the confidence interval of the odds-ratio.</p>
+<p>We can use <code>confint()</code> to get the confidence interval of the odds-ratio to see if it is stays above 1.</p>
 <pre class="r"><code>coefs_ci &lt;- confint(mod_religion)
 coefs_ci # CIs of log-odds</code></pre>
 <pre><code>##                 2.5 %    97.5 %

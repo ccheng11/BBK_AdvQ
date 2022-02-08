@@ -196,13 +196,13 @@ Next, $\beta$ tells us how the *log-odds* will change when we increase the impor
 
 By the law of logarithms, the **the difference between two logs** (the left hand side below) can be rewritten as **the log of them dividing up each other** (the right hand side below): $$\log(\text{Odds when Religion}=2)-\log(\text{Odds when Religion}=1)=\log\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right).$$
   
-Remove the log from $\log\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right)$ by taking the exponent of it; in doing so, we have $$\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right)$$. This is **the odds ratio when we increase the importance of religion by one unit.** 
+Remove the log from $\log\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right)$ by taking the exponent of it; in doing so, we have $$\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right).$$ This is **the odds ratio when we increase the importance of religion by one unit.** 
 
 ```{r, echo=T, eval=T}
 exp(coef(mod_religion))
 ```  
 
-We can use `confint()` to get the confidence interval of the odds-ratio.
+We can use `confint()` to get the confidence interval of the odds-ratio to see if it is stays above 1.
 
 ```{r, echo=T, eval=T, message=F}
 coefs_ci <- confint(mod_religion)
