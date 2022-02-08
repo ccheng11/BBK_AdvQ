@@ -308,22 +308,11 @@ library(purrr)</code></pre>
 </p>
 </blockquote>
 <blockquote>
-<p><em>Question: What is the main dependent variable of interest?</em><br />
-</p>
-</blockquote>
-<blockquote>
-<p><em>Question: Anything wrong with the current set of explanatory/independent variables or predictors? Any other factors should we consider?</em><br />
-</p>
-</blockquote>
-<blockquote>
 <p><em>Question: Can we conduct survey research with children in our sample? How should we do that?</em></p>
 </blockquote>
 <p>Now, set up your working directory and read the data into R.</p>
 <pre class="r"><code>ces &lt;- read.csv(&quot;ces11.csv&quot;, stringsAsFactors=TRUE)</code></pre>
 <p>Note that here we set <code>stringsAsFactors=TRUE</code> so that the variables that are meant to be factors are set up accordingly.</p>
-<blockquote>
-<p><em>Question: How do we verify whether or not a variable is a factor in <code>R</code>? If it is not, which <code>R</code> function should we use to force a variable to be a factor?</em></p>
-</blockquote>
 </div>
 <div id="survey-design-components" class="section level2">
 <h2>3 Survey Design Components</h2>
@@ -397,9 +386,6 @@ ces_s</code></pre>
 ##   &lt;fct&gt;    &lt;int&gt;
 ## 1 No        1818
 ## 2 Yes        413</code></pre>
-<blockquote>
-<p><em>Question: How else can you get the table?</em></p>
-</blockquote>
 <p>Now let’s use <code>ces_s</code> (i.e., the survey object) and the <code>survey_total()</code> function.</p>
 <pre class="r"><code>ces_s %&gt;%
  group_by(abortion) %&gt;%
@@ -410,7 +396,7 @@ ces_s</code></pre>
 ## 1 No       13059520. 196984.
 ## 2 Yes       2964018. 162360.</code></pre>
 <blockquote>
-<p><em>Question: What does <code>survey_total</code> do?</em><br />
+<p><em>Question: What does <code>survey_total()</code> do?</em><br />
 </p>
 </blockquote>
 <blockquote>
@@ -488,16 +474,12 @@ table(ess9$cntry)</code></pre>
 <pre class="r"><code>unique(ess9$wltdffr)</code></pre>
 <p>Let’s create another variable that is grouped the same way as in the report:</p>
 <pre class="r"><code>ess9_survey &lt;- ess9_survey %&gt;%
- mutate(wltdffr_group =
-      case_when(
-       wltdffr &gt;= -4 &amp; wltdffr &lt;= -1 ~ &quot;Unfairly small&quot;,
-       wltdffr == 0 ~ &quot;Fair&quot;,
-       wltdffr &gt;= 1 &amp; wltdffr &lt;= 4 ~ &quot;Unfairly large&quot;),
-     wltdffr_group = factor(wltdffr_group,
-                levels = c(&quot;Unfairly small&quot;,
-                      &quot;Fair&quot;,
-                      &quot;Unfairly large&quot;))
- )</code></pre>
+ mutate(wltdffr_group = case_when(wltdffr &gt;= -4 &amp; wltdffr &lt;= -1 ~ &quot;Unfairly small&quot;,
+                                  wltdffr == 0 ~ &quot;Fair&quot;,
+                                  wltdffr &gt;= 1 &amp; wltdffr &lt;= 4 ~ &quot;Unfairly large&quot;),
+        wltdffr_group = factor(wltdffr_group, levels = c(&quot;Unfairly small&quot;,
+                                                         &quot;Fair&quot;,
+                                                         &quot;Unfairly large&quot;)))</code></pre>
 <blockquote>
 <p><em>Question: Can you repeat the same analysis without using the <code>tidyverse</code> pipelines?</em></p>
 </blockquote>

@@ -309,10 +309,10 @@ head(ces,10)</code></pre>
 ## 8  3431       NL     406455 1715.00 Female      Yes    notvery   college urban
 ## 9  2516       NL     406455 1715.00   Male       No       very   college urban
 ## 10  959       NL     406455 3430.00   Male      Yes       very    lessHS rural</code></pre>
-<p>For the following analysis, we will create a binary variable to assign the value of 1 to people against abortion. If we use the <code>tidyverse</code> style, then we will use the <code>mutate()</code> function after the first pipeline. Make sure you save the data frame with the new variable as the same or another object, so we can continue to use it in the following analysis.</p>
+<p>For the following analysis, we will create a binary variable to assign the value of 1 to people against abortion.</p>
 <pre class="r"><code>ces_new &lt;- ces %&gt;%
   mutate(against_abortion = if_else(abortion == &quot;Yes&quot;, 1, 0))</code></pre>
-<p>The <code>if_else()</code> function is very straightforward – it basically says: please assign the value of 1 to those who answered “Yes” and 0 to those who answered the opposite.</p>
+<p>The <code>if_else()</code> function is very convenient – it basically says: please assign the value of 1 to those who answered “Yes” and 0 to those who answered the opposite.</p>
 <p>Now let’s check if we have done this properly. First, use <code>table()</code>.</p>
 <pre class="r"><code>table(ces_new$against_abortion)</code></pre>
 <pre><code>## 
@@ -424,7 +424,7 @@ table(ces_new$importance, ces_new$religion)</code></pre>
 <blockquote>
 <p><em>Question: Which of the two versions of the importance of religion variable would you use in your analysis? Why? Try to think of pros and cons for each.</em></p>
 </blockquote>
-<p>With the predictor included, the log-odds of someone against abortion is <span class="math display">\[\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{religion}).\]</span> Let’s run the analysis.</p>
+<p>With the predictor included, the log-odds of a respondent against abortion is <span class="math display">\[\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{religion}).\]</span> Let’s run the analysis.</p>
 <pre class="r"><code>mod_religion &lt;- glm(against_abortion ~ religion, data = ces_new, family = binomial)
 summary(mod_religion)</code></pre>
 <pre><code>## 

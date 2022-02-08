@@ -70,14 +70,14 @@ ces <- carData::CES11
 head(ces,10)
 ```
 
-For the following analysis, we will create a binary variable to assign the value of 1 to people against abortion. If we use the `tidyverse` style, then we will use the `mutate()` function after the first pipeline. Make sure you save the data frame with the new variable as the same or another object, so we can continue to use it in the following analysis.
+For the following analysis, we will create a binary variable to assign the value of 1 to people against abortion.
 
 ```{r, echo=T, eval=T}
 ces_new <- ces %>%
   mutate(against_abortion = if_else(abortion == "Yes", 1, 0))
 ```
 
-The `if_else()` function is very straightforward -- it basically says: please assign the value of 1 to those who answered "Yes" and 0 to those who answered the opposite.
+The `if_else()` function is very convenient -- it basically says: please assign the value of 1 to those who answered "Yes" and 0 to those who answered the opposite.
 
 Now let's check if we have done this properly. First, use `table()`.
 
@@ -177,7 +177,7 @@ table(ces_new$importance, ces_new$religion)
 
 > *Question: Which of the two versions of the importance of religion variable would you use in your analysis? Why? Try to think of pros and cons for each.*
 
-With the predictor included, the log-odds of someone against abortion is $$\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{religion}).$$ Let's run the analysis.
+With the predictor included, the log-odds of a respondent against abortion is $$\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{religion}).$$ Let's run the analysis.
 
 ```{r, echo=T, eval=T}
 mod_religion <- glm(against_abortion ~ religion, data = ces_new, family = binomial)

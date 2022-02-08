@@ -75,10 +75,6 @@ There are 2,231 observations on the following 9 variables:
 
 > *Question: When should we use stratified sampling? And how does that decision influence the distribution of respondents from different provinces when we do not use stratified sample?*\
 
-> *Question: What is the main dependent variable of interest?*\
-
-> *Question: Anything wrong with the current set of explanatory/independent variables or predictors? Any other factors should we consider?*\
-
 > *Question: Can we conduct survey research with children in our sample? How should we do that?*
 
 Now, set up your working directory and read the data into R.
@@ -88,8 +84,6 @@ ces <- read.csv("ces11.csv", stringsAsFactors=TRUE)
 ```
 
 Note that here we set `stringsAsFactors=TRUE` so that the variables that are meant to be factors are set up accordingly.
-
-> *Question: How do we verify whether or not a variable is a factor in `R`? If it is not, which `R` function should we use to force a variable to be a factor?*
 
 ## 3 Survey Design Components
   
@@ -146,8 +140,6 @@ ces %>%
   summarise(n = n())
 ```
 
-> *Question: How else can you get the table?*
-
 Now let's use `ces_s` (i.e., the survey object) and the `survey_total()` function.
 
 ```{r, echo=T, eval=T}
@@ -156,7 +148,7 @@ ces_s %>%
  summarise(n = survey_total())
 ```
 
-> *Question: What does `survey_total` do?*\
+> *Question: What does `survey_total()` do?*\
 
 > *Question: Can you the proportion of people who think abortion should be banned?*
 
@@ -254,16 +246,12 @@ Let's create another variable that is grouped the same way as in the report:
 
 ```{r, echo=T, eval=F}
 ess9_survey <- ess9_survey %>%
- mutate(wltdffr_group =
-      case_when(
-       wltdffr >= -4 & wltdffr <= -1 ~ "Unfairly small",
-       wltdffr == 0 ~ "Fair",
-       wltdffr >= 1 & wltdffr <= 4 ~ "Unfairly large"),
-     wltdffr_group = factor(wltdffr_group,
-                levels = c("Unfairly small",
-                      "Fair",
-                      "Unfairly large"))
- )
+ mutate(wltdffr_group = case_when(wltdffr >= -4 & wltdffr <= -1 ~ "Unfairly small",
+                                  wltdffr == 0 ~ "Fair",
+                                  wltdffr >= 1 & wltdffr <= 4 ~ "Unfairly large"),
+        wltdffr_group = factor(wltdffr_group, levels = c("Unfairly small",
+                                                         "Fair",
+                                                         "Unfairly large")))
 ```
 
 > *Question: Can you repeat the same analysis without using the `tidyverse` pipelines?*
