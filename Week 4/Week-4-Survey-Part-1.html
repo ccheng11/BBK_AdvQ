@@ -254,8 +254,8 @@ div.tocify {
 
 <p>Chao-Yo Cheng<br />
 31 January 2021</p>
-<div id="before-you-start-descriptive-statistics-using-r" class="section level2">
-<h2>Before You Start: Descriptive Statistics Using R</h2>
+<div id="before-you-start" class="section level2">
+<h2>Before You Start</h2>
 <ul>
 <li>“<a href="https://www.statmethods.net/stats/descriptives.html">Quick R</a>” (Robert I. Kabacoff)</li>
 <li>“<a href="https://statsandr.com/blog/descriptive-statistics-in-r/">Descriptive Statistics in R</a>” (Antoine Soetewey)</li>
@@ -280,8 +280,11 @@ install.packages(&quot;srvyr&quot;)</code></pre>
 library(ggplot2)
 library(purrr)</code></pre>
 <blockquote>
-<p><em>Question: Can you use a few words (or sentences) to describe what each of these packages does?</em> ## 2 Data</p>
+<p><em>Question: Can you use a few words (or sentences) to describe what each of these packages does?</em></p>
 </blockquote>
+</div>
+<div id="data" class="section level2">
+<h2>2 Data</h2>
 <p>The sample dataset for today’s tutorial is from the 2011 <a href="http://www.ces-eec.ca/" target="_blank">Canadian National Election Study</a>. You can also retrieve the dataset from the <code>carData</code> package (see below). You can also find the .csv file on <strong>Moodle</strong>.</p>
 <pre class="r"><code>ces &lt;- carData::CES11</code></pre>
 <p>There are 2,231 observations on the following 9 variables:</p>
@@ -297,13 +300,33 @@ library(purrr)</code></pre>
 <li><code>urban</code> – place of residence, a factor with levels rural, urban.</li>
 </ul>
 <blockquote>
-<p><em>Question: What is the unit of observation?</em> <em>Question: When should we use stratified sampling? And how does that decision influence the distribution of respondents from different provinces when we do not use stratified sample?</em> <em>Question: What is the main dependent variable of interest?</em> <em>Question: Anything wrong with the current set of explanatory/independent variables or predictors? Any other factors should we consider?</em> <em>Question: Can we conduct survey research with children in our sample? How should we do that?</em> Now, set up your working directory and read the data into R.</p>
+<p><em>Question: What is the unit of observation?</em><br />
+</p>
 </blockquote>
+<blockquote>
+<p><em>Question: When should we use stratified sampling? And how does that decision influence the distribution of respondents from different provinces when we do not use stratified sample?</em><br />
+</p>
+</blockquote>
+<blockquote>
+<p><em>Question: What is the main dependent variable of interest?</em><br />
+</p>
+</blockquote>
+<blockquote>
+<p><em>Question: Anything wrong with the current set of explanatory/independent variables or predictors? Any other factors should we consider?</em><br />
+</p>
+</blockquote>
+<blockquote>
+<p><em>Question: Can we conduct survey research with children in our sample? How should we do that?</em></p>
+</blockquote>
+<p>Now, set up your working directory and read the data into R.</p>
 <pre class="r"><code>ces &lt;- read.csv(&quot;ces11.csv&quot;, stringsAsFactors=TRUE)</code></pre>
 <p>Note that here we set <code>stringsAsFactors=TRUE</code> so that the variables that are meant to be factors are set up accordingly.</p>
 <blockquote>
-<p><em>Question: How do we verify whether or not a variable is a factor in <code>R</code>? If it is not, which <code>R</code> function should we use to force a variable to be a factor?</em> ## 3 Survey Design Components</p>
+<p><em>Question: How do we verify whether or not a variable is a factor in <code>R</code>? If it is not, which <code>R</code> function should we use to force a variable to be a factor?</em></p>
 </blockquote>
+</div>
+<div id="survey-design-components" class="section level2">
+<h2>3 Survey Design Components</h2>
 <p>The following variables in the dataset provide the information on the survey design.</p>
 <ul>
 <li><code>id</code> is a unique identifier for each observation.</li>
@@ -322,8 +345,13 @@ library(purrr)</code></pre>
 ## 5 1799       ON    9439960 8977.61
 ## 6 1103       ON    9439960 8977.61</code></pre>
 <blockquote>
-<p><em>Question: What does “select” and “head” do, respectively?</em> <em>Question: Think again. How might the sample look differently if CNES used simple random sampling? Can you justify why CNES should use stratified sampling rather than simple random sampling? If they use stratified sampling, in what sense is the sample representative?</em> To use the functions contained in the <code>survey</code> and <code>srvyr</code> packages, we have to turn the <code>dataframe</code> into a <code>survey</code> objective.</p>
+<p><em>Question: What does “select” and “head” do, respectively?</em><br />
+</p>
 </blockquote>
+<blockquote>
+<p><em>Question: Think again. How might the sample look differently if CNES used simple random sampling? Can you justify why CNES should use stratified sampling rather than simple random sampling? If they use stratified sampling, in what sense is the sample representative?</em></p>
+</blockquote>
+<p>To use the functions contained in the <code>survey</code> and <code>srvyr</code> packages, we have to turn the <code>dataframe</code> into a <code>survey</code> objective.</p>
 <pre class="r"><code>ces_s &lt;- ces %&gt;%
   as_survey(ids = id,
             strata = province,
@@ -341,16 +369,26 @@ ces_s</code></pre>
 ##   gender (fct), abortion (fct), importance (fct), education (fct), urban (fct)</code></pre>
 <p>Here you can find some basic information for the survey object <code>ces_s</code>.</p>
 <blockquote>
-<p><em>Question: Again, how can we verify that <code>ces_s</code> is really a <code>survey</code> object?</em> <em>Question: In the function <code>as_survey</code>, there are four options you have to fill in – find out what they mean according to the official package manual.</em> ## 4 Computing Descriptive Statistics</p>
+<p><em>Question: Again, how can we verify that <code>ces_s</code> is really a <code>survey</code> object?</em></p>
 </blockquote>
+<blockquote>
+<p><em>Question: In the function <code>as_survey</code>, there are four options you have to fill in – find out what they mean according to the official package manual.</em></p>
+</blockquote>
+</div>
+<div id="computing-descriptive-statistics" class="section level2">
+<h2>4 Computing Descriptive Statistics</h2>
 <p>Complete the following tasks.</p>
 <ul>
 <li>Drawing on the dataframe <code>ces</code>, use <code>tidyverse</code> functions to calculate the number of people who think abortion should be banned.</li>
 <li>Repeat the same analysis, but this time use the survey object <code>ces_s</code>.</li>
 </ul>
 <blockquote>
-<p><em>Question: Describe and explain your observations.</em> <em>Question: Can you think of other descriptive analysis you can do?</em> Here is one example (more TBA after the live session) – say, we want to use the dataframe <code>ces</code> to calculate the number of people who think abortion should be banned.</p>
+<p><em>Question: Describe and explain your observations.</em></p>
 </blockquote>
+<blockquote>
+<p><em>Question: Can you think of other descriptive analysis you can do?</em></p>
+</blockquote>
+<p>Here is one example (more TBA after the live session) – say, we want to use the dataframe <code>ces</code> to calculate the number of people who think abortion should be banned.</p>
 <pre class="r"><code>ces %&gt;%
   group_by(abortion) %&gt;%
   summarise(n = n())</code></pre>
@@ -360,8 +398,9 @@ ces_s</code></pre>
 ## 1 No        1818
 ## 2 Yes        413</code></pre>
 <blockquote>
-<p><em>Question: How else can you get the table?</em> Now let’s use <code>ces_s</code> (i.e., the survey object) and the <code>survey_total()</code> function.</p>
+<p><em>Question: How else can you get the table?</em></p>
 </blockquote>
+<p>Now let’s use <code>ces_s</code> (i.e., the survey object) and the <code>survey_total()</code> function.</p>
 <pre class="r"><code>ces_s %&gt;%
  group_by(abortion) %&gt;%
  summarise(n = survey_total())</code></pre>
@@ -371,11 +410,18 @@ ces_s</code></pre>
 ## 1 No       13059520. 196984.
 ## 2 Yes       2964018. 162360.</code></pre>
 <blockquote>
-<p><em>Question: What does <code>survey_total</code> do?</em> <em>Question: Can you the proportion of people who think abortion should be banned?</em> ## Additional References</p>
+<p><em>Question: What does <code>survey_total</code> do?</em><br />
+</p>
 </blockquote>
+<blockquote>
+<p><em>Question: Can you the proportion of people who think abortion should be banned?</em></p>
+</blockquote>
+</div>
+<div id="additional-references" class="section level2">
+<h2>Additional References</h2>
 <p>John Fox and Sanford Weisberg: “Fitting regression models to data from complex surveys.” – walk through the exercise using the <code>survey</code> package.</p>
-<p>Greg Freedman: <a href="https://cran.r-project.org/web/packages/srvyr/vignettes/srvyr-vs-survey.html">“<code>srvyr</code> compared to the <code>survey</code> package”</a> – a short tutorial from the package’s author.</p>
-<p>Arnold Lau: <a href="https://medium.com/pew-research-center-decoded/exploring-survey-data-with-the-pewmethods-r-package-198c4eb9d1af">“Exploring survey data with the <code>pewmethods</code> R package”</a>. – note this is one of a series articles where Pew researchers introduce how the package they made is a good alternative to the packages we use here.</p>
+<p>Project-only – Greg Freedman: <a href="https://cran.r-project.org/web/packages/srvyr/vignettes/srvyr-vs-survey.html">“<code>srvyr</code> compared to the <code>survey</code> package”</a> – a short tutorial from the package’s author.</p>
+<p>Project-only – Arnold Lau: <a href="https://medium.com/pew-research-center-decoded/exploring-survey-data-with-the-pewmethods-r-package-198c4eb9d1af">“Exploring survey data with the <code>pewmethods</code> R package”</a>. – note this is one of a series articles where Pew researchers introduce how the package they made is a good alternative to the packages we use here.</p>
 </div>
 <div id="extra-european-social-survey-round-9" class="section level2">
 <h2>Extra: European Social Survey (Round 9)</h2>
@@ -390,32 +436,43 @@ ess9 &lt;- read_sav(&quot;ESS9e03.sav&quot;)</code></pre>
 <p>Whenever you import a new dataset, you should see it.</p>
 <pre class="r"><code>View(ess9)</code></pre>
 <blockquote>
-<p><em>Question: Any other functions we can use to “see” the data?</em> <em>Question: What if you just want to list variable names?</em> <em>Question: Describe your observations.</em> <em>Question: Perhaps you want to read the codebook – where is it on the ESS website? It is a good exercise to spend some time looking through the documentation on the ESS website to find the variable name.</em> If that has worked – then the next problem is finding the variables we want to analyze!</p>
+<p><em>Question: Any other functions we can use to “see” the data?</em><br />
+</p>
 </blockquote>
+<blockquote>
+<p><em>Question: What if you just want to list variable names?</em><br />
+</p>
+</blockquote>
+<blockquote>
+<p><em>Question: Describe your observations.</em><br />
+</p>
+</blockquote>
+<blockquote>
+<p><em>Question: Perhaps you want to read the codebook – where is it on the ESS website? It is a good exercise to spend some time looking through the documentation on the ESS website to find the variable name.</em></p>
+</blockquote>
+<p>If that has worked – then the next problem is finding the variables we want to analyze!</p>
 <p>Read the following discussion from the report published by the <a href="https://www.bsa.natcen.ac.uk/latest-report/british-social-attitudes-37/fairness-and-justice-in-britain.aspx" target="_blank">British Social Attitudes</a>:</p>
 <blockquote>
 <blockquote>
-<p>Only 20% of the British public think that differences in wealth in Britain are fair, whilst a majority (59%) think that wealth differences in Britain are unfairly large and a further 16% think that differences in wealth are unfairly small. The original question was</p>
+<p>Only 20% of the British public think that differences in wealth in Britain are fair, whilst a majority (59%) think that wealth differences in Britain are unfairly large and a further 16% think that differences in wealth are unfairly small.</p>
 </blockquote>
 </blockquote>
-<blockquote>
-<blockquote>
-<p>In your opinion, are differences in wealth in Britain unfairly small, fair, or unfairly large? We will also need the variable for country (easier to spot) and any information required for setting up the survey object. The ESS website advises we “must weight tables before quoting percentages from the survey.” See the guide Weighting European Social Survey Data for fuller details about which weights to use (it is on Moodle).</p>
-</blockquote>
-</blockquote>
-<blockquote>
-<blockquote>
-<p>The <em>Design weights</em> (<code>DWEIGHT</code>) adjust for different selection probabilities, while the <em>Post-stratification</em> weights (<code>PSPWGHT</code>) adjust for sampling error and non-response bias, as well as different selection probabilities. Either <code>DWEIGHT</code> or <code>PSPWGHT</code> must always be used. In addition, the <em>Population size weights</em> (<code>PWEIGHT</code>) should be applied if you are looking at aggregates or averages for two or more countries combined. ### Tabulate the data by country</p>
-</blockquote>
-</blockquote>
+<p>The original question was – “In your opinion, are differences in wealth in Britain unfairly small, fair, or unfairly large?”</p>
+<p>We will also need the variable for country (easier to spot) and any information required for setting up the survey object. The ESS website advises we “must weight tables before quoting percentages from the survey.” See the guide Weighting European Social Survey Data for fuller details about which weights to use (it is on Moodle).</p>
+<p>The <em>Design weights</em> (<code>DWEIGHT</code>) adjust for different selection probabilities, while the <em>Post-stratification</em> weights (<code>PSPWGHT</code>) adjust for sampling error and non-response bias, as well as different selection probabilities. Either <code>DWEIGHT</code> or <code>PSPWGHT</code> must always be used. In addition, the <em>Population size weights</em> (<code>PWEIGHT</code>) should be applied if you are looking at aggregates or averages for two or more countries combined.</p>
+<div id="tabulate-the-data-by-country" class="section level3">
+<h3>Tabulate the data by country</h3>
 <p>First, let’s make the country variable look a bit nicer. It currently looks like this:</p>
 <pre class="r"><code>table(ess9$cntry)</code></pre>
 <p>But the dataset also has nicer labels included, which we can get like this using the function <code>as_factor</code> (note the underscore). This function is in the package <code>haven</code>.</p>
 <pre class="r"><code>ess9$cntry &lt;- as_factor(ess9$cntry, levels = &quot;labels&quot;)
 table(ess9$cntry)</code></pre>
 <blockquote>
-<p><em>Question: Describe the differences in the output.</em> ### Set up the <code>survey</code> object</p>
+<p><em>Question: Describe the differences in the output.</em></p>
 </blockquote>
+</div>
+<div id="set-up-the-survey-object" class="section level3">
+<h3>Set up the <code>survey</code> object</h3>
 <p>Now let’s set up the survey object:</p>
 <p>The <code>nest</code> option takes account of the <code>ids</code> being nested within strata – in other words, the same ID is used only once in a country although it is used more than once across the dataset.</p>
 <pre class="r"><code>ess9_survey &lt;- ess9 %&gt;%
@@ -423,6 +480,7 @@ table(ess9$cntry)</code></pre>
                    strata = cntry,
                    nest = TRUE,
                    weights = pspwght)</code></pre>
+</div>
 <div id="try-out-some-analysis" class="section level3">
 <h3>Try out some analysis</h3>
 <p>The country variable is <code>cntry</code> and the wealth variable is <code>wltdffr</code>. They are both explained in the online documentation.</p>
@@ -441,12 +499,13 @@ table(ess9$cntry)</code></pre>
                       &quot;Unfairly large&quot;))
  )</code></pre>
 <blockquote>
-<p><em>Question: Can you repeat the same analysis without using the <code>tidyverse</code> pipelines?</em> Great, now let’s see what the UK data look like for this grouped variable:</p>
+<p><em>Question: Can you repeat the same analysis without using the <code>tidyverse</code> pipelines?</em></p>
 </blockquote>
+<p>Great, now let’s see what the UK data look like for this grouped variable:</p>
 <pre class="r"><code>gb_wealth &lt;- ess9_survey %&gt;%
-filter(cntry == &quot;United Kingdom&quot;) %&gt;%
-group_by(wltdffr_group) %&gt;%
-summarise(prop = survey_mean(vartype = &quot;ci&quot;))
+  filter(cntry == &quot;United Kingdom&quot;) %&gt;%
+  group_by(wltdffr_group) %&gt;%
+  summarise(prop = survey_mean(vartype = &quot;ci&quot;))
 gb_wealth </code></pre>
 <p>Let’s round our results to see more clearly that they match the report:</p>
 <pre class="r"><code>gb_wealth %&gt;%
@@ -464,11 +523,11 @@ gb_wealth </code></pre>
     title = &quot;In your opinion, are differences in wealth in Britain\nunfairly small, fair, or unfairly large?&quot;)</code></pre>
 <p>Let’s do it again for a selection of countries. First, make a function which carries out the analysis for one country:</p>
 <pre class="r"><code>get_country_results &lt;- function(the_cntry) {
-ess9_survey %&gt;%
-  filter(cntry == the_cntry) %&gt;%
-  group_by(wltdffr_group) %&gt;%
-  summarise(prop = survey_mean(vartype = &quot;ci&quot;)) %&gt;%
-  mutate(cntry = the_cntry)
+  ess9_survey %&gt;%
+    filter(cntry == the_cntry) %&gt;%
+    group_by(wltdffr_group) %&gt;%
+    summarise(prop = survey_mean(vartype = &quot;ci&quot;)) %&gt;%
+    mutate(cntry = the_cntry)
 }</code></pre>
 <p>Check it works for the UK:</p>
 <pre class="r"><code>get_country_results(&quot;United Kingdom&quot;)</code></pre>
@@ -478,117 +537,20 @@ euro_wealth &lt;- map_dfr(conts, get_country_results)
 head(euro_wealth)</code></pre>
 <p>That’s a lot of numbers! Let’s try a plot:</p>
 <pre class="r"><code>euro_wealth %&gt;%
-filter(!is.na(wltdffr_group)) %&gt;%
-ggplot(aes(x = cntry,
-           y = prop*100,
-           ymin = prop_low*100,
-           ymax = prop_upp*100,
-           fill = wltdffr_group)) +
-geom_col(position = position_dodge(width = .8), width = 0.6) + 
-geom_errorbar(position=position_dodge(width = .8),
-              colour=&quot;black&quot;,
-              width = 0.2) +
-ylim(0,100) +
-labs(y = &quot;%&quot;, x = NULL,
-     title = &quot;In your opinion, are differences in wealth\nunfairly small, fair, or unfairly large?&quot;,
-     fill = NULL)</code></pre>
-</div>
-</div>
-<div id="extra-when-weights-come-to-rescue" class="section level2">
-<h2>Extra: When Weights Come to Rescue</h2>
-<p><strong>You can skip this part completely.</strong></p>
-<p>This section presents a simulation exercise in <code>R</code> to show why weights matter. The entire simulation consists of the following process:</p>
-<ul>
-<li><p>Create a fake population data such as there are 1,000 observations – there is a equal number of observations from the urban and rural areas, respectively (i.e., 500 observations each). The key outcome variable in the population data is <code>score</code> (e.g., credit score of the household).</p></li>
-<li><p>Use simple random sampling to create a sample of about 500 observations. Compare the weighted and unweighted average scores to the population average score.</p></li>
-<li><p>Use stratified (or multi-stage) samling to create another sample of about 500 observations – however, we will set up such that the probability of being chosen is 0.25 in the countryside and 0.75 in the city.</p></li>
-</ul>
-<div id="set-up-the-population" class="section level3">
-<h3>Set up the population</h3>
-<pre class="r"><code>sim_pop &lt;- data.frame(id = 1:1000, # unique ID
-                      score = rnorm(1000, mean=65, sd=10),
-                      urban = c(rep(0,500), rep(1,500)),
-                      pop = 500)</code></pre>
-<p>In this dataset,</p>
-<ul>
-<li><code>id</code> is the unique identifier of each observation in the population.</li>
-<li><code>score</code> is some made-up score for each observation – I use <code>rnorm()</code> to generate 1,000 random numbers from a normal distribution such that the mean is 65 and the standard deviation is 10.</li>
-<li><code>urban</code> is a binary variable to indicate whether the observation is in the city (=1) or not (=0).</li>
-<li><code>pop</code> is the number of people living in the city and countryside with 500 each.</li>
-</ul>
-<p>To make things more interesting, I multiply the scores in the city by 2.</p>
-<pre class="r"><code>sim_pop$score[sim_pop$urban == 1] &lt;- sim_pop$score[sim_pop$urban == 1]*2</code></pre>
-<p>The population mean is then</p>
-<pre class="r"><code>mean(sim_pop$score)</code></pre>
-<pre><code>## [1] 97.78843</code></pre>
-<p>or</p>
-<pre class="r"><code>sim_pop %&gt;%
-  summarise(mean=mean(score))</code></pre>
-<pre><code>##       mean
-## 1 97.78843</code></pre>
-</div>
-<div id="create-a-sample-with-simple-random-sampling" class="section level3">
-<h3>Create a sample with simple random sampling</h3>
-<p>We will use the function <code>sample()</code> to create a binary indicator in the population data – when the value is 1, it means the observation is selected in the sample.</p>
-<pre class="r"><code>sim_pop$s_simple &lt;- sample(c(0,1), size=1000, replace=TRUE, prob=c(1/2, 1/2))</code></pre>
-<p>The function basically says: “<strong>please take 1,000 draws and the occurrence of 0 and 1 for each draw has the same probability – here each draw is independent from each other because the probability of having 0 (or 1) in the previous draw does not affect the probability of having 0 (or 1) in the following draw.</strong>” Since each observation is being assigned the value of 1 with equal probability, it means the probability of being included in the sample is 500 out of 1000, which is 0.5. The sample weight is the reciprocal (or inverse proportion) of this probability, namely 2.</p>
-<pre class="r"><code>sim_pop$w_simple &lt;- 2</code></pre>
-<p>Now, let’s create another data frame that only includes the selected observations.</p>
-<pre class="r"><code>sam_sim &lt;- sim_pop %&gt;%
-  filter(s_simple == 1)</code></pre>
-<p>And let’s turn this into a survey subject.</p>
-<pre class="r"><code>sam_sim_s &lt;- sam_sim %&gt;%
-  as_survey(ids = id,
-            strata = urban,
-            fpc = pop,
-            weight = w_simple)</code></pre>
-<p>Finally, let’s compare the sample mean with and without weights. They are similar to each other – they are also very close to the population mean.</p>
-<pre class="r"><code>sam_sim %&gt;% summarise(mean=mean(score)) # unweighted</code></pre>
-<pre><code>##       mean
-## 1 97.64015</code></pre>
-<pre class="r"><code>sam_sim_s %&gt;% summarise(mean=survey_mean(score)) # weighted</code></pre>
-<pre><code>## # A tibble: 1 × 2
-##    mean mean_se
-##   &lt;dbl&gt;   &lt;dbl&gt;
-## 1  97.6   0.500</code></pre>
-</div>
-<div id="create-a-sample-with-stratified-sampling" class="section level3">
-<h3>Create a sample with stratified sampling</h3>
-<p>Let’s create another sample, but with a bit more complicated sampling process. Say, now the probabilities of being included in the sample vary by urban vs rural, with 0.25 and 0.75, respectively.</p>
-<pre class="r"><code>sim_pop$s_complex &lt;- NA # add a column in the population data
-sim_pop$s_complex[sim_pop$urban == 1] = sample(c(0,1), size=500, replace=TRUE, prob = c(1/4, 3/4))
-sim_pop$s_complex[sim_pop$urban == 0] = sample(c(0,1), size=500, replace=TRUE, prob = c(3/4, 1/4))</code></pre>
-<p>Now let’s set the weights for those in the city and countryside, respectively.</p>
-<pre class="r"><code>sim_pop$w_complex &lt;- NA
-sim_pop$w_complex[sim_pop$urban == 1] &lt;- (2/1)*(4/3)
-sim_pop$w_complex[sim_pop$urban == 0] &lt;- (2/1)*(4/3)</code></pre>
-<p>Let’s create a new data frame for the new selected observations.</p>
-<pre class="r"><code>sam_com &lt;- sim_pop %&gt;%
-  filter(s_complex == 1)</code></pre>
-<p>Let’s check to see if the sample indeed includes more observations from the city (the numbers may not be perfect here given that we draw all the sample from some random processes).</p>
-<pre class="r"><code>sam_com %&gt;%
-  group_by(urban) %&gt;%
-  summarise(n =n())</code></pre>
-<pre><code>## # A tibble: 2 × 2
-##   urban     n
-##   &lt;dbl&gt; &lt;int&gt;
-## 1     0   138
-## 2     1   385</code></pre>
-<p>And now create the corresponding survey object. Be sure to include the weights.</p>
-<pre class="r"><code>sam_com_s &lt;- sam_com %&gt;%
-  as_survey(ids = id,
-            strata = urban,
-            fpc = pop,
-            weight = w_complex)</code></pre>
-<p>Finally, let’s compare the sample mean with and without weights again. Now you see they are quite different (and the weighted one is closer to the population mean). The unweighted one is higher, which should not be too surprising given that urban observations are more likely to be included in the sample.</p>
-<pre class="r"><code>sam_com %&gt;% summarise(mean=mean(score)) # unweighted</code></pre>
-<pre><code>##       mean
-## 1 113.0923</code></pre>
-<pre class="r"><code>sam_com_s %&gt;% summarise(mean=survey_mean(score)) # weighted</code></pre>
-<pre><code>## # A tibble: 1 × 2
-##    mean mean_se
-##   &lt;dbl&gt;   &lt;dbl&gt;
-## 1  113.   0.406</code></pre>
+  filter(!is.na(wltdffr_group)) %&gt;%
+  ggplot(aes(x = cntry,
+             y = prop*100,
+             ymin = prop_low*100,
+             ymax = prop_upp*100,
+             fill = wltdffr_group)) +
+  geom_col(position = position_dodge(width = .8), width = 0.6) + 
+  geom_errorbar(position=position_dodge(width = .8),
+                colour=&quot;black&quot;,
+                width = 0.2) +
+  ylim(0,100) +
+  labs(y = &quot;%&quot;, x = NULL,
+       title = &quot;In your opinion, are differences in wealth\nunfairly small, fair, or unfairly large?&quot;,
+       fill = NULL)</code></pre>
 </div>
 </div>
 
