@@ -1,16 +1,16 @@
 ---
-title: "Tutorial: Analyzing Survey Data (Part 1)"
+title: "Tutorial: Analyzing Survey Data (Part 2)"
 author: ""
 date: ""
 output:
   html_document:
-    css: style.css
+    css: "../../Workstation/style.css"
     toc: true
     toc_float:
       collapsed: false
       smooth_scroll: false
 ---
-  
+
 Chao-Yo Cheng\
 31 January 2021
 
