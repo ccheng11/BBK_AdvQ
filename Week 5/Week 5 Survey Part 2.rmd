@@ -210,9 +210,7 @@ coefs_ci # CIs of log-odds
 exp(coefs_ci) # CIs of odds-ratio
 ```
 
-In a nutshell, odds-ratio (OR) is **a ratio of two different odds** when we change the level of `religion` by one unit. And it can only fall into one of the three scenarios, each of which has a different substantive interpretation. 
-
-Since we find $OR_{religion}>1$ even after we consider its confidence interval, **more religious people are going be more likely to be against abortion.** 
+In a nutshell, odds-ratio (OR) is **a ratio of two different odds** when we change the level of `religion` by one unit. And OR can only be one of the three conditions below, each of which has a different substantive interpretation. Since we find $OR_{religion}>1$ even after we consider its confidence interval, **more religious people are going be more likely to be against abortion.** 
 
 ```{r, echo=F, eval=T, message=F}
 library(readxl)
