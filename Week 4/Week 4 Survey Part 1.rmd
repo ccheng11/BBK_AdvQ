@@ -150,7 +150,7 @@ ces_s %>%
 
 > *Question: What does `survey_total()` do?*\
 
-> *Question: Can you the proportion of people who think abortion should be banned?*
+> *Question: Can you calculate the proportion of people who think abortion should be banned?*
 
 ## Additional References
 
