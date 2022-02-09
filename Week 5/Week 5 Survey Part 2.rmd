@@ -9,6 +9,7 @@ output:
     toc_float:
       collapsed: false
       smooth_scroll: false
+always_allow_html: true
 ---
 
 Chao-Yo Cheng\
@@ -190,7 +191,7 @@ The estimated coefficient for *religion* is 1.17470 and statistically significan
 
 First, again, the coefficient is **log-odds**. Unlike the model with no predictor, take the exponent of the coefficient will give us the **odds-ratio** (OR). OR is notoriously confusing, but here is the basic intuition with minimum math involved. 
 
-First, recall that we define the model as $$\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{religion}).$$ Keep in mind that the outcome variable is the log-odds of people against abortion.
+First, recall that we define the model as $$\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{religion}).$$ Keep in mind that the outcome variable is the log-odds of people against abortion. So we can rewrite this as $$\log(\text{Odds})=\alpha + \beta(\text{religion}).$$
 
 Next, $\beta$ tells us how the *log-odds* will change when we increase the importance of `religion` by one level. $$\beta=\log(\text{Odds when Religion}=2)-\log(\text{Odds when Religion}=1).$$
 
