@@ -3,12 +3,9 @@ title: "Tutorial: Analyzing Survey Data (Part 2)"
 author: ""
 date: ""
 output:
-  html_document:
-    css: "../../Workstation/style.css"
-    toc: true
-    toc_float:
-      collapsed: false
-      smooth_scroll: false
+  github_document:
+    pandoc_args: --webtex
+always_allow_html: true
 ---
 
 Chao-Yo Cheng\

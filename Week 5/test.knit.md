@@ -3,12 +3,9 @@ title: "Tutorial: Analyzing Survey Data (Part 2)"
 author: ""
 date: ""
 output:
-  html_document:
-    css: "../../Workstation/style.css"
-    toc: true
-    toc_float:
-      collapsed: false
-      smooth_scroll: false
+  github_document:
+    pandoc_args: --webtex
+always_allow_html: true
 ---
 
 Chao-Yo Cheng\
@@ -32,7 +29,8 @@ By the end of this tutorial, you will know how to
 
 We are building on previous tutorials on logit regression and survey weights this week. You can continue writing your code in the same file you used last week. We will start by bringing in the same packages again.
 
-```{r, echo=T, eval=T, message=F}
+
+```r
 library(survey)
 library(srvyr)
 library(dplyr)
@@ -60,19 +58,31 @@ In this tutorial, we will consider some of the variables that may be statistical
 
 Let's read in the data and check that all of our variables are as described.
 
-```{r, echo=T, eval=F, message=F}
+
+```r
 ces <- read.csv("ces11.csv", stringsAsFactors = TRUE)
 head(ces,10)
 ```
 
-```{r, echo=F, eval=T}
-ces <- carData::CES11
-head(ces,10)
+
+```
+##      id province population  weight gender abortion importance education urban
+## 1  2851       BC    3267345 4287.85 Female       No   somewhat    somePS urban
+## 2   521       QC    5996930 9230.78   Male       No        not bachelors urban
+## 3  2118       QC    5996930 6153.85   Male      Yes   somewhat   college urban
+## 4  1815       NL     406455 3430.00 Female       No       very    somePS urban
+## 5  1799       ON    9439960 8977.61   Male       No        not    higher rural
+## 6  1103       ON    9439960 8977.61 Female       No        not    higher urban
+## 7   957       NL     406455 3430.00 Female      Yes       very    lessHS rural
+## 8  3431       NL     406455 1715.00 Female      Yes    notvery   college urban
+## 9  2516       NL     406455 1715.00   Male       No       very   college urban
+## 10  959       NL     406455 3430.00   Male      Yes       very    lessHS rural
 ```
 
 For the following analysis, we will create a binary variable to assign the value of 1 to people against abortion.
 
-```{r, echo=T, eval=T}
+
+```r
 ces_new <- ces %>%
   mutate(against_abortion = if_else(abortion == "Yes", 1, 0))
 ```
@@ -81,8 +91,15 @@ The `if_else()` function is very convenient -- it basically says: please assign 
 
 Now let's check if we have done this properly. First, use `table()`.
 
-```{r, echo=T, eval=T}
+
+```r
 table(ces_new$against_abortion)
+```
+
+```
+## 
+##    0    1 
+## 1818  413
 ```
 
 All observations are placed properly (i.e., no respondent is mis-classified in the new variable).
@@ -111,11 +128,36 @@ If we only include the intercept (i.e., no predictor), then our model is like th
 
 Let's go ahead and fit the model. Use the `summary()` function to see the output. Note that we have to use the new data frame `ces_new` (the original `ces` does not include the variable we created).
 
-```{r, echo=T, eval=T}
+
+```r
 mod_intercept <- glm(against_abortion ~ 1,
                      data = ces_new,
                      family = binomial)
 summary(mod_intercept)
+```
+
+```
+## 
+## Call:
+## glm(formula = against_abortion ~ 1, family = binomial, data = ces_new)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -0.6399  -0.6399  -0.6399  -0.6399   1.8367  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)    
+## (Intercept) -1.48204    0.05451  -27.19   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 2137.6  on 2230  degrees of freedom
+## Residual deviance: 2137.6  on 2230  degrees of freedom
+## AIC: 2139.6
+## 
+## Number of Fisher Scoring iterations: 4
 ```
 
 > *Question: Use `?glm` to see more information -- what is the default for the option `family`?*
@@ -124,40 +166,86 @@ summary(mod_intercept)
 
 The estimated intercept is the *log-odds* (of people against abortion). Let's use `coef()` to extract the coefficient.
   
-```{r, echo=T, eval=T}
+
+```r
 coefs <- coef(mod_intercept) # extracting log odds
 coefs
-```  
+```
+
+```
+## (Intercept) 
+##   -1.482045
+```
   
 Next, we can take the exponent of the log odds to get the *odds* of people against abortion (i.e., use `exp()`). **Rule of thumb: use `exp()` to turn log-odds into odds.**
   
-```{r, echo=T, eval=T}
+
+```r
 exp(coefs) # calculating odds
+```
+
+```
+## (Intercept) 
+##   0.2271727
 ```
 
 Third, we can compute the *probability* of people against abortion. From the previous step, since the odds $\frac{p}{1-p}=0.2271727$, we know $p=\frac{0.2271727}{1+0.2271727}=0.1851188$.
 
-```{r, echo=T, eval=T}
+
+```r
 exp(coefs)/(1+exp(coefs)) # calculating p
+```
+
+```
+## (Intercept) 
+##   0.1851188
 ```
 
 ### 3.1.2 Explore the Confidence Intervals of the Point Estimate
 
 We can show the **confidence interval** of the estimated log-odds, using the `confint()` function. These are the upper and lower bounds of the 95\% confidence intervals.
 
-```{r, echo=T, eval=T, message=F}
+
+```r
 coefs_ci <- confint(mod_intercept)
 coefs_ci
-``` 
+```
+
+```
+##     2.5 %    97.5 % 
+## -1.590112 -1.376378
+```
 
 > *Question: How do you derive the upper and lower bounds of estimated odds and probability? Hint: Use the upper and lower bounds of log odds to calculate the upper and lower bounds of estimated odds and probabilities.*
 
-```{r, echo=T, eval=T, message=F}
+
+```r
 coefs_ci <- confint(mod_intercept)
 coefs_ci # CIs of log-odds
+```
+
+```
+##     2.5 %    97.5 % 
+## -1.590112 -1.376378
+```
+
+```r
 exp(coefs_ci) # CIs of odds
+```
+
+```
+##     2.5 %    97.5 % 
+## 0.2039028 0.2524914
+```
+
+```r
 exp(coefs_ci)/(1+exp(coefs_ci)) # CIs of probability
-``` 
+```
+
+```
+##     2.5 %    97.5 % 
+## 0.1693682 0.2015913
+```
 
 ## 3.2 Logit Regression with One Predictor
 
@@ -165,7 +253,8 @@ Let's add a predictor to the logit regression model.
 
 There is no variable like this, so let's create a new variable `religion`, using `importance`. Let's use `recode()` inside `mutate()`. Here we use higher numbers to refer to greater importance.
 
-```{r, echo=T, eval=T}
+
+```r
 ces_new <- ces_new %>% # update "ces_new" to include all new variables
   mutate(religion = recode(importance,
                            "very" = 4,
@@ -175,13 +264,49 @@ ces_new <- ces_new %>% # update "ces_new" to include all new variables
 table(ces_new$importance, ces_new$religion)
 ```
 
+```
+##           
+##              1   2   3   4
+##   not      607   0   0   0
+##   notvery    0 315   0   0
+##   somewhat   0   0 714   0
+##   very       0   0   0 595
+```
+
 > *Question: Which of the two versions of the importance of religion variable would you use in your analysis? Why? Try to think of pros and cons for each.*
 
 With the predictor included, the log-odds of a respondent against abortion is $$\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{religion}).$$ Let's run the analysis.
 
-```{r, echo=T, eval=T}
+
+```r
 mod_religion <- glm(against_abortion ~ religion, data = ces_new, family = binomial)
 summary(mod_religion)
+```
+
+```
+## 
+## Call:
+## glm(formula = against_abortion ~ religion, family = binomial, 
+##     data = ces_new)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.0431  -0.6349  -0.3653  -0.2054   2.7820  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)    
+## (Intercept) -5.02323    0.25893  -19.40   <2e-16 ***
+## religion     1.17470    0.07506   15.65   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 2137.6  on 2230  degrees of freedom
+## Residual deviance: 1761.9  on 2229  degrees of freedom
+## AIC: 1765.9
+## 
+## Number of Fisher Scoring iterations: 5
 ```
 
 The estimated coefficient for *religion* is 1.17470 and statistically significant. How do we interpret the results?
@@ -198,29 +323,72 @@ By the law of logarithms, the **the difference between two logs** (the left hand
   
 Remove the log from $\log\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right)$ by taking the exponent of it; in doing so, we have $$\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right).$$ This is **the odds ratio when we increase the importance of religion by one unit.** 
 
-```{r, echo=T, eval=T}
+
+```r
 exp(coef(mod_religion))
-```  
+```
+
+```
+## (Intercept)    religion 
+## 0.006583243 3.237173195
+```
 
 We can use `confint()` to get the confidence interval of the odds-ratio to see if it is stays above 1.
 
-```{r, echo=T, eval=T, message=F}
+
+```r
 coefs_ci <- confint(mod_religion)
 coefs_ci # CIs of log-odds
+```
+
+```
+##                 2.5 %    97.5 %
+## (Intercept) -5.548352 -4.532450
+## religion     1.031402  1.325895
+```
+
+```r
 exp(coefs_ci) # CIs of odds-ratio
+```
+
+```
+##                  2.5 %    97.5 %
+## (Intercept) 0.00389387 0.0107543
+## religion    2.80499482 3.7655551
 ```
 
 In a nutshell, odds-ratio (OR) is **a ratio of two different odds** when we change the level of `religion` by one unit. And OR can only be one of the three conditions below, each of which has a different substantive interpretation. Since we find $OR_{religion}>1$ even after we consider its confidence interval, **more religious people are going be more likely to be against abortion.** 
 
-```{r, echo=F, eval=T, message=F}
-library(readxl)
-library(kableExtra)
-or <- read_xlsx("../../Workstation/or.xlsx", col_names=T)
-colnames(or)[1] = ""
-or %>%
-  kbl() %>%
-  kable_styling()
-```
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:left;"> It means </th>
+   <th style="text-align:left;"> So when we increase importance of religion </th>
+   <th style="text-align:left;"> Put it simply </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> OR=1 </td>
+   <td style="text-align:left;"> (Odds when Religion=2) = (Odds when Religion=1) </td>
+   <td style="text-align:left;"> the odds/chance of resisting abortion is not affected </td>
+   <td style="text-align:left;"> Not clear how religious people react to abortion </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> OR&gt;1 </td>
+   <td style="text-align:left;"> (Odds when Religion=2) &gt; (Odds when Religion=1) </td>
+   <td style="text-align:left;"> the odds/chance of resisting the abortion is higher </td>
+   <td style="text-align:left;"> Religious people are more likely to be against abortion </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> OR&lt;1 </td>
+   <td style="text-align:left;"> (Odds when Religion=2) &lt; (Odds when Religion=1) </td>
+   <td style="text-align:left;"> the odds/chance of resisting abortion is lower </td>
+   <td style="text-align:left;"> Religious people are less likely to be against abortion </td>
+  </tr>
+</tbody>
+</table>
 
 To sum up our discussion, when you conduct a logit regression, do the following:
 
@@ -243,14 +411,16 @@ To sum up our discussion, when you conduct a logit regression, do the following:
 
 The most intuitive way to me is perhaps **use the `predict()` function**. Plug the logit model into `predict()` to compute the predicted **log-odds** for each observation (given each respondent's reported level of religious importance). Including `type="response"` will return the predicted **probabilities**. 
 
-```{r, echo=T, eval=T, message=F}
+
+```r
 fit_log_odds <- predict(mod_religion) # for predicted log-odds
 fit_prob <- predict(mod_religion, type="response") # for predicted probabilities
-```  
+```
 
 Let's create a new data frame to include `religion` so you will see it better. We will also include the original `importance` variable.
 
-```{r, echo=T, eval=T}
+
+```r
 fit_religion <- data.frame(religion = ces_new$religion, # use "religion" in "ces_new"
                            importance = ces_new$importance)
 fit_religion <- fit_religion %>%
@@ -258,31 +428,67 @@ fit_religion <- fit_religion %>%
          log_odds = predict(mod_religion)) %>%
   mutate(odds = exp(log_odds)) # convert log-odds into odds
 head(fit_religion, 5)
-```  
+```
+
+```
+##   religion importance       prob   log_odds      odds
+## 1        3   somewhat 0.18255586 -1.4991264 0.2233252
+## 2        1        not 0.02086641 -3.8485273 0.0213111
+## 3        3   somewhat 0.18255586 -1.4991264 0.2233252
+## 4        4       very 0.41959750 -0.3244259 0.7229423
+## 5        1        not 0.02086641 -3.8485273 0.0213111
+```
 
 You will see that observations with the identical level of importance have the same predicted values. Let's clean the data frame a bit using `distinct()` and `arrange()`. 
 
-```{r, echo=T, eval=T}
+
+```r
 fit_religion <- fit_religion %>%
   distinct() %>% # remove duplicates
   arrange(religion) # arrange observations by religion
 fit_religion
-```  
+```
+
+```
+##   religion importance       prob   log_odds       odds
+## 1        1        not 0.02086641 -3.8485273 0.02131110
+## 2        2    notvery 0.06453555 -2.6738269 0.06898771
+## 3        3   somewhat 0.18255586 -1.4991264 0.22332518
+## 4        4       very 0.41959750 -0.3244259 0.72294227
+```
 
 Now we have the corresponding predicted odds, log-odds, and probability for each level of `religion`. If we increase the importance of `religion` from 1 to 2, the corresponding change in log-odds and odds-ratio will be 
 
-```{r, echo=T, eval=T}
+
+```r
 fit_religion$log_odds[fit_religion$religion == 2] - fit_religion$log_odds[fit_religion$religion == 1]
 ```
 
-```{r, echo=T, eval=T}
+```
+##      8 
+## 1.1747
+```
+
+
+```r
 fit_religion$odds[fit_religion$religion == 2]/fit_religion$odds[fit_religion$religion == 1]
+```
+
+```
+##        8 
+## 3.237173
 ```
 
 The corresponding change in probability is
 
-```{r, echo=T, eval=T}
+
+```r
 fit_religion$prob[fit_religion$religion == 2] - fit_religion$prob[fit_religion$religion == 1]
+```
+
+```
+##          8 
+## 0.04366914
 ```
 
 They are identical with the results we get before. All in all, we know that a more religious person is more likely to go against abortion.
@@ -303,7 +509,8 @@ In this section, we will use the updated data frame `ces_new`, which should have
 
 Before we start, let's check we have all the variables we need.
 
-```{r, echo=T, eval=T}
+
+```r
 ces_new <- ces %>%
   mutate(against_abortion = if_else(abortion == "Yes", 1, 0),
          urban = if_else(urban == "urban", 1, 0),
@@ -318,7 +525,8 @@ ces_new <- ces %>%
 
 As before, we can use `as_survey()` to create the `survey` object so we can use the useful functions in the packages.
 
-```{r, echo=T, eval=T}
+
+```r
 ces_s <- ces_new %>%
   as_survey(ids = id,
             strata = province,
@@ -327,21 +535,69 @@ ces_s <- ces_new %>%
 ces_s
 ```
 
+```
+## Stratified Independent Sampling design
+## Called via srvyr
+## Sampling variables:
+##  - ids: id
+##  - strata: province
+##  - fpc: population
+##  - weights: weight
+## Data variables: id (int), province (fct), population (int), weight (dbl),
+##   gender (fct), abortion (fct), importance (fct), education (fct), urban (dbl),
+##   against_abortion (dbl), religion (dbl)
+```
+
 ## 4.2 Fit Logit Regression
 
 To carry out logit regression with weights included, we need to use `svyglm()` in the `survey` package. Let's include `religion` again. Again, here we have to use `ces_s` rather than `ces_new`. You can ignore the warning message.
 
-```{r, echo=T, eval=T, message=F}
+
+```r
 mod_s_religion <- svyglm(against_abortion ~ religion,
                          design = ces_s, # be sure to use the survey object
                          family = binomial)
+```
+
+```
+## Warning in eval(family$initialize): non-integer #successes in a binomial glm!
+```
+
+```r
 summary(mod_s_religion)
+```
+
+```
+## 
+## Call:
+## svyglm(formula = against_abortion ~ religion, design = ces_s, 
+##     family = binomial)
+## 
+## Survey design:
+## Called via srvyr
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)   -5.202      0.355  -14.65   <2e-16 ***
+## religion       1.223      0.103   11.88   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1.210905)
+## 
+## Number of Fisher Scoring iterations: 6
 ```
 
 Let's take a look at the odds-ratio by taking the exponent of the `religion` coefficient.
 
-```{r, echo=T, eval=T, message=F}
+
+```r
 exp(coef(mod_s_religion))
+```
+
+```
+## (Intercept)    religion 
+## 0.005506094 3.397762968
 ```
 
 ## 4.3 Extra: Model Comparison and Diagnostics
@@ -350,17 +606,57 @@ exp(coef(mod_s_religion))
 
 Let's conduct another logit regression but this time only includes the intercept.
 
-```{r, echo=T, eval=T}
+
+```r
 mod_s_intercept <- svyglm(against_abortion ~ 1,
                           design = ces_s,
                           family = binomial)
+```
+
+```
+## Warning in eval(family$initialize): non-integer #successes in a binomial glm!
+```
+
+```r
 summary(mod_s_intercept)
+```
+
+```
+## 
+## Call:
+## svyglm(formula = against_abortion ~ 1, design = ces_s, family = binomial)
+## 
+## Survey design:
+## Called via srvyr
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -1.48297    0.06534   -22.7   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1.000448)
+## 
+## Number of Fisher Scoring iterations: 4
 ```
 
 Use `anova()` to see whether or not including `religion` helps with explaining more variance in the outcome variable (or: does including `religion` statistically improve the model fit)?
 
-```{r, echo=T, eval=T}
+
+```r
 anova(mod_s_intercept, mod_s_religion, test="Chi")
+```
+
+```
+## Warning in eval(family$initialize): non-integer #successes in a binomial glm!
+```
+
+```
+## Working (Rao-Scott) LRT for religion
+##  in svyglm(formula = against_abortion ~ religion, design = ces_s, 
+##     family = binomial)
+## Working 2logLR =  224.806 p= < 2.22e-16 
+## df=1
 ```
 
 > *Question: What is the `test` option here for? Use `?anova` to see more information.*\
@@ -371,11 +667,41 @@ anova(mod_s_intercept, mod_s_religion, test="Chi")
 
 Say now if we include two predictors in the model.
 
-```{r, echo=T, eval=T, message=F}
+
+```r
 mod_s <- svyglm(against_abortion ~ religion + urban,
                 design = ces_s, # be sure to use the survey object
                 family = binomial)
+```
+
+```
+## Warning in eval(family$initialize): non-integer #successes in a binomial glm!
+```
+
+```r
 summary(mod_s)
+```
+
+```
+## 
+## Call:
+## svyglm(formula = against_abortion ~ religion + urban, design = ces_s, 
+##     family = binomial)
+## 
+## Survey design:
+## Called via srvyr
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  -4.9319     0.3774 -13.068   <2e-16 ***
+## religion      1.2246     0.1031  11.873   <2e-16 ***
+## urban        -0.3591     0.1570  -2.287   0.0223 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1.214632)
+## 
+## Number of Fisher Scoring iterations: 6
 ```
 
 We can still use the `predict()` function to get the predicted log-odds and probabilities. Given that the model includes two predictors, we have to carry out the predictions one by one. 
@@ -387,22 +713,40 @@ Let's feed the `predict()` function two pieces of information:
   - What are the unique levels of `religion``? The variable ranges from 1 to 4.
   - What is the constant of `urban` we can use? Weighted mean is a good choice.
 
-```{r, echo=T, eval=T, message=F}
+
+```r
 ces_s %>%
   summarise(urban_w_mean = survey_mean(urban, na.rm=T))
 ```
 
+```
+## # A tibble: 1 × 2
+##   urban_w_mean urban_w_mean_se
+##          <dbl>           <dbl>
+## 1        0.785         0.00952
+```
+
 Put them together into a new data frame. Note the variable names have to be the same as those included in `svyglm()`. 
 
-```{r, echo=T, eval=T, message=F}
+
+```r
 data_predict <- data.frame(religion = 1:4,
                            urban = 0.785)
 data_predict
 ```
 
+```
+##   religion urban
+## 1        1 0.785
+## 2        2 0.785
+## 3        3 0.785
+## 4        4 0.785
+```
+
 Now let's obtain the predicted log-odds, odds, and probabilities when we vary the importance of `religion` while keeping `urban` at its weighted mean. 
 
-```{r, echo=T, eval=T, message=F}
+
+```r
 fit_prob <- predict(mod_s, newdata=data_predict, type="response")
 fit_log_odds <- predict(mod_s, newdata=data_predict)
 fit_mod_s <- data.frame(religion = 1:4,
@@ -410,6 +754,14 @@ fit_mod_s <- data.frame(religion = 1:4,
                         fit_log_odds = as.matrix(fit_log_odds))
 fit_mod_s$fit_odds <- exp(fit_mod_s$fit_log_odds)
 fit_mod_s
+```
+
+```
+##   religion   fit_prob fit_log_odds   fit_odds
+## 1        1 0.01817897   -3.9891435 0.01851557
+## 2        2 0.05927010   -2.7645512 0.06300437
+## 3        3 0.17654126   -1.5399589 0.21438992
+## 4        4 0.42180537   -0.3153665 0.72952142
 ```
 
 > *Question: Do the calculation similar to "Use predict() Function (Recommended). Discuss your observation.*\

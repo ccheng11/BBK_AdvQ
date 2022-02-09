@@ -1,3 +1,6 @@
+Tutorial: Analyzing Survey Data (Part 2)
+================
+
 Chao-Yo Cheng  
 6 February 2021
 
@@ -142,13 +145,17 @@ log-odds.
 
 Quickly recall the logit link function transforms a **probability** into
 **log odds**:
-$$\\text{logit}(p)=\\log\\left(\\frac{p}{1-p}\\right).$$
-In this case, *p* is the **probability** of respondents against
-abortion.\*\*
+
+![\\text{logit}(p)=\\log\\left(\\frac{p}{1-p}\\right).](https://latex.codecogs.com/png.latex?%5Ctext%7Blogit%7D%28p%29%3D%5Clog%5Cleft%28%5Cfrac%7Bp%7D%7B1-p%7D%5Cright%29. "\text{logit}(p)=\log\left(\frac{p}{1-p}\right).")
+
+In this case, ![p](https://latex.codecogs.com/png.latex?p "p") is the
+**probability** of respondents against abortion.\*\*
 
 If we only include the intercept (i.e., no predictor), then our model is
 like this:
-$$\\log\\left(\\frac{p}{1-p}\\right)=\\alpha.$$
+
+![\\log\\left(\\frac{p}{1-p}\\right)=\\alpha.](https://latex.codecogs.com/png.latex?%5Clog%5Cleft%28%5Cfrac%7Bp%7D%7B1-p%7D%5Cright%29%3D%5Calpha. "\log\left(\frac{p}{1-p}\right)=\alpha.")
+
 The estimated intercept will be *the log-odds* of people against
 abortion.
 
@@ -213,8 +220,10 @@ exp(coefs) # calculating odds
     ##   0.2271727
 
 Third, we can compute the *probability* of people against abortion. From
-the previous step, since the odds $\\frac{p}{1-p}=0.2271727$, we know
-$p=\\frac{0.2271727}{1+0.2271727}=0.1851188$.
+the previous step, since the odds
+![\\frac{p}{1-p}=0.2271727](https://latex.codecogs.com/png.latex?%5Cfrac%7Bp%7D%7B1-p%7D%3D0.2271727 "\frac{p}{1-p}=0.2271727"),
+we know
+![p=\\frac{0.2271727}{1+0.2271727}=0.1851188](https://latex.codecogs.com/png.latex?p%3D%5Cfrac%7B0.2271727%7D%7B1%2B0.2271727%7D%3D0.1851188 "p=\frac{0.2271727}{1+0.2271727}=0.1851188").
 
 ``` r
 exp(coefs)/(1+exp(coefs)) # calculating p
@@ -295,7 +304,9 @@ table(ces_new$importance, ces_new$religion)
 
 With the predictor included, the log-odds of a respondent against
 abortion is
-$$\\log\\left(\\frac{p}{1-p}\\right)=\\alpha + \\beta(\\text{religion}).$$
+
+![\\log\\left(\\frac{p}{1-p}\\right)=\\alpha + \\beta(\\text{religion}).](https://latex.codecogs.com/png.latex?%5Clog%5Cleft%28%5Cfrac%7Bp%7D%7B1-p%7D%5Cright%29%3D%5Calpha%20%2B%20%5Cbeta%28%5Ctext%7Breligion%7D%29. "\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{religion}).")
+
 Let’s run the analysis.
 
 ``` r
@@ -338,24 +349,32 @@ predictor, take the exponent of the coefficient will give us the
 intuition with minimum math involved.
 
 First, recall that we define the model as
-$$\\log\\left(\\frac{p}{1-p}\\right)=\\alpha + \\beta(\\text{religion}).$$
+
+![\\log\\left(\\frac{p}{1-p}\\right)=\\alpha + \\beta(\\text{religion}).](https://latex.codecogs.com/png.latex?%5Clog%5Cleft%28%5Cfrac%7Bp%7D%7B1-p%7D%5Cright%29%3D%5Calpha%20%2B%20%5Cbeta%28%5Ctext%7Breligion%7D%29. "\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{religion}).")
+
 Keep in mind that the outcome variable is the log-odds of people against
 abortion. So we can rewrite this as
-log (Odds) = *α* + *β*(religion).
 
-Next, *β* tells us how the *log-odds* will change when we increase the
-importance of `religion` by one level.
-*β* = log (Odds when Religion=2) − log (Odds when Religion=1).
+![\\log(\\text{Odds})=\\alpha + \\beta(\\text{religion}).](https://latex.codecogs.com/png.latex?%5Clog%28%5Ctext%7BOdds%7D%29%3D%5Calpha%20%2B%20%5Cbeta%28%5Ctext%7Breligion%7D%29. "\log(\text{Odds})=\alpha + \beta(\text{religion}).")
+
+Next, ![\\beta](https://latex.codecogs.com/png.latex?%5Cbeta "\beta")
+tells us how the *log-odds* will change when we increase the importance
+of `religion` by one level.
+
+![\\beta=\\log(\\text{Odds when Religion}=2)-\\log(\\text{Odds when Religion}=1).](https://latex.codecogs.com/png.latex?%5Cbeta%3D%5Clog%28%5Ctext%7BOdds%20when%20Religion%7D%3D2%29-%5Clog%28%5Ctext%7BOdds%20when%20Religion%7D%3D1%29. "\beta=\log(\text{Odds when Religion}=2)-\log(\text{Odds when Religion}=1).")
 
 By the law of logarithms, the **the difference between two logs** (the
 left hand side below) can be rewritten as **the log of them dividing up
 each other** (the right hand side below):
-$$\\log(\\text{Odds when Religion}=2)-\\log(\\text{Odds when Religion}=1)=\\log\\left(\\frac{\\text{Odds when Religion}=2}{\\text{Odds when Religion}=1}\\right).$$
+
+![\\log(\\text{Odds when Religion}=2)-\\log(\\text{Odds when Religion}=1)=\\log\\left(\\frac{\\text{Odds when Religion}=2}{\\text{Odds when Religion}=1}\\right).](https://latex.codecogs.com/png.latex?%5Clog%28%5Ctext%7BOdds%20when%20Religion%7D%3D2%29-%5Clog%28%5Ctext%7BOdds%20when%20Religion%7D%3D1%29%3D%5Clog%5Cleft%28%5Cfrac%7B%5Ctext%7BOdds%20when%20Religion%7D%3D2%7D%7B%5Ctext%7BOdds%20when%20Religion%7D%3D1%7D%5Cright%29. "\log(\text{Odds when Religion}=2)-\log(\text{Odds when Religion}=1)=\log\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right).")
 
 Remove the log from
-$\\log\\left(\\frac{\\text{Odds when Religion}=2}{\\text{Odds when Religion}=1}\\right)$
+![\\log\\left(\\frac{\\text{Odds when Religion}=2}{\\text{Odds when Religion}=1}\\right)](https://latex.codecogs.com/png.latex?%5Clog%5Cleft%28%5Cfrac%7B%5Ctext%7BOdds%20when%20Religion%7D%3D2%7D%7B%5Ctext%7BOdds%20when%20Religion%7D%3D1%7D%5Cright%29 "\log\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right)")
 by taking the exponent of it; in doing so, we have
-$$\\left(\\frac{\\text{Odds when Religion}=2}{\\text{Odds when Religion}=1}\\right).$$
+
+![\\left(\\frac{\\text{Odds when Religion}=2}{\\text{Odds when Religion}=1}\\right).](https://latex.codecogs.com/png.latex?%5Cleft%28%5Cfrac%7B%5Ctext%7BOdds%20when%20Religion%7D%3D2%7D%7B%5Ctext%7BOdds%20when%20Religion%7D%3D1%7D%5Cright%29. "\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right).")
+
 This is **the odds ratio when we increase the importance of religion by
 one unit.**
 
@@ -390,9 +409,9 @@ In a nutshell, odds-ratio (OR) is **a ratio of two different odds** when
 we change the level of `religion` by one unit. And OR can only be one of
 the three conditions below, each of which has a different substantive
 interpretation. Since we find
-*O**R*<sub>*r**e**l**i**g**i**o**n*</sub> \> 1 even after we consider
-its confidence interval, **more religious people are going be more
-likely to be against abortion.**
+![OR\_{religion}>1](https://latex.codecogs.com/png.latex?OR_%7Breligion%7D%3E1 "OR_{religion}>1")
+even after we consider its confidence interval, **more religious people
+are going be more likely to be against abortion.**
 
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -470,12 +489,15 @@ following:
 
 -   Step 4: Explain the odds-ratio (OR) with the table you made.
 
-    -   If *O**R* = 1, the predictor is not associated with the (odds of
-        the) outcome (this is going to be rare in practice).
-    -   If *O**R* \> 1, the predictor is positively associated with the
-        (odds of the) outcome.
-    -   If *O**R* \< 1, the predictor is negatively associated with the
-        (odds of the) outcome.
+    -   If ![OR=1](https://latex.codecogs.com/png.latex?OR%3D1 "OR=1"),
+        the predictor is not associated with the (odds of the) outcome
+        (this is going to be rare in practice).
+    -   If ![OR>1](https://latex.codecogs.com/png.latex?OR%3E1 "OR>1"),
+        the predictor is positively associated with the (odds of the)
+        outcome.
+    -   If ![OR\<1](https://latex.codecogs.com/png.latex?OR%3C1 "OR<1"),
+        the predictor is negatively associated with the (odds of the)
+        outcome.
 
 -   Step 5: Get the confidence interval of the odds ratio to make sure
     it stays in one of the three situations above.
@@ -620,8 +642,9 @@ ces_s
     ##  - strata: province
     ##  - fpc: population
     ##  - weights: weight
-    ## Data variables: id (int), province (fct), population (int), weight (dbl), gender (fct), abortion (fct), importance
-    ##   (fct), education (fct), urban (dbl), against_abortion (dbl), religion (dbl)
+    ## Data variables: id (int), province (fct), population (int), weight (dbl),
+    ##   gender (fct), abortion (fct), importance (fct), education (fct), urban (dbl),
+    ##   against_abortion (dbl), religion (dbl)
 
 ## 4.2 Fit Logit Regression
 
