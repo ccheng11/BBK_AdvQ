@@ -11,7 +11,8 @@
 - Week 5: Analyze Survey Data (Part 2)
 - Week 6 (reading week)
 - Week 7 (workshop week)
-- Week 8: Multilevel Model
+- Week 8: Multilevel Modeling (Part 1)
+- Week 9: Multilevel Modeling (Part 2)
 
 ## Contact Information
 
