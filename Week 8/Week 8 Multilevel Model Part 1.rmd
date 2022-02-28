@@ -49,7 +49,7 @@ Today we will be studying Wave 7 (2017-2020). It is a huge dataset and includes 
 
 For the purpose of demonstration, we will focus on the following variables in this tutorial.
 
-  - `happy` (ordinal): Perceptions of corruption in the country; the variable ranges from 1 to 4; "1" means *very happy* and "4" means *not at all happy*. 
+  - `happy` (ordinal): Happiness; the variable ranges from 4 to 1; "4" means *very happy* and "1" means *not at all happy*. 
 
   - `edu` (ordinal): Highest educational level of the respondent; the variable ranges between 1 and 8, with 8 referring to the highest level of education (doctoral or equivalent). This will be our main **individual-level** predictor today. This variable is recoded based on `Q275` in the original dataset.
 
@@ -59,28 +59,39 @@ For the purpose of demonstration, we will focus on the following variables in th
 
 Let's read in the data and take a look at the variables. We will use `readRDS()` to import the `.RData` file.
 
-```{r, echo=T, eval=T, message=F}
+```{r, echo=T, eval=F, message=F}
 dta <- readRDS("WVS_7.RData")
+```
+
+```{r, echo=F, eval=T, message=F}
+dta <- readRDS("../../Workstation/WVS_7.RData")
 ```
 
 Now we can carry out some data wrangling.
 
 ```{r, echo=T, eval=T, message=F}
 dta_new <- dta %>%
-  select(Q46P, Q275, regtype) %>%
-  rename(happy = Q46P,
-         edu = Q275) %>%
-  mutate(happy = ifelse(happy <= 0, NA, happy),
+  dplyr::select(Q46P, Q275, regtype) %>%
+  rename(edu = Q275) %>%
+  mutate(Q46P = ifelse(Q46P <= 0, NA, Q46P),
          edu = ifelse(edu <= 0, NA, edu),
          regtype = ifelse(regtype <= 0, NA, regtype)) %>%
-  mutate(regtype = as.character(regtype)) %>%
-  mutate(reg_type = recode(regtype,
+  mutate(regtype = as.character(regtype),
+         Q46P = as.character(Q46P)) %>%
+  mutate(happy = recode(Q46P,
+                        "4" = "1",
+                        "3" = "2",
+                        "2" = "3",
+                        "1" = "4"),
+         reg_type = recode(regtype,
                            "5" = "full democracy",
                            "4" = "democracy",
                            "3" = "open anocracy",
                            "2" = "closed anocracy",
                            "1" = "autocracy")) %>%
-  tidyr::drop_na(regtype)
+  mutate(happy = as.numeric(happy)) %>%
+  tidyr::drop_na(regtype, happy)
+#table(dta_new$happy, dta_new$Q46P)
 ```
 
 > *Question: Can you walk through the data wrangling process verbally? Any suggestion to make the process more efficiently?*
@@ -191,7 +202,7 @@ mod_lm <- lm(happy ~ edu, data=dta_new)
 summary(mod_lm)
 ```
 
-There seems to be a positive correlation between `edu` and `happy`. 
+There seems to be a **negative** correlation between `edu` and `happy` (huh?). 
 
 Now we will attempt several types of multilevel modeling approaches (using `reg_type` to group respondents across different countries), which can depend on several things.
 
