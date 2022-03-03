@@ -356,7 +356,7 @@ summary(lm(resid(mod_lmm_3) ~ predict(mod_lmm_3)))
 
 ## 6.3 Extra: Random Effects
 
-Here we use **random effects** to refer to the random component of the estimated varying intercepts and/or slopes (depending on which model we are talking about). 
+Here, we use **random effects** to refer to the random component of the estimated varying intercepts and/or slopes (depending on which model we are talking about). 
 
 We will use `mod_lmm_3` (varying intercept and slope) to demonstrate. We will use `ranef()` to extract the random component first. 
 ```{r, echo=T, eval=F, message=F, warning=F}
