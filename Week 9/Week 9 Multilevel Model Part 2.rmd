@@ -1,5 +1,5 @@
 ---
-title: "Tutorial: Multilevel and Hierarchical Modeling (Part 1)"
+title: "Tutorial: Multilevel and Hierarchical Modeling (Part 2)"
 author: ""
 date: ""
 output:
@@ -12,7 +12,7 @@ output:
 ---
 
 Chao-Yo Cheng\
-28 February 2021
+7 March 2021
 
 # 1 Introduction
 
@@ -20,10 +20,11 @@ By the end of today, you will know how to:
 
   - Fit a (linear) multi-level model.
   - Allow the intercepts and/or slopes to vary in a linear multi-level model.
+  - Inspect a linear multi-level model in line with model assumptions.
 
 # 2 Packages 
 
-Today we will use the `lme4` package, which includes a variety of functions to fit linear and non-linear multilevel models. 
+We will continue to use the same packages from the previous week. That is, we will use the `lme4` package, which includes a variety of functions to fit linear and non-linear multilevel models. 
 
 The `lme4` package does not report p-values in model summary tables (recall that there is some controversies around the use of p-values). If we want to report p-values for our models, we can supplement `lme4` with the `lmerTest` package.
 
@@ -41,7 +42,7 @@ library(tidyverse) # for data wrangling
 
 # 3 Data
 
-We will study **World Values Survey (WVS)** today -- one of the largest survey projects in about 100 countries. WVS started as the 1981 European Values Study (EVS) (led b Jan Kerkhofs and Ruud de Moory) and was later expanded under the leadership of Ronald Inglehart at the University of Michigan.
+We will continue **World Values Survey (WVS)** today -- one of the largest survey projects in about 100 countries. WVS started as the 1981 European Values Study (EVS) (led b Jan Kerkhofs and Ruud de Moory) and was later expanded under the leadership of Ronald Inglehart at the University of Michigan.
 
 WVS "explores people's values and beliefs, how they change over time, and what social and political impact they have." For more information about WVS, click [here](https://www.worldvaluessurvey.org/wvs.jsp). 
 
@@ -94,110 +95,31 @@ dta_new <- dta %>%
 #table(dta_new$happy, dta_new$Q46P)
 ```
 
-> *Question: Can you walk through the data wrangling process verbally? Any suggestion to make the process more efficiently?*
+# 4 Analysis
 
-> *Question: What does `tidyr::drop_na()` do?*
 
-Let's check if the recoding is done properly.
+|                                                       | Formal expression               |
+|-------------------------------------------------------|---------------------------------|
+| Linear (fixed $\alpha$ and $\beta$)                   | $Y=\alpha+\beta X+\epsilon$     |
+| Linear Multilevel (varying $\alpha$ only)             | $Y=\alpha_i+\beta X+\epsilon$   |
+| Linear Multilevel (varying $\beta$ only)              | $Y=\alpha+\beta_i X+\epsilon$   |
+| Linear Multilevel (varying $\alpha$ and $\beta$ only) | $Y=\alpha_i+\beta_i X+\epsilon$ |
 
-```{r, echo=T, eval=T, message=F}
-dta_new$reg_type <- factor(dta_new$reg_type,
-                           levels=c("autocracy", "closed anocracy", "open anocracy", "democracy", "full democracy"))
-table(dta_new$reg_type, dta_new$regtype)
-```
+|                                                  | `R` code                   |
+|--------------------------------------------------|----------------------------|
+| Linear (fixed $\alpha$ and $\beta$)              | `lm(y~x)`                  |
+| Linear Multilevel (varying $\alpha$)             | `lmer(y~x+(1|reg_type))`   |
+| Linear Multilevel (varying $\beta$)              | `lmer(y~x+(0+x|reg_type))` |
+| Linear Multilevel (varying $\alpha$ and $\beta$) | `lmer(y~x+(1+x|reg_type))` |
 
-> *Question: What does `factor()` do?*
+We will jump ahead to fit different (linear) multilevel models. Again, the outcome of interest ($Y$) is `happy` and the predictor ($X$) is `edu`; using `reg_type` as the *grouping* variable, we want to use linear multilevel model to answer the following question:
 
-> *Question: How may respondents from different political regimes act differently in the survey?*
+**How does the relationship between `edu` and `happy` vary by `reg_type`?**
 
-Everything looks good. Let's proceed.
-
-```{r, echo=T, eval=T, message=F}
-head(dta_new, 10)
-```
-
-We can check the object type of each variable by calling them out separately.
-
-```{r, echo=T, eval=T, message=F}
-class(dta_new$regtype)
-class(dta_new$reg_type)
-```
-Or, we can use the `sapply()` function to do the same in one go.
-
-```{r, echo=T, eval=T, message=F}
-sapply(dta_new, class)
-```
-
-> *Question: We enter two arguments into `sapply()` -- what does each of them refer to?*
-
-> *Question: What is the difference between "character" and "factor"?*
-
-# 4 Visualization
-
-Let's plot the data using the `xyplot()` function from the `lattice` package to see how the relationship between `edu` and `happyion` varies by different regime types.
-
-```{r, echo=T, eval=T, message=F}
-xyplot(happy ~ edu | reg_type, dta_new)
-```
-
-> *Question: They do not look too informative -- what is going on here?*
-
-Sometimes, we can try heatmaps to visualize the relationship between two **ordinal** variables. For more discussion, check out this [page](https://will-ball.github.io/ordinalplots/) and this [CrossValidated post](https://stats.stackexchange.com/questions/56322/graph-for-relationship-between-two-ordinal-variables).
-
-```{r, echo=T, eval=T, message=F}
-dta_autocracy <- dta_new %>% filter(regtype == 1)
-heat_autocracy <- table(dta_autocracy$edu, dta_autocracy$happy)/nrow(dta_autocracy)
-heat_autocracy <- data.frame(heat_autocracy)
-colnames(heat_autocracy) <- c("edu", "happy", "prop")
-
-ggplot(heat_autocracy, aes(edu, happy)) +
-   geom_tile(aes(fill = prop), colour = "black") +
-   scale_fill_gradient(low = "white", high = "black")
-```
-
-```{r, echo=T, eval=T, message=F}
-dta_democracy <- dta_new %>% filter(regtype == 5)
-heat_democracy <- table(dta_democracy$edu, dta_democracy$happy)/nrow(dta_democracy)
-heat_democracy <- data.frame(heat_democracy)
-colnames(heat_democracy) <- c("edu", "happy", "prop")
-
-ggplot(heat_democracy, aes(edu, happy)) +
-   geom_tile(aes(fill = prop), colour = "black") +
-   scale_fill_gradient(low = "white", high = "black")
-```
-
-> *Question: Does the relationship between education and perceived happyion vary by regime type?*
-
-# 5 Analysis
-
-Let's take a look at the outcome variable to check for any potential outliers. Given that both variables are ordinal, we will use **bar charts** rather than histograms.
-
-```{r, echo=T, eval=T, message=F}
-count <- table(dta_new$happy)
-barplot(count)
-```
-
-Let's check if the distribution varies by political regimes.
-
-```{r, echo=T, eval=T, message=F}
-par(mfrow=c(2,3))
-barplot(table(dta_new$happy[dta$regtype == 5]), main="Full Democracy")
-barplot(table(dta_new$happy[dta$regtype == 4]), main="Democracy")
-barplot(table(dta_new$happy[dta$regtype == 3]), main="Open Anocracy")
-barplot(table(dta_new$happy[dta$regtype == 2]), main="Closed Anocracy")
-barplot(table(dta_new$happy[dta$regtype == 1]), main="Autocracy")
-```
-
-> *Question: What do you think? Is what you see here consistent with your expectations?*
-
-As the starter, let's use our old friend `lm()`.
+As the starter, once again, let's use our old friend `lm()` before we proceed.
 
 ```{r, echo=T, eval=T, message=F}
 options(scipen=999)
-
-mod_lm <- lm(happy ~ 1, data=dta_new)
-summary(mod_lm)
-
 mod_lm <- lm(happy ~ edu, data=dta_new)
 summary(mod_lm)
 ```
@@ -212,9 +134,9 @@ Now we will attempt several types of multilevel modeling approaches (using `reg_
   
 > Question: How do you make decisions on these questions?
 
-## 5.1 No Predictor; Varying Intercept and Fixed Slope
+## 4.1 Varying Intercept and Fixed Slope
 
-If we only allow the intercept to vary by group without including any predictor, basically we are trying to fit the following models in one go with `lmer()`: $$\text{happy}=\alpha_i+\epsilon,$$ in which we use $i$ to denote a given regime type (e.g., autocracy, closed anocracy, open anocracy, democracy, full democracy). 
+If we only allow the intercept to vary by group without including any predictor, basically we are trying to fit the following models in one go with `lmer()`: $$\text{happy}=\alpha_i+\beta+\epsilon,$$ in which we use $i$ to denote a given regime type (e.g., autocracy, closed anocracy, open anocracy, democracy, full democracy). 
 
 Since we have five groups, that means our goal is to find the estimated intercept of each type (in other words, in total we want to have five $\alpha$s) while keeping the estimated slope the same regardless of the regime type.
 
@@ -222,7 +144,7 @@ Let's fit the model.
 
 ```{r, echo=T, eval=T, message=F}
 options(scipen=999)
-mod_lmm_1 <- lmer(happy ~ 1 + (1|reg_type), data=dta_new)
+mod_lmm_1 <- lmer(happy ~ edu + (1|reg_type), data=dta_new)
 summary(mod_lmm_1)
 ```
 
@@ -230,9 +152,7 @@ The regression output does not tell us the exact estimated intercept of each reg
 
   - Step 1: in the regression output, you can find the **average** of all estimated intercepts across political regimes listed under `Fixed effects`. You can use `fixef()` to obtain it. This is also known as the **fixed** part of the estimated intercept of each regime type.
   - Step 2: Now we know the average, the question now is how far away each intercept is from the average. This is the **random** part of the estimated intercept of each regime type. We can use the function `ranef()` to call out them out.
-  - Step 3: The sum of `fixef()` and `ranef()` is the estimated slope of each group (or regime type).
-
-Let's proceed.
+  - Step 3: The sum of `fixef()` and `ranef()` is the estimated intercept of each group (or regime type).
 
 ```{r, echo=T, eval=T, message=F}
 fixef(mod_lmm_1) # fixed part of each intercept
@@ -251,59 +171,196 @@ Alternatively, We can use the `coef()` function again to extract the estimated i
 coef(mod_lmm_1)
 ```
 
-> Question: How do you define and derive the confidence interval of each estimated intercept?
-
-You can repeat the same process but with different modeling approaches (see below). Again, we can use `names()` to open the black box of the regression output.
-
-```{r, echo=T, eval=T, message=F}
-res_lmm_1 <- summary(mod_lmm_1)
-names(res_lmm_1)
-```
-
-> Question: See anything familiar?
-
-## 5.2 With Predictor; Varying Intercept and Fixed Slope
-
-Now let's include the predictor `edu` in our model: $$\text{happy}=\alpha_i+\beta(\text{edu})+\epsilon.$$ Again, our objective is to find the estimated intercept corresponding to each regime type.
-
-```{r, echo=T, eval=F, message=F, warning=F}
-options(scipen=999)
-mod_lmm_int <- lmer(happy ~ edu + (1|reg_type), data=dta_new)
-
-fixef(mod_lmm_int) # fixed part of each intercept
-ranef(mod_lmm_int) # random part of each intercept
-dotplot(ranef(mod_lmm_int, condVar = TRUE))
-coef(mod_lmm_int)
-```
-
-## 5.3 With Predictor; Fixed Intercept and Varying Slope
+## 4.2 Fixed Intercept and Varying Slope
 
 Say now we believe that the intercept for each regime type should be the same, but each regime type will have a different slope. This idea will turn our model into: $$\text{happy}=\alpha+\beta_i(\text{edu})+\epsilon.$$ Our objective is to find the estimated slope corresponding to each regime type.
 
-```{r, echo=T, eval=F, message=F, warning=F}
+```{r, echo=T, eval=T, message=F, warning=F}
 options(scipen=999)
-mod_lmm_beta <- lmer(happy ~ edu + (0+edu|reg_type), data=dta_new)
-
-fixef(mod_lmm_beta) # fixed part of each intercept
-ranef(mod_lmm_beta) # random part of each intercept
-dotplot(ranef(mod_lmm_beta, condVar = TRUE))
-coef(mod_lmm_beta)
+mod_lmm_2 <- lmer(happy ~ edu + (0+edu|reg_type), data=dta_new)
 ```
 
-## 5.4 With Predictor; Varying Intercept and Slope
+And we can study the results as above. 
+
+Likewise, the regression output does not tell us the exact estimated slope of each regime type, so we have to get them manually.
+
+  - Step 1: in the regression output, you can find the **average** of all estimated slopes across political regimes listed under `Fixed effects`. You can use `fixef()` to obtain it. This is also known as the **fixed** part of the estimated slope of each regime type.
+  - Step 2: Now we know the average, the question now is how far away each slope is from the mean. This is the **random** part of the estimated slope of each regime type. We can use the function `ranef()` to call out them out.
+  - Step 3: The sum of `fixef()` and `ranef()` is the estimated slope of each group (or regime type).
+
+```{r, echo=T, eval=T, message=F, warning=F}
+fixef(mod_lmm_2) # fixed part of each slope
+ranef(mod_lmm_2) # random part of each slope
+dotplot(ranef(mod_lmm_2, condVar = TRUE))
+coef(mod_lmm_2)
+```
+
+## 4.3 Varying Intercept and Slope
 
 Finally, if we decide that each regime type should have its own unique intercept and slope, then the model becomes: $$\text{happy}=\alpha_i+\beta_i(\text{edu})+\epsilon.$$ Our objective is to find the estimated intercept and slope corresponding to each regime type.
 
-```{r, echo=T, eval=F, message=F, warning=F}
+```{r, echo=T, eval=T, message=F, warning=F}
 options(scipen=999)
-mod_lmm_int_beta <- lmer(happy ~ edu + (1+edu|reg_type), data=dta_new)
-
-fixef(mod_lmm_int_beta) # fixed part of each intercept
-ranef(mod_lmm_int_beta) # random part of each intercept
-dotplot(ranef(mod_lmm_int_beta, condVar = TRUE))
-coef(mod_lmm_int_beta)
+mod_lmm_3 <- lmer(happy ~ edu + (1+edu|reg_type), data=dta_new)
 ```
 
-# 6 Concluding Remarks
+Again, we can study the results as above.
 
-> *Question: Which one do you prefer? And any ideas to justify your choice? (hint: residuals may come to rescue).*
+```{r, echo=T, eval=T, message=F, warning=F}
+fixef(mod_lmm_3) # fixed part of each intercept and slope
+ranef(mod_lmm_3) # random part of each intercept and slope
+dotplot(ranef(mod_lmm_3, condVar = TRUE))
+coef(mod_lmm_3)
+```
+
+# 5 Confidence Intervals
+
+```{r, echo=T, eval=F, message=F, warning=F}
+mod_lmm_1 <- lmer(happy ~ edu + (1|reg_type), data=dta_new)
+mod_lmm_2 <- lmer(happy ~ edu + (0+edu|reg_type), data=dta_new)
+mod_lmm_3 <- lmer(happy ~ edu + (1+edu|reg_type), data=dta_new)
+```
+
+Let's start with `mod_lmm_1` (varying intercept and fixed slope) -- for the purpose of demonstration, I will explain the process step by step.
+
+  - Step 1: Obtain the average of all estimated intercepts using `fixef()`.
+  - Step 2: Obtain the random part of each estimated intercept using `ranef()`.
+  - Step 3: Turn `ranef()` into a `tibble` object; calculate the 95\% confidence interval of each estimated intercept by taking into the account (1) the standard error of each random component and (2) the average of all estimated intercepts.
+
+```{r, echo=T, eval=F, message=F, warning=F}
+res_lmm_1_fix <- fixef(mod_lmm_1)[1]
+res_lmm_1_ran <- ranef(mod_lmm_1, condVar = TRUE)
+res_lmm_1_ran_dd <- as_tibble(res_lmm_1_ran) %>%
+  mutate(lwr = condval - 1.96*condsd + res_lmm_1_fix,
+         upr = condval + 1.96*condsd + res_lmm_1_fix)
+res_lmm_1_ran_dd
+```
+
+And proceed to check the estimated intercepts and slopes of `mod_lmm_2` (fixed intercept and varying slopes).
+
+  - Step 1: Obtain the average of all estimated slopes using `fixef()`.
+  - Step 2: Obtain the random part of each estimated slope using `ranef()`.
+  - Step 3: Turn `ranef()` into a `tibble` object; calculate the 95\% confidence interval of each estimated slope by taking into the account (1) the standard error of each random part and (2) the average of all estimated slopes.
+
+```{r, echo=T, eval=F, message=F, warning=F}
+res_lmm_2_fix <- fixef(mod_lmm_1)[2]
+res_lmm_2_ran <- ranef(mod_lmm_1, condVar = TRUE)
+res_lmm_2_ran_dd <- as_tibble(res_lmm_2_ran) %>%
+  mutate(lwr = condval - 1.96*condsd + res_lmm_2_fix,
+         upr = condval + 1.96*condsd + res_lmm_2_fix)
+res_lmm_2_ran_dd
+```
+
+Below is the step you need for `res_lmm_3` (varying intercepts and slopes).  Note that we have to work on the intercepts and slopes separately. Let's start with the intercepts.
+
+```{r, echo=T, eval=F, message=F, warning=F}
+res_lmm_3_fix <- fixef(mod_lmm_3)
+res_lmm_3_ran <- ranef(mod_lmm_3, condVar = TRUE)
+```
+
+The intercepts:
+
+```{r, echo=T, eval=F, message=F, warning=F}
+res_lmm_3_ran_dd <- as_tibble(res_lmm_3_ran) %>%
+  filter(term == "(Intercept)") %>%
+  mutate(lwr = condval - 1.96*condsd + res_lmm_3_fix[1],
+         upr = condval + 1.96*condsd + res_lmm_3_fix[1])
+res_lmm_3_ran_dd
+```
+
+The slopes:
+
+```{r, echo=T, eval=F, message=F, warning=F}
+res_lmm_3_ran_dd <- as_tibble(res_lmm_3_ran) %>%
+  filter(term == "edu") %>%
+  mutate(lwr = condval - 1.96*condsd + res_lmm_3_fix[2],
+         upr = condval + 1.96*condsd + res_lmm_3_fix[2])
+res_lmm_3_ran_dd
+```
+
+# 6 Model Comparison and Diagnostics
+
+## 6.1 Model Comparison
+
+```{r, echo=T, eval=F, message=F, warning=F}
+anova(mod_lmm_1, mod_lmm_2, mod_lmm_3)
+```
+
+## 6.2 Extra: Residuals
+
+First, let's call out the residuals of all `lm()` and `lmer()` models. You can use the `resid()`, but we can actually find the residuals or errors using the `$` sign.
+
+```{r, echo=T, eval=F, message=F, warning=F}
+error_lm <- mod_lm$residuals
+error_lmm_1 <- (summary(mod_lmm_1))$residuals
+error_lmm_2 <- (summary(mod_lmm_2))$residuals
+error_lmm_3 <- (summary(mod_lmm_3))$residuals
+```
+
+Let's do a quick summary statistics for each of them.
+
+```{r, echo=T, eval=F, message=F, warning=F}
+summary(error_lm)
+summary(error_lmm_1) 
+summary(error_lmm_2) 
+summary(error_lmm_3) 
+```
+
+### 6.2.1 Normally Distributed Errors 
+
+> Question: What are some of the most important properties of a normal distribution?
+
+We can first check whether the errors are distributed normally.
+
+```{r, echo=T, eval=F, message=F, warning=F}
+par(mfrow=c(2,2))
+hist(error_lm, main="Fixed a and b")
+hist(error_lmm_1, main="Vary a; fixed b")
+hist(error_lmm_2, main="Fixed a; vary b")
+hist(error_lmm_3, main="Vary a and b")
+```
+
+Using **qq-plot** is probably a better idea.
+
+```{r, echo=T, eval=F, message=F, warning=F}
+library(car)
+par(mfrow=c(2,2))
+qqPlot(error_lm, main="Fixed a and b")
+qqPlot(error_lmm_1, main="Vary a; fixed b")
+qqPlot(error_lmm_2, main="Fixed a; vary b")
+qqPlot(error_lmm_3, main="Vary a and b")
+```
+
+### 6.2.2 Residuals and Predicted $Y$ 
+
+You can also create the scatterplots, using the predicted $Y$ (i.e., $\widehat{Y}$) against the residuals (i.e., $\epsilon$); ideally, we should not observe any systematic patterns, which means
+
+  - $\widehat{Y}$ cannot predict $\epsilon$, OR
+  - $\widehat{Y}$ is not correlated with predict $\epsilon$).
+
+```{r, echo=T, eval=F, message=F, warning=F}
+par(mfrow=c(2,2))
+plot(resid(mod_lm) ~ predict(mod_lm), main="Fixed a and b")
+plot(resid(mod_lmm_1) ~ predict(mod_lmm_1), main="Vary a; fixed b")
+plot(resid(mod_lmm_2) ~ predict(mod_lmm_2), main="Fixed a; vary b")
+plot(resid(mod_lmm_3) ~ predict(mod_lmm_3), main="Vary a and b")
+```
+You can also just check the correlation using `lm()` -- again, ideally, they should **NOT** correlated with each other, so all estimated slopes should be statistically insignificant.
+
+```{r, echo=T, eval=F, message=F, warning=F}
+summary(lm(resid(mod_lm) ~ predict(mod_lm)))
+summary(lm(resid(mod_lmm_1) ~ predict(mod_lmm_1)))
+summary(lm(resid(mod_lmm_2) ~ predict(mod_lmm_2)))
+summary(lm(resid(mod_lmm_3) ~ predict(mod_lmm_3)))
+```
+
+## 6.3 Extra: Random Effects
+
+Here we use **random effects** to refer to the random component of the estimated varying intercepts and/or slopes (depending on which model we are talking about). 
+
+We will use `mod_lmm_3` (varying intercept and slope) to demonstrate. We will use `ranef()` to extract the random component first. 
+```{r, echo=T, eval=F, message=F, warning=F}
+ran_eff <- ranef(mod_lmm_3)$reg_type
+shapiro.test(ran_eff$"(Intercept)")
+shapiro.test(ran_eff$"edu")
+```
