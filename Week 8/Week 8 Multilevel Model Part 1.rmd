@@ -230,7 +230,7 @@ The regression output does not tell us the exact estimated intercept of each reg
 
   - Step 1: in the regression output, you can find the **average** of all estimated intercepts across political regimes listed under `Fixed effects`. You can use `fixef()` to obtain it. This is also known as the **fixed** part of the estimated intercept of each regime type.
   - Step 2: Now we know the average, the question now is how far away each intercept is from the average. This is the **random** part of the estimated intercept of each regime type. We can use the function `ranef()` to call out them out.
-  - Step 3: The sum of `fixef()` and `ranef()` is the estimated slope of each group (or regime type).
+  - Step 3: The sum of `fixef()` and `ranef()` is the estimated intercept of each group (or regime type).
 
 Let's proceed.
 
@@ -284,8 +284,8 @@ Say now we believe that the intercept for each regime type should be the same, b
 options(scipen=999)
 mod_lmm_beta <- lmer(happy ~ edu + (0+edu|reg_type), data=dta_new)
 
-fixef(mod_lmm_beta) # fixed part of each intercept
-ranef(mod_lmm_beta) # random part of each intercept
+fixef(mod_lmm_beta) # fixed part of each slope
+ranef(mod_lmm_beta) # random part of each slope
 dotplot(ranef(mod_lmm_beta, condVar = TRUE))
 coef(mod_lmm_beta)
 ```
@@ -298,8 +298,8 @@ Finally, if we decide that each regime type should have its own unique intercept
 options(scipen=999)
 mod_lmm_int_beta <- lmer(happy ~ edu + (1+edu|reg_type), data=dta_new)
 
-fixef(mod_lmm_int_beta) # fixed part of each intercept
-ranef(mod_lmm_int_beta) # random part of each intercept
+fixef(mod_lmm_int_beta) # fixed part of each intercept and slope
+ranef(mod_lmm_int_beta) # random part of each intercept and slope
 dotplot(ranef(mod_lmm_int_beta, condVar = TRUE))
 coef(mod_lmm_int_beta)
 ```
