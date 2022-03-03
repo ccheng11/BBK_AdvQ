@@ -269,6 +269,11 @@ Now let's include the predictor `edu` in our model: $$\text{happy}=\alpha_i+\bet
 ```{r, echo=T, eval=F, message=F, warning=F}
 options(scipen=999)
 mod_lmm_int <- lmer(happy ~ edu + (1|reg_type), data=dta_new)
+
+fixef(mod_lmm_int) # fixed part of each intercept
+ranef(mod_lmm_int) # random part of each intercept
+dotplot(ranef(mod_lmm_int, condVar = TRUE))
+coef(mod_lmm_int)
 ```
 
 ## 5.3 With Predictor; Fixed Intercept and Varying Slope
@@ -277,7 +282,12 @@ Say now we believe that the intercept for each regime type should be the same, b
 
 ```{r, echo=T, eval=F, message=F, warning=F}
 options(scipen=999)
-mod_lmm_int <- lmer(happy ~ edu + (0+edu|reg_type), data=dta_new)
+mod_lmm_beta <- lmer(happy ~ edu + (0+edu|reg_type), data=dta_new)
+
+fixef(mod_lmm_beta) # fixed part of each intercept
+ranef(mod_lmm_beta) # random part of each intercept
+dotplot(ranef(mod_lmm_beta, condVar = TRUE))
+coef(mod_lmm_beta)
 ```
 
 ## 5.4 With Predictor; Varying Intercept and Slope
@@ -286,7 +296,12 @@ Finally, if we decide that each regime type should have its own unique intercept
 
 ```{r, echo=T, eval=F, message=F, warning=F}
 options(scipen=999)
-mod_lmm_int <- lmer(happy ~ edu + (1+edu|reg_type), data=dta_new)
+mod_lmm_int_beta <- lmer(happy ~ edu + (1+edu|reg_type), data=dta_new)
+
+fixef(mod_lmm_int_beta) # fixed part of each intercept
+ranef(mod_lmm_int_beta) # random part of each intercept
+dotplot(ranef(mod_lmm_int_beta, condVar = TRUE))
+coef(mod_lmm_int_beta)
 ```
 
 # 6 Concluding Remarks

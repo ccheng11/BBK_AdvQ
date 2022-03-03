@@ -1897,7 +1897,12 @@ names(res_lmm_1)</code></pre>
 Again, our objective is to find the estimated intercept corresponding to
 each regime type.</p>
 <pre class="r"><code>options(scipen=999)
-mod_lmm_int &lt;- lmer(happy ~ edu + (1|reg_type), data=dta_new)</code></pre>
+mod_lmm_int &lt;- lmer(happy ~ edu + (1|reg_type), data=dta_new)
+
+fixef(mod_lmm_int) # fixed part of each intercept
+ranef(mod_lmm_int) # random part of each intercept
+dotplot(ranef(mod_lmm_int, condVar = TRUE))
+coef(mod_lmm_int)</code></pre>
 </div>
 <div id="with-predictor-fixed-intercept-and-varying-slope" class="section level2">
 <h2>5.3 With Predictor; Fixed Intercept and Varying Slope</h2>
@@ -1907,7 +1912,12 @@ will turn our model into: <span class="math display">\[\text{happy}=\alpha+\beta
 Our objective is to find the estimated slope corresponding to each
 regime type.</p>
 <pre class="r"><code>options(scipen=999)
-mod_lmm_int &lt;- lmer(happy ~ edu + (0+edu|reg_type), data=dta_new)</code></pre>
+mod_lmm_beta &lt;- lmer(happy ~ edu + (0+edu|reg_type), data=dta_new)
+
+fixef(mod_lmm_beta) # fixed part of each intercept
+ranef(mod_lmm_beta) # random part of each intercept
+dotplot(ranef(mod_lmm_beta, condVar = TRUE))
+coef(mod_lmm_beta)</code></pre>
 </div>
 <div id="with-predictor-varying-intercept-and-slope" class="section level2">
 <h2>5.4 With Predictor; Varying Intercept and Slope</h2>
@@ -1916,7 +1926,12 @@ unique intercept and slope, then the model becomes: <span class="math display">\
 Our objective is to find the estimated intercept and slope corresponding
 to each regime type.</p>
 <pre class="r"><code>options(scipen=999)
-mod_lmm_int &lt;- lmer(happy ~ edu + (1+edu|reg_type), data=dta_new)</code></pre>
+mod_lmm_int_beta &lt;- lmer(happy ~ edu + (1+edu|reg_type), data=dta_new)
+
+fixef(mod_lmm_int_beta) # fixed part of each intercept
+ranef(mod_lmm_int_beta) # random part of each intercept
+dotplot(ranef(mod_lmm_int_beta, condVar = TRUE))
+coef(mod_lmm_int_beta)</code></pre>
 </div>
 </div>
 <div id="concluding-remarks" class="section level1">
