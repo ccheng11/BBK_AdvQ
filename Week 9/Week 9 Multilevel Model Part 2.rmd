@@ -105,12 +105,12 @@ dta_new <- dta %>%
 | Linear Multilevel (varying $\beta$ only)              | $Y=\alpha+\beta_i X+\epsilon$   |
 | Linear Multilevel (varying $\alpha$ and $\beta$ only) | $Y=\alpha_i+\beta_i X+\epsilon$ |
 
-|                                                  | `R` code                   |
-|--------------------------------------------------|----------------------------|
-| Linear (fixed $\alpha$ and $\beta$)              | `lm(y~x)`                  |
-| Linear Multilevel (varying $\alpha$)             | `lmer(y~x+(1|reg_type))`   |
-| Linear Multilevel (varying $\beta$)              | `lmer(y~x+(0+x|reg_type))` |
-| Linear Multilevel (varying $\alpha$ and $\beta$) | `lmer(y~x+(1+x|reg_type))` |
+|                                                  | `R` code                         |
+|--------------------------------------------------|----------------------------------|
+| Linear (fixed $\alpha$ and $\beta$)              | `lm(happy~edu)`                  |
+| Linear Multilevel (varying $\alpha$)             | `lmer(happy~edu+(1|reg_type))`   |
+| Linear Multilevel (varying $\beta$)              | `lmer(happy~edu+(0+x|reg_type))` |
+| Linear Multilevel (varying $\alpha$ and $\beta$) | `lmer(happy~edu+(1+x|reg_type))` |
 
 We will jump ahead to fit different (linear) multilevel models. Again, the outcome of interest ($Y$) is `happy` and the predictor ($X$) is `edu`; using `reg_type` as the *grouping* variable, we want to use linear multilevel model to answer the following question:
 

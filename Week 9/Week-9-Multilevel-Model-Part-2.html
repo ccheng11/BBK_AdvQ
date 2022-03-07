@@ -1656,8 +1656,8 @@ X+\epsilon\)</span></td>
 </table>
 <table>
 <colgroup>
-<col width="64%" />
-<col width="35%" />
+<col width="59%" />
+<col width="40%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -1668,19 +1668,19 @@ X+\epsilon\)</span></td>
 <tbody>
 <tr class="odd">
 <td>Linear (fixed <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>)</td>
-<td><code>lm(y~x)</code></td>
+<td><code>lm(happy~edu)</code></td>
 </tr>
 <tr class="even">
 <td>Linear Multilevel (varying <span class="math inline">\(\alpha\)</span>)</td>
-<td><code>lmer(y~x+(1|reg_type))</code></td>
+<td><code>lmer(happy~edu+(1|reg_type))</code></td>
 </tr>
 <tr class="odd">
 <td>Linear Multilevel (varying <span class="math inline">\(\beta\)</span>)</td>
-<td><code>lmer(y~x+(0+x|reg_type))</code></td>
+<td><code>lmer(happy~edu+(0+x|reg_type))</code></td>
 </tr>
 <tr class="even">
 <td>Linear Multilevel (varying <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>)</td>
-<td><code>lmer(y~x+(1+x|reg_type))</code></td>
+<td><code>lmer(happy~edu+(1+x|reg_type))</code></td>
 </tr>
 </tbody>
 </table>
