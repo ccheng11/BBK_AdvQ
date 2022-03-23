@@ -145,7 +145,7 @@ xyplot(happy ~ edu | reg_type, dta_new)
 Sometimes, we can try heatmaps to visualize the relationship between two **ordinal** variables. For more discussion, check out this [page](https://will-ball.github.io/ordinalplots/) and this [CrossValidated post](https://stats.stackexchange.com/questions/56322/graph-for-relationship-between-two-ordinal-variables).
 
 ```{r, echo=T, eval=T, message=F}
-dta_autocracy <- dta_new %>% filter(regtype == 1)
+dta_autocracy <- dta_new %>% filter(regtype == 1) %>% drop_na(edu, happy)
 heat_autocracy <- table(dta_autocracy$edu, dta_autocracy$happy)/nrow(dta_autocracy)
 heat_autocracy <- data.frame(heat_autocracy)
 colnames(heat_autocracy) <- c("edu", "happy", "prop")
@@ -156,7 +156,7 @@ ggplot(heat_autocracy, aes(edu, happy)) +
 ```
 
 ```{r, echo=T, eval=T, message=F}
-dta_democracy <- dta_new %>% filter(regtype == 5)
+dta_democracy <- dta_new %>% filter(regtype == 5) %>% drop_na(edu, happy)
 heat_democracy <- table(dta_democracy$edu, dta_democracy$happy)/nrow(dta_democracy)
 heat_democracy <- data.frame(heat_democracy)
 colnames(heat_democracy) <- c("edu", "happy", "prop")
@@ -273,7 +273,7 @@ mod_lmm_int <- lmer(happy ~ edu + (1|reg_type), data=dta_new)
 fixef(mod_lmm_int) # fixed part of each intercept
 ranef(mod_lmm_int) # random part of each intercept
 dotplot(ranef(mod_lmm_int, condVar = TRUE))
-coef(mod_lmm_int)
+coef(mod_lmm_int) # sum of fixed and random 
 ```
 
 ## 5.3 With Predictor; Fixed Intercept and Varying Slope
@@ -287,7 +287,7 @@ mod_lmm_beta <- lmer(happy ~ edu + (0+edu|reg_type), data=dta_new)
 fixef(mod_lmm_beta) # fixed part of each slope
 ranef(mod_lmm_beta) # random part of each slope
 dotplot(ranef(mod_lmm_beta, condVar = TRUE))
-coef(mod_lmm_beta)
+coef(mod_lmm_beta) # sum of fixed and random 
 ```
 
 ## 5.4 With Predictor; Varying Intercept and Slope
@@ -301,7 +301,7 @@ mod_lmm_int_beta <- lmer(happy ~ edu + (1+edu|reg_type), data=dta_new)
 fixef(mod_lmm_int_beta) # fixed part of each intercept and slope
 ranef(mod_lmm_int_beta) # random part of each intercept and slope
 dotplot(ranef(mod_lmm_int_beta, condVar = TRUE))
-coef(mod_lmm_int_beta)
+coef(mod_lmm_int_beta) # sum of fixed and random 
 ```
 
 # 6 Concluding Remarks
