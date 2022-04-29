@@ -333,3 +333,4 @@ euro_wealth %>%
        title = "In your opinion, are differences in wealth\nunfairly small, fair, or unfairly large?",
        fill = NULL)
 ```
+

@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.305">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Dr Chao-Yo Cheng">
+<meta name="dcterms.date" content="2021-02-06">
+
+<title>Tutorial: Analyzing Survey Data (Part 2)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="Week 5 Survey Part 2_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Week 5 Survey Part 2_files/libs/quarto-html/quarto.js"></script>
+<script src="Week 5 Survey Part 2_files/libs/quarto-html/popper.min.js"></script>
+<script src="Week 5 Survey Part 2_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Week 5 Survey Part 2_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Week 5 Survey Part 2_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link id="quarto-text-highlighting-styles" href="Week 5 Survey Part 2_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<script src="Week 5 Survey Part 2_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Week 5 Survey Part 2_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Week 5 Survey Part 2_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script src="Week 5 Survey Part 2_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="Week 5 Survey Part 2_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Tutorial: Analyzing Survey Data (Part 2)</h1>
+</div>
+
+
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Dr Chao-Yo Cheng </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">6 February 2021</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="before-you-start" class="level1">
+<h1>Before You Start</h1>
+<p>Revisit <strong>Tutorial: logistic regression as a GLM</strong> prepared by Dr Marju Kaps – let’s have a quick discussion on this.</p>
+<p><strong>If you’d like, treat the original tutorial as extra (i.e., project-only) materials</strong>.</p>
+<p>Having said that, Section 7 in the original tutorial is useful if you need a quick refresher on the log function. Section 12 provides some useful tools for model diagnostics etc.</p>
+</section>
+<section id="introduction" class="level1">
+<h1>1 Introduction</h1>
+<p>By the end of this tutorial, you will know how to</p>
+<ul>
+<li>Review the main concepts of logit regression and how to interpret the results.</li>
+<li>Use logit regression to analyze survey data.</li>
+<li>Perform model comparison on survey data.</li>
+</ul>
+<p>We are building on previous tutorials on logit regression and survey weights this week. You can continue writing your code in the same file you used last week. We will start by bringing in the same packages again.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(srvyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="data" class="level1">
+<h1>2 Data</h1>
+<p>We will continue to work with the data set from <strong>the 2011 Canadian National Election Study</strong>, which includes the following variables.</p>
+<ul>
+<li><code>id</code> – a unique identifier for each response.</li>
+<li><code>province</code> – a factor with (alphabetical) levels, including AB, BC, MB, NB, NL, NS, ON, PE, QC, SK (each of these refers to a Canadian province). The sample was “stratified” by province.</li>
+<li><code>population</code> – population of the respondent’s province (number of people over age 17).</li>
+<li><code>weight</code> – weight sample to size of population, taking into account unequal sampling probabilities by province and household size.</li>
+<li><code>abortion</code> – attitude toward abortion, a factor with levels <code>No</code> and <code>Yes</code>; answer to the question “Should abortion be banned?”</li>
+<li><code>gender</code> – a factor with two levels <code>Female</code> and <code>Male</code>.</li>
+<li><code>importance</code> – importance of religion, a factor with (alphabetical) levels including <code>not</code>, <code>notvery</code>, <code>somewhat</code>, <code>very</code>; answer to the question, “In your life, would you say that religion is very important, somewhat important, not very important, or not important at all?”</li>
+<li><code>education</code> – a factor with (alphabetical) levels including <code>bachelors</code> (Bachelors degree), <code>college</code> (community college or technical school), <code>higher</code> (graduate degree), HS (high-school graduate), <code>lessHS</code> (less than high-school graduate), <code>somePS</code> (some post-secondary).</li>
+<li><code>urban</code> – place of residence, a factor with levels <code>rural</code>, <code>urban</code>.</li>
+</ul>
+<p>In this tutorial, we will consider some of the variables that may be statistically associated with people’s attitudes towards abortion. The outcome of variable of interest is therefore <code>abortion</code>.</p>
+<blockquote class="blockquote">
+<p><em>Question: Any other factors we can or should consider?</em></p>
+</blockquote>
+<p>Let’s read in the data and check that all of our variables are as described.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ces <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"ces11.csv"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ces,<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>     id province population  weight gender abortion importance education urban
+1  2851       BC    3267345 4287.85 Female       No   somewhat    somePS urban
+2   521       QC    5996930 9230.78   Male       No        not bachelors urban
+3  2118       QC    5996930 6153.85   Male      Yes   somewhat   college urban
+4  1815       NL     406455 3430.00 Female       No       very    somePS urban
+5  1799       ON    9439960 8977.61   Male       No        not    higher rural
+6  1103       ON    9439960 8977.61 Female       No        not    higher urban
+7   957       NL     406455 3430.00 Female      Yes       very    lessHS rural
+8  3431       NL     406455 1715.00 Female      Yes    notvery   college urban
+9  2516       NL     406455 1715.00   Male       No       very   college urban
+10  959       NL     406455 3430.00   Male      Yes       very    lessHS rural</code></pre>
+</div>
+</div>
+<p>For the following analysis, we will create a binary variable to assign the value of 1 to people against abortion.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ces_new <span class="ot">&lt;-</span> ces <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">against_abortion =</span> <span class="fu">if_else</span>(abortion <span class="sc">==</span> <span class="st">"Yes"</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>if_else()</code> function is very convenient – it basically says: please assign the value of 1 to those who answered “Yes” and 0 to those who answered the opposite.</p>
+<p>Now let’s check if we have done this properly. First, use <code>table()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(ces_new<span class="sc">$</span>against_abortion)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   0    1 
+1818  413 </code></pre>
+</div>
+</div>
+<p>All observations are placed properly (i.e., no respondent is mis-classified in the new variable).</p>
+</section>
+<section id="use-glm-to-run-logit-regression" class="level1">
+<h1>3 Use <code>glm()</code> to Run Logit Regression</h1>
+<p><em>Note: The main objective of this section is to make sure everyone is on the same page with respect to logit and GLM before we move on to include weights in the analysis.</em></p>
+<p>In this section, we will use the workhorse function <code>glm()</code> to estimate the correlates of <em>people’s attitudes against abortion</em>.</p>
+<ul>
+<li><p>Create a new dependent variable <code>against_abortion</code>, using the original variable <code>abortion</code> in the dataset.</p></li>
+<li><p>Fit the logit model with no predictor. Interpret the findings.</p></li>
+<li><p>Fit the logit model with one predictor. Interpret the findings using odds-ratio with the help of <code>predict()</code>.</p></li>
+</ul>
+<blockquote class="blockquote">
+<p><em>Question: Can you create a new binary variable such that it assigns the value of 1 (and 0 otherwise) to those living in the urban area?</em></p>
+</blockquote>
+<section id="logit-regression-with-no-predictor" class="level2">
+<h2 class="anchored" data-anchor-id="logit-regression-with-no-predictor">3.1 Logit Regression with No Predictor</h2>
+<p>We will start with a simple model with no predictor. This exercise aims to make you familiar with the differences between probability, odds, and log-odds.</p>
+<p>Quickly recall the logit link function transforms a <strong>probability</strong> into <strong>log odds</strong>: <span class="math display">\[\text{logit}(p)=\log\left(\frac{p}{1-p}\right).\]</span> In this case, <span class="math inline">\(p\)</span> is the <strong>probability</strong> of respondents against abortion.**</p>
+<p>If we only include the intercept (i.e., no predictor), then our model is like this: <span class="math display">\[\log\left(\frac{p}{1-p}\right)=\alpha.\]</span> The estimated intercept will be <em>the log-odds</em> of people against abortion.</p>
+<p>Let’s go ahead and fit the model. Use the <code>summary()</code> function to see the output. Note that we have to use the new data frame <code>ces_new</code> (the original <code>ces</code> does not include the variable we created).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mod_intercept <span class="ot">&lt;-</span> <span class="fu">glm</span>(against_abortion <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> ces_new,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">family =</span> binomial)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_intercept)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = against_abortion ~ 1, family = binomial, data = ces_new)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-0.6399  -0.6399  -0.6399  -0.6399   1.8367  
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -1.48204    0.05451  -27.19   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 2137.6  on 2230  degrees of freedom
+Residual deviance: 2137.6  on 2230  degrees of freedom
+AIC: 2139.6
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><em>Question: Use <code>?glm</code> to see more information – what is the default for the option <code>family</code>?</em></p>
+</blockquote>
+<section id="explore-the-point-estimate" class="level3">
+<h3 class="anchored" data-anchor-id="explore-the-point-estimate">3.1.1 Explore the Point Estimate</h3>
+<p>The estimated intercept is the <em>log-odds</em> (of people against abortion). Let’s use <code>coef()</code> to extract the coefficient.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>coefs <span class="ot">&lt;-</span> <span class="fu">coef</span>(mod_intercept) <span class="co"># extracting log odds</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>coefs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept) 
+  -1.482045 </code></pre>
+</div>
+</div>
+<p>Next, we can take the exponent of the log odds to get the <em>odds</em> of people against abortion (i.e., use <code>exp()</code>). <strong>Rule of thumb: use <code>exp()</code> to turn log-odds into odds.</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(coefs) <span class="co"># calculating odds</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept) 
+  0.2271727 </code></pre>
+</div>
+</div>
+<p>Third, we can compute the <em>probability</em> of people against abortion. From the previous step, since the odds <span class="math inline">\(\frac{p}{1-p}=0.2271727\)</span>, we know <span class="math inline">\(p=\frac{0.2271727}{1+0.2271727}=0.1851188\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(coefs)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(coefs)) <span class="co"># calculating p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept) 
+  0.1851188 </code></pre>
+</div>
+</div>
+</section>
+<section id="explore-the-confidence-intervals-of-the-point-estimate" class="level3">
+<h3 class="anchored" data-anchor-id="explore-the-confidence-intervals-of-the-point-estimate">3.1.2 Explore the Confidence Intervals of the Point Estimate</h3>
+<p>We can show the <strong>confidence interval</strong> of the estimated log-odds, using the <code>confint()</code> function. These are the upper and lower bounds of the 95% confidence intervals.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>coefs_ci <span class="ot">&lt;-</span> <span class="fu">confint</span>(mod_intercept)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>coefs_ci</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    2.5 %    97.5 % 
+-1.590112 -1.376378 </code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><em>Question: How do you derive the upper and lower bounds of estimated odds and probability? Hint: Use the upper and lower bounds of log odds to calculate the upper and lower bounds of estimated odds and probabilities.</em></p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>coefs_ci <span class="ot">&lt;-</span> <span class="fu">confint</span>(mod_intercept)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>coefs_ci <span class="co"># CIs of log-odds</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    2.5 %    97.5 % 
+-1.590112 -1.376378 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(coefs_ci) <span class="co"># CIs of odds</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    2.5 %    97.5 % 
+0.2039028 0.2524914 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(coefs_ci)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(coefs_ci)) <span class="co"># CIs of probability</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    2.5 %    97.5 % 
+0.1693682 0.2015913 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="logit-regression-with-one-predictor" class="level2">
+<h2 class="anchored" data-anchor-id="logit-regression-with-one-predictor">3.2 Logit Regression with One Predictor</h2>
+<p>Let’s add a predictor to the logit regression model.</p>
+<p>There is no variable like this, so let’s create a new variable <code>religion</code>, using <code>importance</code>. Let’s use <code>recode()</code> inside <code>mutate()</code>. Here we use higher numbers to refer to greater importance.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>ces_new <span class="ot">&lt;-</span> ces_new <span class="sc">%&gt;%</span> <span class="co"># update "ces_new" to include all new variables</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">religion =</span> <span class="fu">recode</span>(importance,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"very"</span> <span class="ot">=</span> <span class="dv">4</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"somewhat"</span> <span class="ot">=</span> <span class="dv">3</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"notvery"</span> <span class="ot">=</span> <span class="dv">2</span>,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"not"</span> <span class="ot">=</span> <span class="dv">1</span>))</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(ces_new<span class="sc">$</span>importance, ces_new<span class="sc">$</span>religion)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          
+             1   2   3   4
+  not      607   0   0   0
+  notvery    0 315   0   0
+  somewhat   0   0 714   0
+  very       0   0   0 595</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><em>Question: Which of the two versions of the importance of religion variable would you use in your analysis? Why? Try to think of pros and cons for each.</em></p>
+</blockquote>
+<p>With the predictor included, the log-odds of a respondent against abortion is <span class="math display">\[\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{religion}).\]</span> Let’s run the analysis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>mod_religion <span class="ot">&lt;-</span> <span class="fu">glm</span>(against_abortion <span class="sc">~</span> religion, <span class="at">data =</span> ces_new, <span class="at">family =</span> binomial)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_religion)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = against_abortion ~ religion, family = binomial, 
+    data = ces_new)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.0431  -0.6349  -0.3653  -0.2054   2.7820  
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -5.02323    0.25893  -19.40   &lt;2e-16 ***
+religion     1.17470    0.07506   15.65   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 2137.6  on 2230  degrees of freedom
+Residual deviance: 1761.9  on 2229  degrees of freedom
+AIC: 1765.9
+
+Number of Fisher Scoring iterations: 5</code></pre>
+</div>
+</div>
+<p>The estimated coefficient for <em>religion</em> is 1.17470 and statistically significant. How do we interpret the results?</p>
+<section id="odds-ratio-or" class="level3">
+<h3 class="anchored" data-anchor-id="odds-ratio-or">3.2.1 Odds Ratio (OR)</h3>
+<p>First, again, the coefficient is <strong>log-odds</strong>. Unlike the model with no predictor, take the exponent of the coefficient will give us the <strong>odds-ratio</strong> (OR). OR is notoriously confusing, but here is the basic intuition with minimum math involved.</p>
+<p>First, recall that we define the model as <span class="math display">\[\log\left(\frac{p}{1-p}\right)=\alpha + \beta(\text{religion}).\]</span> Keep in mind that the outcome variable is the log-odds of people against abortion. So we can rewrite this as <span class="math display">\[\log(\text{Odds})=\alpha + \beta(\text{religion}).\]</span></p>
+<p>Next, <span class="math inline">\(\beta\)</span> tells us how the <em>log-odds</em> will change when we increase the importance of <code>religion</code> by one level. <span class="math display">\[\beta=\log(\text{Odds when Religion}=2)-\log(\text{Odds when Religion}=1).\]</span></p>
+<p>By the law of logarithms, the <strong>the difference between two logs</strong> (the left hand side below) can be rewritten as <strong>the log of them dividing up each other</strong> (the right hand side below): <span class="math display">\[\log(\text{Odds when Religion}=2)-\log(\text{Odds when Religion}=1)=\log\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right).\]</span></p>
+<p>Remove the log from <span class="math inline">\(\log\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right)\)</span> by taking the exponent of it; in doing so, we have <span class="math display">\[\left(\frac{\text{Odds when Religion}=2}{\text{Odds when Religion}=1}\right).\]</span> This is <strong>the odds ratio when we increase the importance of religion by one unit.</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(mod_religion))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)    religion 
+0.006583243 3.237173195 </code></pre>
+</div>
+</div>
+<p>We can use <code>confint()</code> to get the confidence interval of the odds-ratio to see if it is stays above 1.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>coefs_ci <span class="ot">&lt;-</span> <span class="fu">confint</span>(mod_religion)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>coefs_ci <span class="co"># CIs of log-odds</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                2.5 %    97.5 %
+(Intercept) -5.548352 -4.532450
+religion     1.031402  1.325895</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(coefs_ci) <span class="co"># CIs of odds-ratio</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 2.5 %    97.5 %
+(Intercept) 0.00389387 0.0107543
+religion    2.80499482 3.7655551</code></pre>
+</div>
+</div>
+<p>In a nutshell, odds-ratio (OR) is <strong>a ratio of two different odds</strong> when we change the level of <code>religion</code> by one unit. And OR can only be one of the three conditions below, each of which has a different substantive interpretation. Since we find <span class="math inline">\(OR_{religion}&gt;1\)</span> even after we consider its confidence interval, <strong>more religious people are going be more likely to be against abortion.</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:left;"> It means </th>
+   <th style="text-align:left;"> So when we increase importance of religion </th>
+   <th style="text-align:left;"> Put it simply </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> OR=1 </td>
+   <td style="text-align:left;"> (Odds when Religion=2) = (Odds when Religion=1) </td>
+   <td style="text-align:left;"> the odds/chance of resisting abortion is not affected </td>
+   <td style="text-align:left;"> Not clear how religious people react to abortion </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> OR&gt;1 </td>
+   <td style="text-align:left;"> (Odds when Religion=2) &gt; (Odds when Religion=1) </td>
+   <td style="text-align:left;"> the odds/chance of resisting the abortion is higher </td>
+   <td style="text-align:left;"> Religious people are more likely to be against abortion </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> OR&lt;1 </td>
+   <td style="text-align:left;"> (Odds when Religion=2) &lt; (Odds when Religion=1) </td>
+   <td style="text-align:left;"> the odds/chance of resisting abortion is lower </td>
+   <td style="text-align:left;"> Religious people are less likely to be against abortion </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>To sum up our discussion, when you conduct a logit regression, do the following:</p>
+<ul>
+<li><p>Step 1: Write down a table like the one above to think through your interpretations.</p></li>
+<li><p>Step 2: Run the logit regression (use <code>glm()</code>); see if your predictor(s) have any statistically significant coefficients.</p></li>
+<li><p>Step 3: Take the exponent of your coefficients (use <code>exp()</code>). the odds-ratio when we change the corresponding predictor by one unit.</p></li>
+<li><p>Step 4: Explain the odds-ratio (OR) with the table you made.</p>
+<ul>
+<li>If <span class="math inline">\(OR=1\)</span>, the predictor is not associated with the (odds of the) outcome (this is going to be rare in practice).</li>
+<li>If <span class="math inline">\(OR&gt;1\)</span>, the predictor is positively associated with the (odds of the) outcome.</li>
+<li>If <span class="math inline">\(OR&lt;1\)</span>, the predictor is negatively associated with the (odds of the) outcome.</li>
+</ul></li>
+<li><p>Step 5: Get the confidence interval of the odds ratio to make sure it stays in one of the three situations above.</p></li>
+</ul>
+<blockquote class="blockquote">
+<p><em>Question: Use another predictor in the dataset to go through the entire analysis again to make sure everything is clear.</em></p>
+</blockquote>
+</section>
+<section id="use-predict-function-recommended" class="level3">
+<h3 class="anchored" data-anchor-id="use-predict-function-recommended">3.2.2 Use <code>predict()</code> Function (Recommended)</h3>
+<p>The most intuitive way to me is perhaps <strong>use the <code>predict()</code> function</strong>. Plug the logit model into <code>predict()</code> to compute the predicted <strong>log-odds</strong> for each observation (given each respondent’s reported level of religious importance). Including <code>type="response"</code> will return the predicted <strong>probabilities</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>fit_log_odds <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod_religion) <span class="co"># for predicted log-odds</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>fit_prob <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod_religion, <span class="at">type=</span><span class="st">"response"</span>) <span class="co"># for predicted probabilities</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s create a new data frame to include <code>religion</code> so you will see it better. We will also include the original <code>importance</code> variable.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>fit_religion <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">religion =</span> ces_new<span class="sc">$</span>religion, <span class="co"># use "religion" in "ces_new"</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">importance =</span> ces_new<span class="sc">$</span>importance)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>fit_religion <span class="ot">&lt;-</span> fit_religion <span class="sc">%&gt;%</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prob =</span> <span class="fu">predict</span>(mod_religion, <span class="at">type=</span><span class="st">"response"</span>),</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">log_odds =</span> <span class="fu">predict</span>(mod_religion)) <span class="sc">%&gt;%</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">odds =</span> <span class="fu">exp</span>(log_odds)) <span class="co"># convert log-odds into odds</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(fit_religion, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  religion importance       prob   log_odds      odds
+1        3   somewhat 0.18255586 -1.4991264 0.2233252
+2        1        not 0.02086641 -3.8485273 0.0213111
+3        3   somewhat 0.18255586 -1.4991264 0.2233252
+4        4       very 0.41959750 -0.3244259 0.7229423
+5        1        not 0.02086641 -3.8485273 0.0213111</code></pre>
+</div>
+</div>
+<p>You will see that observations with the identical level of importance have the same predicted values. Let’s clean the data frame a bit using <code>distinct()</code> and <code>arrange()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>fit_religion <span class="ot">&lt;-</span> fit_religion <span class="sc">%&gt;%</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">%&gt;%</span> <span class="co"># remove duplicates</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(religion) <span class="co"># arrange observations by religion</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>fit_religion</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  religion importance       prob   log_odds       odds
+1        1        not 0.02086641 -3.8485273 0.02131110
+2        2    notvery 0.06453555 -2.6738269 0.06898771
+3        3   somewhat 0.18255586 -1.4991264 0.22332518
+4        4       very 0.41959750 -0.3244259 0.72294227</code></pre>
+</div>
+</div>
+<p>Now we have the corresponding predicted odds, log-odds, and probability for each level of <code>religion</code>. If we increase the importance of <code>religion</code> from 1 to 2, the corresponding change in log-odds and odds-ratio will be</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>fit_religion<span class="sc">$</span>log_odds[fit_religion<span class="sc">$</span>religion <span class="sc">==</span> <span class="dv">2</span>] <span class="sc">-</span> fit_religion<span class="sc">$</span>log_odds[fit_religion<span class="sc">$</span>religion <span class="sc">==</span> <span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     8 
+1.1747 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>fit_religion<span class="sc">$</span>odds[fit_religion<span class="sc">$</span>religion <span class="sc">==</span> <span class="dv">2</span>]<span class="sc">/</span>fit_religion<span class="sc">$</span>odds[fit_religion<span class="sc">$</span>religion <span class="sc">==</span> <span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       8 
+3.237173 </code></pre>
+</div>
+</div>
+<p>The corresponding change in probability is</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>fit_religion<span class="sc">$</span>prob[fit_religion<span class="sc">$</span>religion <span class="sc">==</span> <span class="dv">2</span>] <span class="sc">-</span> fit_religion<span class="sc">$</span>prob[fit_religion<span class="sc">$</span>religion <span class="sc">==</span> <span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         8 
+0.04366914 </code></pre>
+</div>
+</div>
+<p>They are identical with the results we get before. All in all, we know that a more religious person is more likely to go against abortion.</p>
+<p>To use <code>predict()</code> when the model includes more than one predictor, see <em>Section 4.4</em>.</p>
+</section>
+</section>
+</section>
+<section id="fitting-glms-with-weights" class="level1">
+<h1>4 Fitting GLMs With Weights</h1>
+<p>The <code>survey</code> package makes this very easy. The function <code>svyglm()</code> is identical to the conventional <code>glm()</code> function except that <code>svyglm()</code> use <code>design</code> (i.e., the survey object) instead of <code>data</code>.</p>
+<p>Type <code>?svyglm</code> for more information about the function. Alternatively, you can visit the <code>survey</code> package’s vignette page. The section <strong>Regression models</strong> provides additional information.</p>
+<p>In this section, we will use the updated data frame <code>ces_new</code>, which should have included all the variables we have added so far, to carry out the following activities.</p>
+<ul>
+<li><p>Create a survey object.</p></li>
+<li><p>Use the <code>svyglm()</code> function to fit logit regression with two predictors.</p></li>
+</ul>
+<p>Before we start, let’s check we have all the variables we need.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>ces_new <span class="ot">&lt;-</span> ces <span class="sc">%&gt;%</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">against_abortion =</span> <span class="fu">if_else</span>(abortion <span class="sc">==</span> <span class="st">"Yes"</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">urban =</span> <span class="fu">if_else</span>(urban <span class="sc">==</span> <span class="st">"urban"</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">religion =</span> <span class="fu">recode</span>(importance,</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"very"</span> <span class="ot">=</span> <span class="dv">4</span>,</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"somewhat"</span> <span class="ot">=</span> <span class="dv">3</span>,</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"notvery"</span> <span class="ot">=</span> <span class="dv">2</span>,</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"not"</span> <span class="ot">=</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="create-a-survey-object" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-survey-object">4.1 Create a Survey Object</h2>
+<p>As before, we can use <code>as_survey()</code> to create the <code>survey</code> object so we can use the useful functions in the packages.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>ces_s <span class="ot">&lt;-</span> ces_new <span class="sc">%&gt;%</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_survey</span>(<span class="at">ids =</span> id,</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">strata =</span> province,</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">fpc =</span> population,</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">weights =</span> weight)</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>ces_s</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Stratified Independent Sampling design
+Called via srvyr
+Sampling variables:
+ - ids: id
+ - strata: province
+ - fpc: population
+ - weights: weight
+Data variables: id (int), province (fct), population (int), weight (dbl),
+  gender (fct), abortion (fct), importance (fct), education (fct), urban (dbl),
+  against_abortion (dbl), religion (dbl)</code></pre>
+</div>
+</div>
+</section>
+<section id="fit-logit-regression" class="level2">
+<h2 class="anchored" data-anchor-id="fit-logit-regression">4.2 Fit Logit Regression</h2>
+<p>To carry out logit regression with weights included, we need to use <code>svyglm()</code> in the <code>survey</code> package. Let’s include <code>religion</code> again. Again, here we have to use <code>ces_s</code> rather than <code>ces_new</code>. You can ignore the warning message.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>mod_s_religion <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(against_abortion <span class="sc">~</span> religion,</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">design =</span> ces_s, <span class="co"># be sure to use the survey object</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">family =</span> binomial)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in eval(family$initialize): non-integer #successes in a binomial glm!</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_s_religion)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+svyglm(formula = against_abortion ~ religion, design = ces_s, 
+    family = binomial)
+
+Survey design:
+Called via srvyr
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   -5.202      0.355  -14.65   &lt;2e-16 ***
+religion       1.223      0.103   11.88   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1.210905)
+
+Number of Fisher Scoring iterations: 6</code></pre>
+</div>
+</div>
+<p>Let’s take a look at the odds-ratio by taking the exponent of the <code>religion</code> coefficient.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(mod_s_religion))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)    religion 
+0.005506094 3.397762968 </code></pre>
+</div>
+</div>
+</section>
+<section id="extra-model-comparison-and-diagnostics" class="level2">
+<h2 class="anchored" data-anchor-id="extra-model-comparison-and-diagnostics">4.3 Extra: Model Comparison and Diagnostics</h2>
+<p><strong>Note: Please revisit Section 12 “Diagnostics” in “Tutorial: logistic regression as a GLM” by Dr Marju Kaps to see the functions you can use for model diagnostics.</strong></p>
+<p>Let’s conduct another logit regression but this time only includes the intercept.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>mod_s_intercept <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(against_abortion <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">design =</span> ces_s,</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">family =</span> binomial)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in eval(family$initialize): non-integer #successes in a binomial glm!</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_s_intercept)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+svyglm(formula = against_abortion ~ 1, design = ces_s, family = binomial)
+
+Survey design:
+Called via srvyr
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -1.48297    0.06534   -22.7   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1.000448)
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+<p>Use <code>anova()</code> to see whether or not including <code>religion</code> helps with explaining more variance in the outcome variable (or: does including <code>religion</code> statistically improve the model fit)?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod_s_intercept, mod_s_religion, <span class="at">test=</span><span class="st">"Chi"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in eval(family$initialize): non-integer #successes in a binomial glm!</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Working (Rao-Scott) LRT for religion
+ in svyglm(formula = against_abortion ~ religion, design = ces_s, 
+    family = binomial)
+Working 2logLR =  224.806 p= &lt; 2.22e-16 
+df=1</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><em>Question: What is the <code>test</code> option here for? Use <code>?anova</code> to see more information.</em><br>
+</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><em>Question: You can also compare the finding we get from <code>glm()</code>.</em><br>
+</p>
+</blockquote>
+</section>
+<section id="extra-get-predicted-log-odds-and-probability-with-multiple-predictors" class="level2">
+<h2 class="anchored" data-anchor-id="extra-get-predicted-log-odds-and-probability-with-multiple-predictors">4.4 Extra: Get Predicted Log Odds and Probability With Multiple Predictors</h2>
+<p>Say now if we include two predictors in the model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>mod_s <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(against_abortion <span class="sc">~</span> religion <span class="sc">+</span> urban,</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">design =</span> ces_s, <span class="co"># be sure to use the survey object</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">family =</span> binomial)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in eval(family$initialize): non-integer #successes in a binomial glm!</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_s)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+svyglm(formula = against_abortion ~ religion + urban, design = ces_s, 
+    family = binomial)
+
+Survey design:
+Called via srvyr
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  -4.9319     0.3774 -13.068   &lt;2e-16 ***
+religion      1.2246     0.1031  11.873   &lt;2e-16 ***
+urban        -0.3591     0.1570  -2.287   0.0223 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1.214632)
+
+Number of Fisher Scoring iterations: 6</code></pre>
+</div>
+</div>
+<p>We can still use the <code>predict()</code> function to get the predicted log-odds and probabilities. Given that the model includes two predictors, we have to carry out the predictions one by one.</p>
+<p>We will start with the <code>religion</code> coefficient. This time, rather than putting the model into <code>predict()</code>, let’s specify the exact levels of <code>religion</code>. Since we are interested in learning how the predicted log-odds and probabilities across different levels, we have to hold <code>urban</code> constant. In this sense, <code>urban</code> serves as a <strong>control</strong> variable for us so we can explore the following: <em>how will the attitudes against abortion change with one-unit increase in <code>religion</code>, when we hold <code>urban</code> constant?</em></p>
+<p>Let’s feed the <code>predict()</code> function two pieces of information:</p>
+<ul>
+<li>What are the unique levels of `religion``? The variable ranges from 1 to 4.</li>
+<li>What is the constant of <code>urban</code> we can use? Weighted mean is a good choice.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>ces_s <span class="sc">%&gt;%</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">urban_w_mean =</span> <span class="fu">survey_mean</span>(urban, <span class="at">na.rm=</span>T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 x 2
+  urban_w_mean urban_w_mean_se
+         &lt;dbl&gt;           &lt;dbl&gt;
+1        0.785         0.00952</code></pre>
+</div>
+</div>
+<p>Put them together into a new data frame. Note the variable names have to be the same as those included in <code>svyglm()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>data_predict <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">religion =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">urban =</span> <span class="fl">0.785</span>)</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>data_predict</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  religion urban
+1        1 0.785
+2        2 0.785
+3        3 0.785
+4        4 0.785</code></pre>
+</div>
+</div>
+<p>Now let’s obtain the predicted log-odds, odds, and probabilities when we vary the importance of <code>religion</code> while keeping <code>urban</code> at its weighted mean.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>fit_prob <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod_s, <span class="at">newdata=</span>data_predict, <span class="at">type=</span><span class="st">"response"</span>)</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>fit_log_odds <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod_s, <span class="at">newdata=</span>data_predict)</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>fit_mod_s <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">religion =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">fit_prob =</span> <span class="fu">as.matrix</span>(fit_prob),</span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">fit_log_odds =</span> <span class="fu">as.matrix</span>(fit_log_odds))</span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>fit_mod_s<span class="sc">$</span>fit_odds <span class="ot">&lt;-</span> <span class="fu">exp</span>(fit_mod_s<span class="sc">$</span>fit_log_odds)</span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a>fit_mod_s</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  religion   fit_prob fit_log_odds   fit_odds
+1        1 0.01817897   -3.9891435 0.01851557
+2        2 0.05927010   -2.7645512 0.06300437
+3        3 0.17654126   -1.5399589 0.21438992
+4        4 0.42180537   -0.3153665 0.72952142</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><em>Question: Do the calculation similar to “Use predict() Function (Recommended). Discuss your observation.</em><br>
+</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><em>Question: Redo the same process, but this time, obtain the predicted log-odds, odds, and probabilities when we vary the levels of <code>urban</code> while holding <code>religion</code> at its weighted mean.</em></p>
+</blockquote>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

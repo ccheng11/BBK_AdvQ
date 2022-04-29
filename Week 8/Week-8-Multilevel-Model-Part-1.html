@@ -1619,10 +1619,30 @@ And why?</em></p>
 <p><em>Question: Can you walk through the data wrangling process
 verbally? Any suggestion to make the process more efficiently?</em></p>
 </blockquote>
+<p>For more information – you can consult the book <em>R for Data
+Science</em> (). Cheatsheets are also available here: .</p>
+<p>Below is a step-by-step explanation:</p>
+<ul>
+<li>Use <code>select()</code> to choose the variables we need from
+<code>dta</code>.</li>
+<li>Use <code>rename()</code> to rename <code>Q275</code>.</li>
+<li>Use <code>mutate()</code> four times
+<ul>
+<li>first, for all variables we change the negative values to
+<code>NA</code> (see the codebook)</li>
+<li>next, we change the variables to “character” (from factor) so it is
+easier for the next manipulation</li>
+<li>third, change the variables into ordinal ones</li>
+<li>finally, convert <code>happy</code> from character to “numeric”
+objects so we can use it for the dependent variable.</li>
+</ul></li>
+</ul>
 <blockquote>
 <p><em>Question: What does <code>tidyr::drop_na()</code> do?</em></p>
 </blockquote>
-<p>Let’s check if the recoding is done properly.</p>
+<p>We use this to drop all observations with NA for any of these three
+variables in <code>dta_new</code>.</p>
+<p>Let’s check if the re-coding is done properly.</p>
 <pre class="r"><code>dta_new$reg_type &lt;- factor(dta_new$reg_type,
                            levels=c(&quot;autocracy&quot;, &quot;closed anocracy&quot;, &quot;open anocracy&quot;, &quot;democracy&quot;, &quot;full democracy&quot;))
 table(dta_new$reg_type, dta_new$regtype)</code></pre>

@@ -96,9 +96,23 @@ dta_new <- dta %>%
 
 > *Question: Can you walk through the data wrangling process verbally? Any suggestion to make the process more efficiently?*
 
+For more information -- you can consult the book *R for Data Science* (\url{https://r4ds.had.co.nz/index.html}). Cheatsheets are also available here: \url{https://www.rstudio.com/resources/cheatsheets/}.
+
+Below is a step-by-step explanation:
+
+  - Use `select()` to choose the variables we need from `dta`.
+  - Use `rename()` to rename `Q275`.
+  - Use `mutate()` four times
+    - first, for all variables we change the negative values to `NA` (see the codebook)
+    - next, we change the variables to "character" (from factor) so it is easier for the next manipulation
+    - third, change the variables into ordinal ones
+    - finally, convert `happy` from character to "numeric" objects so we can use it for the dependent variable.
+
 > *Question: What does `tidyr::drop_na()` do?*
 
-Let's check if the recoding is done properly.
+We use this to drop all observations with NA for any of these three variables in `dta_new`.
+
+Let's check if the re-coding is done properly.
 
 ```{r, echo=T, eval=T, message=F}
 dta_new$reg_type <- factor(dta_new$reg_type,
