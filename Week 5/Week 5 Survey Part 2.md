@@ -1,4 +1,4 @@
 Tutorial: Analyzing Survey Data (Part 2)
 ================
 
-test <script src="//yihui.org/js/math-code.js" defer>$\frac{p}{1-p}=0.2271727$</script>.
+<img src="https://render.githubusercontent.com/render/math?math=e^{i \pi} = -1">
