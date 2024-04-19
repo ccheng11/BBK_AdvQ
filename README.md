@@ -4,7 +4,7 @@
 
 - **Date and Time**: Monday 6-8pm, unless otherwise specified
 - **Location**: Room 253, [Malet Street](https://maps.app.goo.gl/YMYvCRvA3WrSc4Dk9)
-- **Convenor**: [Dr Chao-Yo Cheng] (mailto:c.cheng@bbk.ac.uk)
+- **Convenor**: Dr Chao-Yo Cheng ([c.cheng[at]bbk.ac.uk](mailto:c.cheng@bbk.ac.uk))
 - **Administrator**: [BBK Ask System](https://www.bbk.ac.uk/ask)
 
 ## Weekly Syllabus
