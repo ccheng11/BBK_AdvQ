@@ -1,4 +1,4 @@
-# Advanced Topics in Quant Social Research (Summer 2024)
+# Advanced Topics in Quant Social Research/(Summer 2024)
 
 ## Module Information
 
