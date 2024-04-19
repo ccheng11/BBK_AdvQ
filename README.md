@@ -20,7 +20,7 @@
 
 ### Week 2 (April 29): From OLS to GLM
 
- - **Lecture**: A Practical Review of Multiple Linear Regression
+ - **Lecture**: "A Practical Review of Multiple Linear Regression"
  - **Readings**
 	- [*Beyond Multiple Linear Regression*](https://bookdown.org/roback/bookdown-BeyondMLR/), Chapter 1.
 	- **[Optional]** [*The Effect*](https://theeffectbook.net/), Chapter 13.
@@ -32,7 +32,7 @@
 
 Note: Convenor traveling abroad; arrangement to be discussed.
 
- - **Lecture**: Logit Regression
+ - **Lecture**: "Generalized Linear Model: Logit Regression"
  - **Readings**
  	- [*Beyond Multiple Linear Regression*](https://bookdown.org/roback/bookdown-BeyondMLR/), Chapter 6.
 	- **[Optional]** [*The Effect*](https://theeffectbook.net/), Chapter 13-14.
@@ -40,9 +40,9 @@ Note: Convenor traveling abroad; arrangement to be discussed.
  - **Tutorial**: Public Attitudes Towards AI
  	- Rainie, Lee, Cary Funk, Monica Anderson and Alec Tyson. 2022. "[AI and Human Enhancement: Americans' Opennes Is Tempered by a Range of Concerns](https://www.pewresearch.org/internet/2022/03/17/ai-and-human-enhancement-americans-openness-is-tempered-by-a-range-of-concerns/)." Pew Research Center Report.
 
-### Week 4 (May 13): Multilevel Modeling
+### Week 4 (May 13): "Multilevel Modeling"
 
- - **Lecture**: Multilevel/Hierarchical Modeling
+ - **Lecture**: "Multilevel/Hierarchical Modeling"
  - **Readings**
 	- [*Beyond Multiple Linear Regression*](https://bookdown.org/roback/bookdown-BeyondMLR/), Chapter 8.
 	- **[Optional]** [*The Effect*](https://theeffectbook.net/), Chapter 11-12.
