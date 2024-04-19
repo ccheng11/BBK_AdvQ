@@ -3,9 +3,9 @@
 ## Module Information
 
 - **Date and Time**: Monday 6-8pm, unless otherwise specified
-- **Location**: Room 253, [Malet Street](https://maps.app.goo.gl/YMYvCRvA3WrSc4Dk9)
-- **Convenor**: Dr Chao-Yo Cheng ([c.cheng[at]bbk.ac.uk](mailto:c.cheng@bbk.ac.uk))
-- **Administrator**: [Birkbeck Ask System](https://www.bbk.ac.uk/ask)
+- **Location**: Room 253, [Malet Street](https://maps.app.goo.gl/YMYvCRvA3WrSc4Dk9){:target="_blank"}
+- **Convenor**: [Dr Chao-Yo Cheng] (mailto:c.cheng@bbk.ac.uk)
+- **Administrator**: [BBK Ask System](https://www.bbk.ac.uk/ask){:target="_blank"}
 
 ## Weekly Syllabus
 
@@ -13,7 +13,7 @@
 
  - **Lecture**: No lecture
  - **Readings**
-    - **[Optional]** Tufte, Edward. [*Data Analysis for Politics and Policy*](https://www.edwardtufte.com/tufte/dapp/). Englewood Cliffs, NJ: Printice-Hall.
+    - **[Optional]** Tufte, Edward. [*Data Analysis for Politics and Policy*](https://www.edwardtufte.com/tufte/dapp/){:target="_blank"}. Englewood Cliffs, NJ: Printice-Hall.
  - **Discussion**
 	- What would you like to study as a quantitative social researcher?
 	- How do you introduce multiple linear regression to others?
@@ -22,8 +22,8 @@
 
  - **Lecture**: A Practical Review of Multiple Linear Regression
  - **Readings**
-	- [*Beyond Multiple Linear Regression*](https://bookdown.org/roback/bookdown-BeyondMLR/), Chapter 1.
-	- **[Optional]** [*The Effect*](https://theeffectbook.net/), Chapter 13.
+	- [*Beyond Multiple Linear Regression*](https://bookdown.org/roback/bookdown-BeyondMLR/){:target="_blank"}, Chapter 1.
+	- **[Optional]** [*The Effect*](https://theeffectbook.net/){:target="_blank"}, Chapter 13.
 	- **[Optional]** Box, George EP. 1976. "Science and Statistics." *Journal of the American Statistical Association 71*(356): 791-799.
  - **Tutorial**: Democracy, Corruption and Development
  	- Treisman, Daniel. "The Causes of Corruption: A Cross-National Study." *Journal of Public Economics 76*(3): 399-457.
@@ -34,18 +34,18 @@ Note: Convenor traveling abroad; arrangement to be discussed.
 
  - **Lecture**: Logit Regression
  - **Readings**
- 	- [*Beyond Multiple Linear Regression*](https://bookdown.org/roback/bookdown-BeyondMLR/), Chapter 6.
-	- **[Optional]** [*The Effect*](https://theeffectbook.net/), Chapter 13-14.
+ 	- [*Beyond Multiple Linear Regression*](https://bookdown.org/roback/bookdown-BeyondMLR/){:target="_blank"}, Chapter 6.
+	- **[Optional]** [*The Effect*](https://theeffectbook.net/){:target="_blank"}, Chapter 13-14.
 	- **[Optional]** Breen, Richard, Kristian Bernt Karlson, and Anders Holm. 2018. "Interpreting and Understanding Logits, Probits, and Other Nonlinear Probability Models." *Annual Review of Sociology 44*: 39-54.
- - **Tutorial**: Anti-Americanism in the Islam World
- 	- Rainie, Lee, Cary Funk, Monica Anderson and Alec Tyson. 2022. "AI and Human Enhancement: Americans' Opennes Is Tempered by a Range of Concerns." Pew Research Center Report.
+ - **Tutorial**: Public Attitudes Towards AI
+ 	- Rainie, Lee, Cary Funk, Monica Anderson and Alec Tyson. 2022. "[AI and Human Enhancement: Americans' Opennes Is Tempered by a Range of Concerns](https://www.pewresearch.org/internet/2022/03/17/ai-and-human-enhancement-americans-openness-is-tempered-by-a-range-of-concerns/){:target="_blank"}." Pew Research Center Report.
 
 ### Week 4 (May 13): Multilevel Modeling
 
  - **Lecture**: Multilevel/Hierarchical Modeling
  - **Readings**
-	- [*Beyond Multiple Linear Regression*](https://bookdown.org/roback/bookdown-BeyondMLR/), Chapter 8.
-	- **[Optional]** [*The Effect*](https://theeffectbook.net/), Chapter 11-12.
+	- [*Beyond Multiple Linear Regression*](https://bookdown.org/roback/bookdown-BeyondMLR/){:target="_blank"}, Chapter 8.
+	- **[Optional]** [*The Effect*](https://theeffectbook.net/){:target="_blank"}, Chapter 11-12.
 	- **[Optional]** Hoffman, Lesa, and Ryan W. Walters, 2022. "Catching Up on Multilevel Modeling." *Annual Review of Psychology 73*: 659-689.
  - **Tutorial**: Anti-Americanism in the Islam World
  	- Blaydes, Lisa, and Drew A. Linzer. 2012. "Elite Competition, Religiosity, and Anti-Americanism in the Islamic World." *American Political Science Review 106*(2): 225-243.
