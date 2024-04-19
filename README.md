@@ -14,8 +14,8 @@
  - **Lecture**: None
  - **Readings**: None
  - **Discussion**
-  - A
-  - B
+	- A
+	- B
 
 ### Week 2: From OLS to GLM
 
