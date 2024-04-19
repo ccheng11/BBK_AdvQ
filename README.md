@@ -43,7 +43,7 @@ Note: Convenor traveling abroad; arrangement to be discussed.
  - **Tutorial**: Public Attitudes Towards AI
  	- Rainie, Lee, Cary Funk, Monica Anderson and Alec Tyson. 2022. "[AI and Human Enhancement: Americans' Opennes Is Tempered by a Range of Concerns](https://www.pewresearch.org/internet/2022/03/17/ai-and-human-enhancement-americans-openness-is-tempered-by-a-range-of-concerns)." Pew Research Center Report.
 
-### Week 4 (May 13): "Multilevel Modeling"
+### Week 4 (May 13): Multilevel Modeling
 
  - **Lecture**: "Multilevel/Hierarchical Modeling"
  - **Readings**
