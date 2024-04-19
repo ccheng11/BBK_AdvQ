@@ -6,6 +6,7 @@
 - **Location**: Room 253, [Malet Street](https://maps.app.goo.gl/YMYvCRvA3WrSc4Dk9)
 - **Convenor**: Dr Chao-Yo Cheng ([c.cheng[at]bbk.ac.uk](mailto:c.cheng@bbk.ac.uk))
 - **Administrator**: [BBK Ask System](https://www.bbk.ac.uk/ask)
+- **Moodle**: https://moodle.bbk.ac.uk/course/view.php?id=41419 (Birkbeck login required) 
 
 ## Weekly Syllabus
 
