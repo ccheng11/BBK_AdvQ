@@ -24,7 +24,8 @@
  - **Readings**
 	- [*Beyond Multiple Linear Regression*](https://bookdown.org/roback/bookdown-BeyondMLR/), Chapter 1.
 	- **[Optional]** [*The Effect*](https://theeffectbook.net/), Chapter 13.
-	- **[Optional]** Box, George EP. 1976. "Science and Statistics." *Journal of the American Statistical Association 71*(356): 791-799.
+	- **[Optional]** Box, George E.P. 1976. "Science and Statistics." *Journal of the American Statistical Association 71*(356): 791-799.
+	- **[Optional]** Sala-I-Martin, Xavier X. 1997. "I Just Ran Two Million Regressions." *Papers and Proceedings of the 104th Annual Meeting of the American Economic Association 87)*(2): 178-183.
  - **Tutorial**: Democracy, Corruption and Development
  	- Treisman, Daniel. "The Causes of Corruption: A Cross-National Study." *Journal of Public Economics 76*(3): 399-457.
 
@@ -37,6 +38,7 @@ Note: Convenor traveling abroad; arrangement to be discussed.
  	- [*Beyond Multiple Linear Regression*](https://bookdown.org/roback/bookdown-BeyondMLR/), Chapter 6.
 	- **[Optional]** [*The Effect*](https://theeffectbook.net/), Chapter 13-14.
 	- **[Optional]** Breen, Richard, Kristian Bernt Karlson, and Anders Holm. 2018. "Interpreting and Understanding Logits, Probits, and Other Nonlinear Probability Models." *Annual Review of Sociology 44*: 39-54.
+	- **[Optional]** Rainey, Carlisle, and Kelly McCaskey. 2021. "Estimating Logit Models with Small Samples." *Political Science Research and Methods 9*(3): 549-564.
  - **Tutorial**: Public Attitudes Towards AI
  	- Rainie, Lee, Cary Funk, Monica Anderson and Alec Tyson. 2022. "[AI and Human Enhancement: Americans' Opennes Is Tempered by a Range of Concerns](https://www.pewresearch.org/internet/2022/03/17/ai-and-human-enhancement-americans-openness-is-tempered-by-a-range-of-concerns/)." Pew Research Center Report.
 
@@ -46,7 +48,7 @@ Note: Convenor traveling abroad; arrangement to be discussed.
  - **Readings**
 	- [*Beyond Multiple Linear Regression*](https://bookdown.org/roback/bookdown-BeyondMLR/), Chapter 8.
 	- **[Optional]** [*The Effect*](https://theeffectbook.net/), Chapter 11-12.
-	- **[Optional]** Hoffman, Lesa, and Ryan W. Walters, 2022. "Catching Up on Multilevel Modeling." *Annual Review of Psychology 73*: 659-689.
+	- **[Optional]** Hoffman, Lesa, and Ryan W. Walters. 2022. "Catching Up on Multilevel Modeling." *Annual Review of Psychology 73*: 659-689.
  - **Tutorial**: Anti-Americanism in the Islam World
  	- Blaydes, Lisa, and Drew A. Linzer. 2012. "Elite Competition, Religiosity, and Anti-Americanism in the Islamic World." *American Political Science Review 106*(2): 225-243.
 
