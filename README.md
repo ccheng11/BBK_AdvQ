@@ -3,7 +3,7 @@
 ## Module Information
 
 - **Date and Time**: Monday 6-8pm, unless otherwise specified
-- **Location**: Room 253, [Malet Street](https://maps.app.goo.gl/YMYvCRvA3WrSc4Dk9){:target="_blank"}
+- **Location**: Room 253, [Malet Street](https://maps.app.goo.gl/YMYvCRvA3WrSc4Dk9){target="_blank"}
 - **Convenor**: [Dr Chao-Yo Cheng] (mailto:c.cheng@bbk.ac.uk)
 - **Administrator**: [BBK Ask System](https://www.bbk.ac.uk/ask){:target="_blank"}
 
