@@ -1,8 +1,11 @@
-# Advanced Topics in Quantitative Social Research (2023-24)
+# Advanced Topics in Quant Social Research (Summer 2024)
 
 ## Module Information
 
-Convenor: Dr Chao-Yo Cheng ([c.cheng[at]bbk.ac.uk](mailto:c.cheng@bbk.ac.uk))
+**Date and Time**: Monday 6-8pm, unless otherwise specified
+**Location**: Room 253, [Malet Street](https://maps.app.goo.gl/YMYvCRvA3WrSc4Dk9)
+**Convenor**: Dr Chao-Yo Cheng ([c.cheng[at]bbk.ac.uk](mailto:c.cheng@bbk.ac.uk))
+**Administrator**: [Birkbeck Ask System](https://www.bbk.ac.uk/ask)
 
 ## Weekly Syllabus
 
