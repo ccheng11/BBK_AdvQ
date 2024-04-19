@@ -1,4 +1,4 @@
-# Advanced Topics in Quant Social Research\ (Summer 2024)
+# Adv Topics in Quant Social Research (Summer 2024)
 
 ## Module Information
 
@@ -10,6 +10,12 @@
 ## Weekly Syllabus
 
 ### Week 1 (April 22): Introduction
+
+ - **Lecture**: None
+ - **Readings**: None
+ - **Discussion**
+  - A
+  - B
 
 ### Week 2: From OLS to GLM
 
@@ -42,6 +48,3 @@ TBD.
 ### Week 11: Looking Ahead 
 
 TBD.
-
-## Contact Information
-
