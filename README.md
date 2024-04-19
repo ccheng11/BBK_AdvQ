@@ -13,7 +13,7 @@
 
  - **Lecture**: No lecture
  - **Readings**
-    - Tufte, Edward. [*Data Analysis for Politics and Policy*](https://www.edwardtufte.com/tufte/dapp/). Englewood Cliffs, NJ: Printice-Hall. 
+    - **[Optional]** Tufte, Edward. [*Data Analysis for Politics and Policy*](https://www.edwardtufte.com/tufte/dapp/). Englewood Cliffs, NJ: Printice-Hall.
  - **Discussion**
 	- What would you like to study as a quantitative social researcher?
 	- How do you introduce multiple linear regression to others?
@@ -22,59 +22,69 @@
 
  - **Lecture**: A Practical Review of Multiple Linear Regression
  - **Readings**
-	- **[Core]** [*Beyond Multiple Linear Regression*](https://bookdown.org/roback/bookdown-BeyondMLR/), Chapter 1
-	- [*The Effect*](https://theeffectbook.net/), Chapter 13
-	- Box, George EP. 1976. "Science and Statistics." *Journal of the American Statistical Association 71*(356): 791-799
+	- [*Beyond Multiple Linear Regression*](https://bookdown.org/roback/bookdown-BeyondMLR/), Chapter 1.
+	- **[Optional]** [*The Effect*](https://theeffectbook.net/), Chapter 13.
+	- **[Optional]** Box, George EP. 1976. "Science and Statistics." *Journal of the American Statistical Association 71*(356): 791-799.
  - **Tutorial**: Democracy, Corruption and Development
- 	- **[Core]** Treisman, Daniel. "The Causes of Corruption: A Cross-National Study." *Journal of Public Economics 76*(3): 399-457
+ 	- Treisman, Daniel. "The Causes of Corruption: A Cross-National Study." *Journal of Public Economics 76*(3): 399-457.
 
-### Week 3: Logit Regression
+### Week 3 (May 7): Logit Regression
 
- - **Lecture**:
- - **Readings**:
- - **Tutorial**:
+Note: Convenor traveling abroad; arrangement to be discussed.
 
-### Week 4: Multilevel Modeling
+ - **Lecture**: Logit Regression
+ - **Readings**
+ 	- [*Beyond Multiple Linear Regression*](https://bookdown.org/roback/bookdown-BeyondMLR/), Chapter 6.
+	- **[Optional]** [*The Effect*](https://theeffectbook.net/), Chapter 13-14.
+	- **[Optional]** Breen, Richard, Kristian Bernt Karlson, and Anders Holm. 2018. "Interpreting and Understanding Logits, Probits, and Other Nonlinear Probability Models." *Annual Review of Sociology 44*: 39-54.
+ - **Tutorial**: Anti-Americanism in the Islam World
+ 	- Rainie, Lee, Cary Funk, Monica Anderson and Alec Tyson. 2022. "AI and Human Enhancement: Americans' Opennes Is Tempered by a Range of Concerns." Pew Research Center Report.
 
- - **Lecture**:
- - **Readings**:
- - **Tutorial**:
+### Week 4 (May 13): Multilevel Modeling
 
-### Week 5: Project Week
+ - **Lecture**: Multilevel/Hierarchical Modeling
+ - **Readings**
+	- [*Beyond Multiple Linear Regression*](https://bookdown.org/roback/bookdown-BeyondMLR/), Chapter 8.
+	- **[Optional]** [*The Effect*](https://theeffectbook.net/), Chapter 11-12.
+	- **[Optional]** Hoffman, Lesa, and Ryan W. Walters, 2022. "Catching Up on Multilevel Modeling." *Annual Review of Psychology 73*: 659-689.
+ - **Tutorial**: Anti-Americanism in the Islam World
+ 	- Blaydes, Lisa, and Drew A. Linzer. 2012. "Elite Competition, Religiosity, and Anti-Americanism in the Islamic World." *American Political Science Review 106*(2): 225-243.
 
- - **Lecture**:
- - **Readings**:
- - **Discussion**:
+### Week 5 (May 20): Project Week
 
-### Week 6
+ - **Lecture**: No lecture
+ - **Readings**: TBD
+ - **Discussion**: Share your plan for the Final Analytical Project
+
+### Week 6 (May 27)
 
 Reading Week; no class
 
-### Week 7: Causal Inference I
+### Week 7 (June 3): Causal Inference I
 
  - **Lecture**: TBD
  - **Readings**: TBD
  - **Discussion**: TBD
 
-### Week 8: Causal Inference II
+### Week 8 (June 10): Causal Inference II
 
  - **Lecture**: TBD
  - **Readings**: TBD
  - **Tutorial**: TBD
 
-### Week 9: Causal Inference III 
+### Week 9 (June 17): Causal Inference III 
 
  - **Lecture**: TBD
  - **Readings**: TBD
  - **Tutorial**: TBD
 
-### Week 10: Causal Inference IV 
+### Week 10 (June 24): Causal Inference IV 
 
  - **Lecture**: TBD
  - **Readings**: TBD
  - **Tutorial**: TBD
 
-### Week 11: Looking Ahead and Student Presentations
+### Week 11 (July 1): Looking Ahead and Student Presentations
 
  - **Lecture**: TBD
  - **Readings**: TBD
