@@ -26,7 +26,7 @@
 	- [*Beyond Multiple Linear Regression*](https://bookdown.org/roback/bookdown-BeyondMLR), Chapter 1.
 	- **[Optional]** [*The Effect*](https://theeffectbook.net), Chapter 13.
 	- **[Optional]** Box, George E.P. 1976. "Science and Statistics." *Journal of the American Statistical Association 71*(356): 791-799.
-	- **[Optional]** Sala-I-Martin, Xavier X. 1997. "I Just Ran Two Million Regressions." *Papers and Proceedings of the 104th Annual Meeting of the American Economic Association 87)*(2): 178-183.
+	- **[Optional]** Sala-I-Martin, Xavier X. 1997. "I Just Ran Two Million Regressions." *Papers and Proceedings of the 104th Annual Meeting of the American Economic Association 87*(2): 178-183.
  - **Tutorial**: Democracy, Corruption and Development
  	- Treisman, Daniel. "The Causes of Corruption: A Cross-National Study." *Journal of Public Economics 76*(3): 399-457.
 
@@ -37,7 +37,7 @@ Note: Convenor traveling abroad; arrangement to be discussed.
  - **Lecture**: "Generalized Linear Model: Logit Regression"
  - **Readings**
  	- [*Beyond Multiple Linear Regression*](https://bookdown.org/roback/bookdown-BeyondMLR), Chapter 6.
-	- **[Optional]** [*The Effect*](https://theeffectbook.net), Chapter 13-14.
+	- **[Optional]** [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/), Chapter 13-14.
 	- **[Optional]** Breen, Richard, Kristian Bernt Karlson, and Anders Holm. 2018. "Interpreting and Understanding Logits, Probits, and Other Nonlinear Probability Models." *Annual Review of Sociology 44*: 39-54.
 	- **[Optional]** Rainey, Carlisle, and Kelly McCaskey. 2021. "Estimating Logit Models with Small Samples." *Political Science Research and Methods 9*(3): 549-564.
  - **Tutorial**: Public Attitudes Towards AI
