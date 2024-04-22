@@ -32,8 +32,9 @@
 
 ### Week 3 (May 7): Logit Regression
 
-Note: Convenor traveling abroad; arrangement to be discussed.
+Note: Convenor traveling abroad. No class.
 
+ - **Background**: "[Introduction to Logarithms](https://www.khanacademy.org/math/algebra2/x2ec2f6f830c9fb89:logs)" (Khan Academy)
  - **Lecture**: "Generalized Linear Model: Logit Regression"
  - **Readings**
  	- [*Beyond Multiple Linear Regression*](https://bookdown.org/roback/bookdown-BeyondMLR), Chapter 6.
@@ -41,7 +42,7 @@ Note: Convenor traveling abroad; arrangement to be discussed.
 	- **[Optional]** Breen, Richard, Kristian Bernt Karlson, and Anders Holm. 2018. "Interpreting and Understanding Logits, Probits, and Other Nonlinear Probability Models." *Annual Review of Sociology 44*: 39-54.
 	- **[Optional]** Rainey, Carlisle, and Kelly McCaskey. 2021. "Estimating Logit Models with Small Samples." *Political Science Research and Methods 9*(3): 549-564.
  - **Tutorial**: Public Attitudes Towards AI
- 	- Rainie, Lee, Cary Funk, Monica Anderson and Alec Tyson. 2022. "[AI and Human Enhancement: Americans' Opennes Is Tempered by a Range of Concerns](https://www.pewresearch.org/internet/2022/03/17/ai-and-human-enhancement-americans-openness-is-tempered-by-a-range-of-concerns)." Pew Research Center Report.
+ 	- Rainie, Lee, Cary Funk, Monica Anderson and Alec Tyson. 2022. "[AI and Human Enhancement: Americans' Opennes Is Tempered by a Range of Concerns](https://www.pewresearch.org/internet/2022/03/17/ai-and-human-enhancement-americans-openness-is-tempered-by-a-range-of-concerns)." Pew Research Center Report. **Read Chapter 2**.
 
 ### Week 4 (May 13): Multilevel Modeling
 
