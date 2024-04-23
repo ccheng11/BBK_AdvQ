@@ -27,6 +27,7 @@
 	- **[Optional]** [*The Effect*](https://theeffectbook.net), Chapter 13.
 	- **[Optional]** Box, George E.P. 1976. "Science and Statistics." *Journal of the American Statistical Association 71*(356): 791-799.
 	- **[Optional]** Sala-I-Martin, Xavier X. 1997. "I Just Ran Two Million Regressions." *Papers and Proceedings of the 104th Annual Meeting of the American Economic Association 87*(2): 178-183.
+	- **[Optional]** Lundberg, Ian, Rebecca Johnson, and Brendan M. Stewart. 2021. "What Is Your Estimand? Defining the Target Quantity Connects Statistical Evidence to Theory." *American Sociological Review 86*(3): 532-565.
  - **Tutorial**: Democracy, Corruption and Development
  	- Treisman, Daniel. "The Causes of Corruption: A Cross-National Study." *Journal of Public Economics 76*(3): 399-457.
 
