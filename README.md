@@ -46,6 +46,8 @@ Note: Convenor traveling abroad. No class.
 
 ### Week 4 (May 13): Multilevel Modeling
 
+Note: Convenor returned. Extended in-person tutorial.
+
  - **Lecture**: "Multilevel/Hierarchical Modeling"
  - **Readings**
 	- [*Beyond Multiple Linear Regression*](https://bookdown.org/roback/bookdown-BeyondMLR/), Chapter 8.
@@ -62,7 +64,7 @@ Note: Convenor traveling abroad. No class.
 
 ### Week 6 (May 27)
 
-Reading Week; no class
+Note: Reading Week; no class.
 
 ### Week 7 (June 3): Causal Inference I
 
