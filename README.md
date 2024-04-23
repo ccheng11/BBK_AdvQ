@@ -29,8 +29,8 @@
 	- **[Optional]** Sala-I-Martin, Xavier X. 1997. "I Just Ran Two Million Regressions." *Papers and Proceedings of the 104th Annual Meeting of the American Economic Association 87*(2): 178-183.
 	- **[Optional]** Lundberg, Ian, Rebecca Johnson, and Brendan M. Stewart. 2021. "What Is Your Estimand? Defining the Target Quantity Connects Statistical Evidence to Theory." *American Sociological Review 86*(3): 532-565.
  - **Tutorial**: Democracy, Corruption and Development
- 	- Treisman, Daniel. "The Causes of Corruption: A Cross-National Study." *Journal of Public Economics 76*(3): 399-457.
- 	- La Porta, Rafael, Florencio Lopez-de-Silanes, Andrei Shleifer, and Robert Vishny. 1999. "The Quality of Government." *Journal of Law, Economics & Organization 15*(1): 222-279.
+ 	- Treisman, Daniel. "The Causes of Corruption: A Cross-National Study." *Journal of Public Economics 76*(3): 399-457. **Read pp. 399-414**.
+ 	- **[Optional]** La Porta, Rafael, Florencio Lopez-de-Silanes, Andrei Shleifer, and Robert Vishny. 1999. "The Quality of Government." *Journal of Law, Economics & Organization 15*(1): 222-279.
 
 ### Week 3 (May 7): Logit Regression
 
