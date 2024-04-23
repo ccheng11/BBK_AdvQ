@@ -32,7 +32,7 @@
 
 ### Week 3 (May 7): Logit Regression
 
-Note: Convenor traveling abroad. No class.
+Note: Convenor traveling abroad. No in-person class.
 
  - **Background**: "[Introduction to Logarithms](https://www.khanacademy.org/math/algebra2/x2ec2f6f830c9fb89:logs)" (Khan Academy)
  - **Lecture**: "Generalized Linear Model: Logit Regression"
