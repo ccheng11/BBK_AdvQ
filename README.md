@@ -21,7 +21,7 @@
 
 ### Week 2 (April 29): From OLS to GLM
 
- - **Lecture**: "A Practical Review of Multiple Linear Regression"
+ - **Lecture**: "[A Practical Review of Multiple Linear Regression](https://moodle.bbk.ac.uk/course/view.php?id=41419&section=4)"
  - **Readings**
 	- [*Beyond Multiple Linear Regression*](https://bookdown.org/roback/bookdown-BeyondMLR), Chapter 1.
 	- **[Optional]** [*The Effect*](https://theeffectbook.net), Chapters 4 (intro) and 13 (advanced).
