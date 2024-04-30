@@ -37,7 +37,7 @@
 Note: Convenor traveling abroad. No in-person class.
 
  - **Background**: "[Introduction to Logarithms](https://www.khanacademy.org/math/algebra2/x2ec2f6f830c9fb89:logs)" (Khan Academy)
- - **Lecture**: "Generalized Linear Model: Logit Regression"
+ - **Lecture**: "[Generalized Linear Model: Logit Regression](https://moodle.bbk.ac.uk/course/view.php?id=41419&section=4)"
  - **Readings**
  	- [*Beyond Multiple Linear Regression*](https://bookdown.org/roback/bookdown-BeyondMLR), Chapter 6.
 	- **[Optional]** [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/), Chapter 13-14.
