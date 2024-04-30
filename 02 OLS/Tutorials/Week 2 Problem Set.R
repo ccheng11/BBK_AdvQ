@@ -1,17 +1,20 @@
 rm(list=ls())
-setwd("~/Dropbox/Birkbeck/Modules/04 Quants/05 Weeks/Week 02/02 Exercise/Data")
+setwd("C:/Users/polar/Downloads/BBK_AdvQ/02 OLS/Tutorials/Data")
 
-library(car)
+library(car) 
 library(haven)
 library(tidyverse)
 library(stargazer)
+library(modelsummary)
 
 ##### Import the data #####
 dta <- read_csv("05_01_23_0912pm_wep.csv")
+spec(dta)
 
 ##### Subset data #####
 dta_sel <- dta |>
-  dplyr::select(country, year, gdppc_WDI_PW, lngdppc_WDI_PW, democracy_DD, v2x_polyarchy_VDEM, v2x_corr_VDEM) |>
+  dplyr::select(country, year, gdppc_WDI_PW, lngdppc_WDI_PW,
+                democracy_DD, v2x_polyarchy_VDEM, v2x_corr_VDEM) |>
   mutate(v2x_polyarchy_VDEM_10 = v2x_polyarchy_VDEM*10,
          v2x_corr_VDEM_10 = v2x_corr_VDEM*10) |>
   filter(year == 2000) |>
@@ -101,6 +104,9 @@ stargazer(list(b_corruption, b_democracy, m_mod),
     no.space = T,
     intercept.bottom = TRUE,
     star.cutoffs = c(0.05, 0.01, 0.001))
+
+modelsummary(list(b_corruption, b_democracy, m_mod),
+             stars = c('*'=.1,'**'=.05,'***'=.01))
 
 #########################################################################################################
 #########################################################################################################
