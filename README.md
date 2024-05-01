@@ -41,6 +41,7 @@ Note: Convenor traveling abroad. No in-person class.
  - **Readings**
  	- [*Beyond Multiple Linear Regression*](https://bookdown.org/roback/bookdown-BeyondMLR), Chapter 6.
 	- **[Optional]** [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/), Chapter 13-14.
+	- **[Optional]** *Regression Models for Categorical and Limited Dependent Variables*, Chapter 3.
 	- **[Optional]** Breen, Richard, Kristian Bernt Karlson, and Anders Holm. 2018. "Interpreting and Understanding Logits, Probits, and Other Nonlinear Probability Models." *Annual Review of Sociology 44*: 39-54.
 	- **[Optional]** Rainey, Carlisle, and Kelly McCaskey. 2021. "Estimating Logit Models with Small Samples." *Political Science Research and Methods 9*(3): 549-564.
  - **Tutorial**: Public Attitudes Towards AI
