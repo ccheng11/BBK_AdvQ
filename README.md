@@ -44,7 +44,7 @@
 	- Derpanopoulos, George, Erica Frantz, Barbara Geddes, and Joseph Wright. 2016. "Are Coups Good for Democracy?" *Research and Politics 3*(1): 1-7.
 	- Sturgis, Patrick, Ian Brunton-Smith, and Jonathan Jackson. 2021. "Trust in Science, Social Consensus and Vaccine Confidence." *Nature Human Behaviour 5*: 1528–1534.
 	- Nunn, Nathan. 2010. "Religious Conversion in Colonial Africa." *American Economic Review 100*(2): 147-152.
- - **Discussion**: Share your plan for the Final Analytical Project -- see the Week 5 folder for the worksheet.
+ - **Discussion**: Share your plan for the Final Analytical Project -- see **Project-instructions.pdf** in the Week 5 folder.
 
 ### Week 6 (May 27)
 
