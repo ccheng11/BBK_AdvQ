@@ -42,8 +42,8 @@
  - **Examples**: Read one of the following
 	- Carlitz, Ruth. 2017. "Money Flows, Water Trickles: Understanding Patterns of Decentralized Water Provision in Tanzania." *World Development 93*: 16-30. **Read pp.16-21**.
 	- Derpanopoulos, George, Erica Frantz, Barbara Geddes, and Joseph Wright. 2016. "Are Coups Good for Democracy?" *Research and Politics 3*(1): 1-7.
-	- Sturgis, Patrick, Ian Brunton-Smith, and Jonathan Jackson. 2021. "Trust in Science, Social Consensus and Vaccine Confidence." *Nature Human Behaviour 5*: 1528–1534.
 	- Nunn, Nathan. 2010. "Religious Conversion in Colonial Africa." *American Economic Review 100*(2): 147-152.
+	- Sturgis, Patrick, Ian Brunton-Smith, and Jonathan Jackson. 2021. "Trust in Science, Social Consensus and Vaccine Confidence." *Nature Human Behaviour 5*: 1528–1534.	
  - **Discussion**: Share your plan for the Final Analytical Project -- see **Project-instructions.pdf** in the Week 5 folder.
  - **References**: "[How to `R` Code Faster with ChatGPT](https://www.r-bloggers.com/2023/04/how-to-r-code-faster-with-chatgpt/)" (R Blogger)
 
