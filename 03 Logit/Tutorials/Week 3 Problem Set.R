@@ -1,5 +1,5 @@
 rm(list=ls())
-setwd("/Users/chaoyocheng/Dropbox/Github/Sandbox/Teaching/AdvQ_sandpit/Week 03/02 Exercise/Data")
+setwd("C:/Users/polar/Downloads/BBK_AdvQ/03 Logit/Tutorials/Data")
 
 library(haven)
 library(readxl)
