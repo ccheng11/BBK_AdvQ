@@ -47,6 +47,9 @@ table(dta_sel$FACEREC2_W99)
 attr(dta_sel$FACEREC2_W99, "label")
 attr(dta_sel$FACEREC2_W99, "labels")
 
+count <- table(dta_sel$FACEREC2_W99)
+barplot(count)
+
 ## Explanatory variables
 dta_sel$F_EDUCCAT
 table(dta_sel$F_EDUCCAT)
