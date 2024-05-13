@@ -29,7 +29,8 @@ plot(gdppc_WDI_PW ~ v2x_corr_VDEM, data=dta_sel,
      ylab = "GDP per capita")
 abline(lm(gdppc_WDI_PW ~ v2x_corr_VDEM, data=dta_sel),
        col = "red",
-       lwd = 3)
+       lwd = 3,
+       lty = 2)
 
 ## Log transformation
 par(mfrow=c(1,2))
