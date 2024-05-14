@@ -31,6 +31,7 @@
  - **Tutorial**: Democracy, Corruption and Development
  	- Treisman, Daniel. "The Causes of Corruption: A Cross-National Study." *Journal of Public Economics 76*(3): 399-457. **Read pp. 399-414**.
  	- **[Optional]** La Porta, Rafael, Florencio Lopez-de-Silanes, Andrei Shleifer, and Robert Vishny. 1999. "The Quality of Government." *Journal of Law, Economics & Organization 15*(1): 222-279.
+ - **References**: "[Interpreting Log Transformations in a Linear Model](https://library.virginia.edu/data/articles/interpreting-log-transformations-in-a-linear-model)" (UVa)
 
 ### Week 5 (May 20): Project Week
 
