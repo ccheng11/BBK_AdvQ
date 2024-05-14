@@ -46,7 +46,7 @@
 	- Nunn, Nathan. 2010. "Religious Conversion in Colonial Africa." *American Economic Review 100*(2): 147-152.
 	- Sturgis, Patrick, Ian Brunton-Smith, and Jonathan Jackson. 2021. "Trust in Science, Social Consensus and Vaccine Confidence." *Nature Human Behaviour 5*: 1528–1534.	
  - **Discussion**: Share your plan for the Final Analytical Project -- see **Project-instructions.pdf** in the Week 5 folder.
- - **References**: "[How to `R` Code Faster with ChatGPT](https://www.r-bloggers.com/2023/04/how-to-r-code-faster-with-chatgpt/)" (R Blogger)
+ - **References**: TBD
 
 ### Week 6 (May 27)
 
