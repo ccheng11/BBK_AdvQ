@@ -1,5 +1,5 @@
 rm(list=ls())
-setwd("C:/Users/polar/Downloads/BBK_AdvQ/03 Logit/Tutorials/Data")
+setwd("C:/Users/polar/Downloads/BBK_AdvQ/07 Logit/Tutorials/Data")
 
 library(haven)
 library(readxl)
@@ -66,7 +66,7 @@ table(dta_sel$F_PARTY_FINAL)
 attr(dta_sel$F_PARTY_FINAL, "label")
 attr(dta_sel$F_PARTY_FINAL, "labels")
 
-##### Recoding variables #####
+##### Re-coding variables #####
 dta_sel$yes_fr <- ifelse(dta_sel$FACEREC2_W99 == 1, 1, 0)
 dta_sel$yes_fr[is.na(dta_sel$yes_fr) == T] = 0
 summary(dta_sel$yes_fr)
@@ -79,6 +79,40 @@ summary(dta_sel$female)
 
 dta_sel$democrat <- ifelse(dta_sel$F_PARTY_FINAL == 2, 1, 0)
 summary(dta_sel$democrat)
+
+##### Descriptive statistics #####
+main <- dta_sel %>%
+  dplyr::select(yes_fr, highedu, female, democrat)
+summary(main)
+
+colnames(main) <- c("Facial Recognition is Good (=1)",
+                    "Higher Education (=1)", 
+                    "Female (=1)",
+                    "Democrat (=1)")
+
+## Summary statistics
+library(stargazer)
+stargazer(as.data.frame(main),
+          digits=3,
+          summary=T,
+          type="text")
+
+library(modelsummary)
+datasummary_skim(main,
+                 histogram=F)
+
+## Correlation matrix
+main.cor <- cor(main, use="pairwise.complete.obs")
+main.cor
+
+main.cor[upper.tri(main.cor, diag=F) == T] <- NA
+colnames(main.cor) <- paste("(", 1:ncol(main), ")", sep="")
+rownames(main.cor) <- paste(colnames(main.cor), rownames(main.cor), sep=" ")
+
+library(stargazer)
+stargazer(main.cor,
+          digits=3,
+          type="text")
 
 ##### Task 1: Logit with no predictor #####
 mod_intercept <- glm(yes_fr ~ 1,
