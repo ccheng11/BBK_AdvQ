@@ -39,11 +39,17 @@ dta_sel <- dta %>%
   unique()
 #rm(dta)
 
+## Export the dataframe
+#saveRDS(dta_sel, "PEW_sel.RData")
+#dta_sel <- readRDS("PEW_sel.RData")
+
 ##### Read variables #####
 
 ## Dependent variable
 dta_sel$FACEREC2_W99
 table(dta_sel$FACEREC2_W99)
+table(is.na(dta_sel$FACEREC2_W99))
+
 attr(dta_sel$FACEREC2_W99, "label")
 attr(dta_sel$FACEREC2_W99, "labels")
 
