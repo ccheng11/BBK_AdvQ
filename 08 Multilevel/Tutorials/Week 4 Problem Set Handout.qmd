@@ -202,10 +202,10 @@ Below are the correspondoing formal expressions and `R` code (here we use the su
 
 |                                                  | `R` code                          |
 |--------------------------------------------------|-----------------------------------|
-| Linear (constant $\alpha$ and $\beta$)           | `lm(us.scale~ed3)`                |
-| Linear Multilevel (varying $\alpha$)             | `lmer(happy~ed3+(1|country))`     |
-| Linear Multilevel (varying $\beta$)              | `lmer(happy~ed3+(0+edu|country))` |
-| Linear Multilevel (varying $\alpha$ and $\beta$) | `lmer(happy~ed3+(edu|country))` |
+| Linear (constant $\alpha$ and $\beta$)           | `lm(us.scale~edu)`                |
+| Linear Multilevel (varying $\alpha$)             | `lmer(us.scale~edu+(1|country))`     |
+| Linear Multilevel (varying $\beta$)              | `lmer(us.scale~edu+(0+edu|country))` |
+| Linear Multilevel (varying $\alpha$ and $\beta$) | `lmer(us.scale~edu+(edu|country))` |
 
 ## Varying Intercept w/o Predictor
 
