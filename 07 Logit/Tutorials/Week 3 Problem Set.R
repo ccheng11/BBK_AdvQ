@@ -136,8 +136,8 @@ exp(confint(mod_intercept))/(1+exp(confint(mod_intercept)))
 
 ##### Task 2: Logit with one predictor #####
 mod_edu <- glm(yes_fr ~ highedu,
-                data = dta_sel,
-                family = binomial)
+               data = dta_sel,
+               family = binomial)
 summary(mod_edu)
 ls(mod_edu)
 
