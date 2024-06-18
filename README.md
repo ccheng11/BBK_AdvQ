@@ -68,7 +68,7 @@ Note: Reading Week; no class.
 
 ### Week 9 (June 17): Multilevel Modeling
 
- - **Lecture**: "Multilevel/Hierarchical Modeling"
+ - **Lecture**: "[Multilevel/Hierarchical Modeling](https://moodle.bbk.ac.uk/course/view.php?id=41419&section=4)"
  - **Readings**
 	- [*Beyond Multiple Linear Regression*](https://bookdown.org/roback/bookdown-BeyondMLR/), Chapter 8.
 	- **[Optional]** [*Data Analysis Using Regression and Multilevel/Hierarchical Models*](http://www.stat.columbia.edu/~gelman/arm), Chapter 11-12.
@@ -76,16 +76,16 @@ Note: Reading Week; no class.
  - **Tutorial**: Anti-Americanism in the Islam World
  	- Blaydes, Lisa, and Drew A. Linzer. 2012. "Elite Competition, Religiosity, and Anti-Americanism in the Islamic World." *American Political Science Review 106*(2): 225-243.
 
-### Week 10 (June 24): Causal Inference I
+### Week 10-11 (June 24-July 1): Causal Inference
 
  - **Lecture**: TBD
- - **Readings**: TBD
- - **Tutorial**: TBD
-
-### Week 11 (July 1): Causal Inference II
-
- - **Lecture**: TBD
- - **Readings**: TBD
+ - **Readings**:
+ 	- *Thinking Clearly with Data*, Chapters 3 and 9.
+ 	- [Optional] *The Mixtape*, Chapters 1 and 4.
+ 	- [Optional] Angrist, Joshua D. and Jörn-Steffen Pischke. 2010. "The Credibility Revolution in Empirical Economics." *Journal of Economic Perspectives 24*(2): 3-30.
+ 	- [Optional] Brand, Jennie E., Xiang Zhou, and Yu Xie. 2023. "Recent Developments in Causal Inference and Machine Learning." *Annual Review of Sociology 49*: 81-110.
+ 	- [Optional] Goldsmith-Pinkham, Paul. 2024. "Tracking the Credibility Revolution across Fields." Working Paper.
+ 	- [Optional] Imbens, Guido W. 2024. "Causal Inference in the Social Sciences." *Annual Review of Statistics and Its Applicaition 11*: 123–152.
  - **Tutorial**: TBD
 
 ### Extra: Looking Ahead
