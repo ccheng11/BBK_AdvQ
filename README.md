@@ -52,7 +52,7 @@
 
 Note: Reading Week; no class.
 
-### Week 7 (June 3): Logit Regression
+### Weeks 7-8 (June 3-10): Logit Regression
 
  - **Background**: "[Introduction to Logarithms](https://www.khanacademy.org/math/algebra2/x2ec2f6f830c9fb89:logs)" (Khan Academy)
  - **Lecture**: "[Generalized Linear Model: Logit Regression](https://moodle.bbk.ac.uk/course/view.php?id=41419&section=4)"
@@ -66,7 +66,7 @@ Note: Reading Week; no class.
  	- Rainie, Lee, Cary Funk, Monica Anderson and Alec Tyson. 2022. "[AI and Human Enhancement: Americans' Opennes Is Tempered by a Range of Concerns](https://www.pewresearch.org/internet/2022/03/17/ai-and-human-enhancement-americans-openness-is-tempered-by-a-range-of-concerns)." Pew Research Center Report. **Read Chapter 2**.
  - **Reference**: "[Logit Regression in `R`](https://stats.oarc.ucla.edu/r/dae/logit-regression/)" (UCLA)
 
-### Week 8 (June 10): Multilevel Modeling
+### Week 9 (June 17): Multilevel Modeling
 
  - **Lecture**: "Multilevel/Hierarchical Modeling"
  - **Readings**
@@ -76,19 +76,13 @@ Note: Reading Week; no class.
  - **Tutorial**: Anti-Americanism in the Islam World
  	- Blaydes, Lisa, and Drew A. Linzer. 2012. "Elite Competition, Religiosity, and Anti-Americanism in the Islamic World." *American Political Science Review 106*(2): 225-243.
 
-### Week 9 (June 17): Causal Inference I
-
- - **Lecture**: TBD
- - **Readings**: TBD
- - **Discussion**: TBD
-
-### Week 10 (June 24): Causal Inference II
+### Week 10 (June 24): Causal Inference I
 
  - **Lecture**: TBD
  - **Readings**: TBD
  - **Tutorial**: TBD
 
-### Week 11 (July 1): Causal Inference III 
+### Week 11 (July 1): Causal Inference II
 
  - **Lecture**: TBD
  - **Readings**: TBD
