@@ -44,13 +44,17 @@ head(dta_gap)
 
 ### Merge data
 dta_all <- merge(dta_gap, dta_country, by="country") %>%
-  unique() %>%
-  drop_na()
+  unique() #%>%
+  #drop_na()
 summary(dta_all)
 head(dta_all)
 
+#unique(dta_country$country)
+#unique(dta_all$country)
+
 ##### Task 1: LMM with random intercept #####
-mod_lmm_1 <- lmer(us.scale ~ 1 + (1|country), data=dta_all)
+mod_lmm_1 <- lmer(us.scale ~ 1 + (1|country),
+                  data=dta_all)
 summary(mod_lmm_1)
 coef(mod_lmm_1)
 
