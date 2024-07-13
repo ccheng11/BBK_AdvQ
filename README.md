@@ -11,9 +11,6 @@
  - **Lecture**: No lecture
  - **Readings**
     - **[Optional]** Tufte, Edward. [*Data Analysis for Politics and Policy*](https://www.edwardtufte.com/tufte/dapp). Englewood Cliffs, NJ: Printice-Hall.
- - **Discussion**
-	- What would you like to study as a quantitative social researcher?
-	- How do you introduce multiple linear regression to others?
 
 ## From OLS to GLM
 
