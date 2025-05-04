@@ -16,7 +16,7 @@
 
 ## Week Syllabus
 
- - May 6: Introduction
+ - May 6: Introduction and welcome
  - May 12: From OLS to GLM
  - May 19: Logistics regression
  - May 27: Writing up a quantitative project
@@ -31,9 +31,9 @@
 
  - Multilevel/hierarchical modeling
  - Causal inference
-   - Introduction
    - Selection on Observables
    - Regression Discontinuity Design
    - Instrumental variable 
- - Applied machine learning  
+   - Difference in differences
+ - Applied machine learning (and causal learning)
  - Bayesian statistics
