@@ -1,12 +1,16 @@
 # Adv Topics in Quant Social Research (2025)
 
-## Logistics
+## Key Information
 
  - Monday 6-8pm (unless otherwise noted)
  - Room 407, 30 Russell Square
  - Convenor: Dr Chao-Yo Cheng ([c.cheng[at]bbk.ac.uk](mailto:c.cheng@bbk.ac.uk))
  - Administration: [Birkbeck Ask](https://www.bbk.ac.uk/ask)
  - Moodle: https://moodle.bbk.ac.uk/course/view.php?id=43309 
+
+## Textbook
+
+ - 
 
 ## Week Syllabus
 
