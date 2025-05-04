@@ -1,4 +1,4 @@
-# Adv Topics in Quant Social Research (Summer 2025)
+# Adv Topics in Quant Social Research (2025)
 
 ## Logistics
 
