@@ -6,7 +6,7 @@ title: |
   |
   |
 author: |
-  | Welcome and Introduction
+  | Week 1: Welcome and Introduction
   |
 output:
   beamer_presentation:
@@ -30,22 +30,22 @@ fontsize: 10pt
 	\vspace{0.3cm}
 	\item \textbf{Introduction}: Tell us about yourself
 	\vspace{0.3cm}
-	\item \textbf{Exercise}: A quick recap on OLS (and will be continued)
+	\item \textbf{Exercise}: A quick recap on OLS (and will be continued in Week 2)
 \end{itemize}
 
 # Objectives and arrangements
 
 \begin{itemize}
-	\item Advanced Quants covers a selection of topics on \textbf{model-} and \textbf{design-}based  statistical inference
+	\item Advanced Quants covers a selection of topics on \textbf{model-} (Weeks 2-4) and \textbf{design-}based (Weeks 7-10) statistical inference
 	\vspace{0.2cm}
-	\item Students are expected to be familiar with \textbf{multiple linear regression} and basic \textbf{\texttt{R} programming} before they join
+	\item Students are expected to be familiar with \textbf{multiple linear regression} and \textbf{basic \texttt{R} programming} before they join
 	\vspace{0.2cm}
-	\item The weekly syllabus is \textbf{tentative} and can be adjusted depending on our progress 
+	\item The weekly syllabus is \textbf{tentative} and can be adjusted depending on students' progress 
 	\vspace{0.2cm}
-	\item The in-person tutorials will be used to
+	\item The 90- to 120-min in-person tutorials will be used to
 	\vspace{0.1cm}
 	\begin{itemize}
-		\item Review and answer your questions about the readings and recorded lectures (if any)
+		\item Answer your questions about the readings and recorded lectures
 		\item Give you the chance to implement the analysis in \texttt{R}
 		\item Help you prepare for the final project (Weeks 5 and 11)
 	\end{itemize}
@@ -54,20 +54,22 @@ fontsize: 10pt
 # Weekly syllabus
 
 \begin{itemize}
-	\item Part 1: Generalized linear model
+	\item \textbf{Week 1}: Introduction
+	\item \textbf{Weeks 2-4}: Generalized linear model
 	\begin{itemize}
-		\item From OLS to GLM
-		\item Logit regression
-		\item Multilevel/hierarichical modeling (maybe)
+		\item Week 2: From OLS to GLM
+		\item Week 3: Logit regression
+		\item Week 4: Multilevel modeling
 	\end{itemize}
-	\item Part 2: Applied causal inference (maybe)
+	\item \textbf{Weeks 5}: Final analytical project
+	\item \textbf{Weeks 7-10}: Applied causal inference
 	\begin{itemize}
 		\item Selection on the observables (matching)
 		\item Regression discontinuity design
 		\item Instrumental variable
 		\item Difference-in-difference
-		\item Causal learning
 	\end{itemize}
+	\item \textbf{Week 11}: Looking beyond adv quants
 \end{itemize}
 
 # Textbooks: Clear explanation without much math (under most circumstances)
@@ -84,17 +86,6 @@ knitr::include_graphics("Figs/textbook.pdf")
 knitr::include_graphics("Figs/tufte_new.pdf")
 ```
 
----
-
-\vspace{0.2cm}
-```{r echo=FALSE, out.width="85%", fig.align="center"}
-knitr::include_graphics("Figs/github.pdf")
-```
-\vspace{0.1cm}
-\begin{center}
-\url{https://github.com/ccheng11/BBK_AdvQ}
-\end{center}
-
 # Additional resources on Moodle
 
 \begin{itemize}
@@ -107,16 +98,16 @@ knitr::include_graphics("Figs/github.pdf")
 		\vspace{0.1cm}
 		\item R Programming: Help yourself when you have a hard time; pick one of the books and use the online community (e.g., \textbf{R-bloggers} and \textbf{Stack Overflow}) to keep yourself updated
 		\vspace{0.1cm}
-		\item Podcasts: Get a sense of how quant social researchers present and discuss their work
+		\item Podcasts: Get a sense of how professional quant social researchers present and discuss their work
 	\end{itemize}
 \end{itemize}
 
 # Assessment
 
 \begin{itemize}
-	\item \textbf{Exercises I and II} (20\% each): Students will complete \textbf{two short data analytical exercises} based on the weekly tutorials
+	\item \textbf{Exercises I and II} (20\%): Students will complete \textbf{two short data analytical exercises} based on the weekly tutorials
 	\vspace{1cm}
-	\item \textbf{Final project} (60\%): Students will complete \textbf{a quantitative research note} of about 4,000 words, excluding footnotes, bibliography, and appendices (R script and supplementary information); more details will be discussed in \textbf{Week 5}
+	\item \textbf{Final project} (60\%): Students will complete \textbf{a quantitative research note of about 4,000 words}, excluding footnotes, bibliography, and appendices (R script and supplementary information). More details will be discussed in \textbf{Week 5}
 \end{itemize}
 
 # Next week
