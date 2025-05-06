@@ -5,7 +5,7 @@
  - **When**: Monday 6-8pm (unless otherwise noted)
  - **Where**: Room 407, 30 Russell Square
  - **Contact**
-   - Convenor: Dr Chao-Yo Cheng ([c.cheng[at]bbk.ac.uk](mailto:c.cheng@bbk.ac.uk)) [**Schuedle a meeting**](https://bit.ly/bbkcyc)
+   - Convenor: Dr Chao-Yo Cheng ([c.cheng[at]bbk.ac.uk](mailto:c.cheng@bbk.ac.uk)) -- [**schuedle a meeting**](https://bit.ly/bbkcyc)
    - Admin: [Birkbeck Ask](https://www.bbk.ac.uk/ask)
  - **Moodle**: https://moodle.bbk.ac.uk/course/view.php?id=43309 
 
