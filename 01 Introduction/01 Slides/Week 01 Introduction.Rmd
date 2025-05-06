@@ -116,7 +116,7 @@ knitr::include_graphics("Figs/github.pdf")
 \begin{itemize}
 	\item \textbf{Exercises I and II} (20\% each): Students will complete \textbf{two short data analytical exercises} based on the weekly tutorials
 	\vspace{1cm}
-	\item \textbf{Final project} (60\%): Students will complete \textbf{a quantitative research note} of about 4,000 words, excluding footnotes, bibliography, and appendices (R script and supplementary information); more details will be discussed in \textbf{Week 5}
+	\item \textbf{Final project} (60\%): Students will complete \textbf{a quantitative research note} of about 4,000 words, excluding footnotes, bibliography, and appendices (R script and supplementary information); more will be discussed in \textbf{Week 5}
 \end{itemize}
 
 # Next week
