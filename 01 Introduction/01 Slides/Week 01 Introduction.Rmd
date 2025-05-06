@@ -2,11 +2,11 @@
 title: |
   |
   |
-  | Advanced Topics in Quantitative Social Research
+  | Welcome and Introduction
   |
   |
 author: |
-  | Welcome and Introduction
+  | Advanced Topics in Quantitative Social Research
   |
 output:
   beamer_presentation:
