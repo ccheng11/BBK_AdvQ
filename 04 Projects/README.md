@@ -21,3 +21,15 @@ Read one of the examples provided below. In class you will be asked to share you
  - Nunn, Nathan. 2010. "Religious Conversion in Colonial Africa." *American Economic Review 100*(2): 147-152.
 
  - Sturgis, Patrick, Ian Brunton-Smith, and Jonathan Jackson. 2021. "Trust in Science, Social Consensus and Vaccine Confidence." *Nature Human Behaviour 5*: 1528–1534.
+
+## Additional References on Data Visualization
+
+ - Healy, Kieran. 2019. *Data Visualization: A Practical Introduction*. Princeton, NJ: Princeton University Press.
+
+ - Schwabish, Jonathan A. 2014. "An Economist's Guide to Visualizing Data." *Journal of Economic Perspectives 28*(1): 209–34.
+
+ - Tufte, Edward R. 2001. *The Visual Display of Quantitative Information*. Cheshire CT: Graphics Press.
+
+
+
+
