@@ -60,6 +60,7 @@ fontsize: 10pt
 		\item Logit regression
 		\item Multilevel/hierarichical modeling (maybe)
 	\end{itemize}
+	\vspace{0.3cm}
 	\item Part 2: Applied causal inference (maybe)
 	\begin{itemize}
 		\item Selection on the observables (matching)
