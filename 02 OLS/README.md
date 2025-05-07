@@ -2,7 +2,7 @@
 
 ## Lecture
 
-TBA.
+\url{https://moodle.bbk.ac.uk/course/view.php?id=43309&section=5} (Birkbeck login required)
 
 ## Readings
 

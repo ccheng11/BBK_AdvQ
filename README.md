@@ -13,7 +13,7 @@
 
  - Roback, Paul, Julie Legler. 2021. [*Beyond Multiple Linear Regression: Applied Generalized Linear Models and Multilevel Models in R*](https://bookdown.org/roback/bookdown-BeyondMLR/). Boca Raton, FL: CRC Press.
 
- - Huntington-Klein, Nick. 2022. [*The Effect: An Introduction to Research Design and Causality*](https://theeffectbook.net/). Boca Raton, FL: CRC Press. 
+ - Huntington-Klein, Nick. 2022. [*The Effect: An Introduction to Research Design and Causality*](https://theeffectbook.net/). Boca Raton, FL: CRC Press. ([second version forthcoming in 2025](https://www.taylorfrancis.com/books/mono/10.1201/9781003448969/effect-nick-huntington-klein))
 
 ## Week Syllabus
 
